@@ -34,17 +34,7 @@ theta_values = np.linspace(0, 90, 100)
 ranges = [projectile_range(v0, theta) for theta in theta_values]
 
 # Plot
-plt.figure(figsize=(8, 5))
-plt.plot(theta_values, ranges, label=f'v0={v0} m/s', color='b')
-plt.xlabel('Angle (degrees)')
-plt.ylabel('Range (m)')
-plt.title('Projectile Range vs. Angle')
-plt.legend()
-plt.grid()
-plt.savefig('projectile_range_plot.png')  # Save plot for GitHub
-plt.show()
-
-"""
+![alt text](fadf4870-6c4f-45a0-b283-dda00493efc6-1.png)
 ## 2. Analysis of the Range
 The horizontal range R of a projectile is given by:
 
