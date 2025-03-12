@@ -172,6 +172,63 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-2">Problem 2</h1>
+<h1 id="investigating-the-dynamics-of-a-forced-damped-pendulum">Investigating the Dynamics of a Forced Damped Pendulum</h1>
+<h2 id="motivation">Motivation</h2>
+<p>The forced damped pendulum is a fundamental example of nonlinear dynamics, demonstrating a rich spectrum of behaviors due to the interplay between damping, restoring forces, and external driving forces. Unlike a simple pendulum, which exhibits predictable periodic motion, the forced damped pendulum can display resonance, quasiperiodicity, and even chaotic motion depending on system parameters. Understanding these behaviors is crucial in applications ranging from mechanical resonance in engineering to the study of climate systems and electrical circuits.</p>
+<h2 id="theoretical-foundation">Theoretical Foundation</h2>
+<h3 id="governing-equation">Governing Equation</h3>
+<p>The equation of motion for a forced damped pendulum is given by:</p>
+<div class="arithmatex">\[
+\frac{d^2\theta}{dt^2} + b \frac{d\theta}{dt} + c\sin(\theta) = A\cos(\omega t)
+\]</div>
+<p>where:
+- $$ \theta $$ is the angular displacement,
+- $$ b $$ is the damping coefficient,
+- $$ c $$ is the restoring force parameter (related to gravity and the length of the pendulum),
+- $$ A $$ is the amplitude of the external forcing,
+- $$ \omega $$ is the driving frequency.</p>
+<p>For small angles ($$ \theta \approx \sin\theta $$), this equation reduces to a linear form, leading to approximate solutions that describe simple harmonic motion. However, for larger angles, the nonlinearity introduces complex behaviors, including chaotic dynamics.</p>
+<h3 id="resonance-and-stability">Resonance and Stability</h3>
+<ul>
+<li>When the driving frequency $$ \omega $$ matches the natural frequency of the pendulum, resonance occurs, leading to large oscillations.</li>
+<li>Stability analysis reveals that certain parameter ranges lead to periodic, quasiperiodic, or chaotic behavior, depending on the damping and driving force.</li>
+</ul>
+<h2 id="analysis-of-dynamics">Analysis of Dynamics</h2>
+<p>To explore the system’s behavior, we analyze the influence of key parameters:
+- <strong>Damping coefficient (b):</strong> High damping suppresses oscillations, while low damping allows sustained motion.
+- <strong>Driving amplitude (A):</strong> Increasing the driving force can push the system into chaotic regimes.
+- <strong>Driving frequency ($$ \omega $$):</strong> The frequency affects resonance conditions and synchronization.</p>
+<h2 id="practical-applications">Practical Applications</h2>
+<p>The forced damped pendulum model is relevant to various real-world systems:
+- <strong>Energy harvesting devices:</strong> Exploiting resonance for efficient energy conversion.
+- <strong>Suspension bridges:</strong> Studying oscillatory behavior to prevent resonance-related structural failures.
+- <strong>Oscillating electrical circuits:</strong> Analogous to the dynamics of driven RLC circuits.</p>
+<h2 id="computational-implementation">Computational Implementation</h2>
+<p>We implemented a numerical simulation using Python’s <code>solve_ivp</code> function to integrate the differential equation. The simulation provides:
+- <strong>Time evolution plots</strong> of the pendulum’s motion.
+- <strong>Phase portraits</strong> to visualize transitions to chaotic behavior.
+- <strong>Poincaré sections</strong> and <strong>bifurcation diagrams</strong> to explore the system’s sensitivity to initial conditions.</p>
+<h2 id="results-and-discussion">Results and Discussion</h2>
+<p>Graphical analysis highlights:
+- <strong>Regular oscillations</strong> for low forcing amplitudes.
+- <strong>Resonance behavior</strong> at specific driving frequencies.
+- <strong>Chaotic motion</strong> for certain parameter sets, demonstrated by non-repeating phase space trajectories.</p>
+<h3 id="visualizations">Visualizations</h3>
+<h4 id="time-evolution-plot">Time Evolution Plot</h4>
+<p><img alt="Time Evolution" src="pendulum_time_evolution.png"/></p>
+<h4 id="phase-space-plot">Phase Space Plot</h4>
+<p><img alt="Phase Space" src="pendulum_phase_space.png"/></p>
+<h4 id="poincare-section">Poincaré Section</h4>
+<p><img alt="Poincaré Section" src="pendulum_poincare_section.png"/></p>
+<h4 id="bifurcation-diagram">Bifurcation Diagram</h4>
+<p><img alt="Bifurcation Diagram" src="pendulum_bifurcation.png"/></p>
+<h3 id="limitations-and-extensions">Limitations and Extensions</h3>
+<ul>
+<li>The model assumes a simple sinusoidal driving force; more complex forcing functions can be explored.</li>
+<li>Nonlinear damping effects could provide further insights into real-world applications.</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>The forced damped pendulum serves as a compelling case study in nonlinear dynamics. By varying key parameters, we observe a transition from simple periodic motion to chaos, offering insights into both fundamental physics and engineering applications. Further computational studies can deepen our understanding of its complex behavior.</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
