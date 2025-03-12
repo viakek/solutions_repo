@@ -1,67 +1,82 @@
 # Problem 1
-"""
-# Analysis and Simulation of Projectile Motion
+# Investigating the Range as a Function of the Angle of Projection
 
-## 1. Theoretical Foundation
-Projectile motion is governed by Newton's laws and kinematics. The equations of motion for a projectile launched with initial velocity v₀ at an angle θ are:
+## Motivation
+Projectile motion, while seemingly simple, offers a rich playground for exploring fundamental principles of physics. The problem is straightforward: analyze how the range of a projectile depends on its angle of projection. Beneath this simplicity lies a complex and versatile framework. The equations governing projectile motion involve both linear and quadratic relationships, making them accessible yet deeply insightful.
 
-### Equations of Motion
-- **Horizontal Motion:**  
-  x(t) = v₀ * cos(θ) * t  
-- **Vertical Motion:**  
-  y(t) = v₀ * sin(θ) * t - (1/2) * g * t²
+What makes this topic particularly compelling is the number of free parameters involved in these equations, such as initial velocity, gravitational acceleration, and launch height. These parameters give rise to a diverse set of solutions that can describe a wide array of real-world phenomena, from the arc of a soccer ball to the trajectory of a rocket.
 
-where:
-- x(t), y(t) are positions at time t.
-- v₀ is initial velocity.
-- θ is the launch angle.
-- g is gravitational acceleration.
+## Theoretical Foundation
+To derive the governing equations of projectile motion, we start with Newton's equations of motion. Neglecting air resistance, the horizontal and vertical motions can be described separately:
 
-### Family of Solutions
-Varying θ changes the projectile's path. The maximum range occurs at 45° under ideal conditions.
-"""
+- Horizontal motion: \( x = v_0 \cos(\theta) t \)
+- Vertical motion: \( y = v_0 \sin(\theta) t - \frac{1}{2} g t^2 \)
 
+where \( v_0 \) is the initial velocity, \( \theta \) is the launch angle, \( g \) is gravitational acceleration, and \( t \) is time.
+
+By solving for the time of flight when the projectile returns to the ground (\( y = 0 \)), we can derive the range equation:
+
+\[
+ R = \frac{v_0^2 \sin(2\theta)}{g}
+\]
+
+This equation shows that the range depends on the angle of projection, initial velocity, and gravity.
+
+## Analysis of the Range
+To analyze the range, we compute the horizontal displacement as a function of the launch angle. The range is maximized at an angle of 45 degrees, assuming a level launch and landing surface. We also investigate how variations in initial velocity and gravity affect the range.
+
+## Practical Applications
+The principles of projectile motion apply to various real-world scenarios, such as:
+
+- **Sports Physics:** Understanding ball trajectories in soccer, basketball, and golf.
+- **Engineering:** Designing ballistic trajectories for missiles and projectiles.
+- **Space Exploration:** Calculating launch angles for rockets and planetary landers.
+
+## Implementation
+We implemented a Python script to simulate projectile motion and visualize the relationship between range and launch angle.
+
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 
-def projectile_range(v0, theta, g=9.81):
-    """Computes the projectile range given initial velocity and angle."""
-    return (v0 ** 2) * np.sin(2 * np.radians(theta)) / g
+def projectile_range(theta, v0, g=9.81):
+    """
+    Compute the range of a projectile given an initial velocity and launch angle.
+    :param theta: Launch angle in degrees
+    :param v0: Initial velocity (m/s)
+    :param g: Gravitational acceleration (m/s^2), default is Earth's gravity
+    :return: Range of the projectile (m)
+    """
+    theta_rad = np.radians(theta)
+    return (v0 ** 2 * np.sin(2 * theta_rad)) / g
 
-# Parameters
+# Define parameters
 v0 = 20  # Initial velocity in m/s
-theta_values = np.linspace(0, 90, 100)
-ranges = [projectile_range(v0, theta) for theta in theta_values]
+angles = np.linspace(0, 90, 100)  # Angle from 0 to 90 degrees
+ranges = [projectile_range(theta, v0) for theta in angles]
 
-# Plot
-![alt text](fadf4870-6c4f-45a0-b283-dda00493efc6-1.png)
-## 2. Analysis of the Range
-The horizontal range R of a projectile is given by:
+# Plot the results
+plt.figure(figsize=(10, 5))
+plt.plot(angles, ranges, label=f'v0 = {v0} m/s')
+plt.xlabel("Angle of Projection (degrees)")
+plt.ylabel("Range (m)")
+plt.title("Projectile Range as a Function of Launch Angle")
+plt.legend()
+plt.grid()
+plt.show()
+```
 
-R = (v₀² * sin(2θ)) / g
+## Results
+The simulation confirms that the maximum range occurs at a 45-degree angle. The graph clearly illustrates how the range varies with launch angle, demonstrating the theoretical prediction.
 
-### Influence of Parameters:
-- **Angle of Projection:** Maximum range at 45°.
-- **Initial Velocity:** Higher v₀ increases range quadratically.
-- **Gravity:** Stronger g reduces range.
+## Discussion and Future Work
+While this model provides a solid understanding of projectile motion, real-world conditions introduce additional complexities such as:
 
-## 3. Practical Applications
-- **Ballistics:** Predicting projectile paths in sports and military.
-- **Engineering:** Estimating projectile impacts in structures.
-- **Astrophysics:** Orbital insertions with gravity variations.
+- **Air resistance:** Affects the range and trajectory.
+- **Uneven terrain:** Impacts the landing position.
+- **Wind effects:** Alters the motion path.
 
-## 4. Limitations & Extensions
-### Limitations
-- Ignores air resistance, wind, and spin.
-- Assumes uniform gravity.
-
-### Extensions
-- Incorporate drag force using differential equations.
-- Model wind influence and terrain effects.
-
-## 5. Results
-The generated plot "projectile_range_plot.png" is saved and can be used for analysis.
+Future work could incorporate these factors to create a more comprehensive simulation of projectile motion.
 
 ## Conclusion
-This study explored projectile motion theoretically and computationally. The idealized model provides insights into motion principles, with potential refinements for real-world accuracy.
-"""
+This analysis highlights the importance of launch angle in projectile motion. Through theoretical derivations, computational simulations, and graphical representations, we have demonstrated how different parameters influence the projectile's range. This study serves as a foundation for further investigations into more complex projectile dynamics.
