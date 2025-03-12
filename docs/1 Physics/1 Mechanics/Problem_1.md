@@ -9,10 +9,10 @@ What makes this topic particularly compelling is the number of free parameters i
 ## Theoretical Foundation
 To derive the governing equations of projectile motion, we start with Newton's equations of motion. Neglecting air resistance, the horizontal and vertical motions can be described separately:
 
-- Horizontal motion: \( x = v_0 \cos(\theta) t \)
-- Vertical motion: \( y = v_0 \sin(\theta) t - \frac{1}{2} g t^2 \)
+- Horizontal motion: $$ x = v_0 \cos(\theta) t $$
+- Vertical motion: $$ y = v_0 \sin(\theta) t - \frac{1}{2} g t^2 $$
 
-where \( v_0 \) is the initial velocity, \( \theta \) is the launch angle, \( g \) is gravitational acceleration, and \( t \) is time.
+where $$ v_0 $$ is the initial velocity, $$ \theta $$ is the launch angle, $$ g $$ is gravitational acceleration, and $$ t $$ is time.
 
 By solving for the time of flight when the projectile returns to the ground $$ y = 0 $$ , we can derive the range equation:
 
@@ -33,7 +33,7 @@ The principles of projectile motion apply to various real-world scenarios, such 
 - **Space Exploration:** Calculating launch angles for rockets and planetary landers.
 
 ## Implementation
-We implemented a Python script to simulate projectile motion and visualize the relationship between range and launch angle.
+Implemented Python script to simulate projectile motion and visualize the relationship between range and launch angle.
 
 ```python
 import numpy as np
