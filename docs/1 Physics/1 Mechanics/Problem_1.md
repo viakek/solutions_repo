@@ -14,11 +14,11 @@ To derive the governing equations of projectile motion, we start with Newton's e
 
 where \( v_0 \) is the initial velocity, \( \theta \) is the launch angle, \( g \) is gravitational acceleration, and \( t \) is time.
 
-By solving for the time of flight when the projectile returns to the ground (\( y = 0 \)), we can derive the range equation:
+By solving for the time of flight when the projectile returns to the ground $$ y = 0 $$ , we can derive the range equation:
 
-\[
+$$
  R = \frac{v_0^2 \sin(2\theta)}{g}
-\]
+$$
 
 This equation shows that the range depends on the angle of projection, initial velocity, and gravity.
 
