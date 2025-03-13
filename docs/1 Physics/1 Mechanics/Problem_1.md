@@ -61,7 +61,8 @@ y(t) = v_0 \sin\theta \cdot t - \frac{1}{2} g t^2
 $$
 
 ### **Time of Flight**
-The projectile hits the ground when $ y = 0 $ :
+The projectile hits the ground when 
+$ y = 0 $ :
 
 $$
 t = \frac{2 v_0 \sin\theta}{g}
