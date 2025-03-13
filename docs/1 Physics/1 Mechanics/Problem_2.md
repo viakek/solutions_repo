@@ -20,7 +20,7 @@ where:
 -  A  is the amplitude of the external forcing,
 - $ \omega $ is the driving frequency.
 
-For small angles $$ \theta \approx \sin\theta $$ this equation reduces to a linear form, leading to approximate solutions that describe simple harmonic motion. However, for larger angles, the nonlinearity introduces complex behaviors, including chaotic dynamics.
+For small angles $ \theta \approx \sin\theta $ this equation reduces to a linear form, leading to approximate solutions that describe simple harmonic motion. However, for larger angles, the nonlinearity introduces complex behaviors, including chaotic dynamics.
 
 ### Resonance and Stability
 - When the driving frequency $$ \omega $$ matches the natural frequency of the pendulum, resonance occurs, leading to large oscillations.
