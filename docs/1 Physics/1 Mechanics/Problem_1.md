@@ -62,7 +62,8 @@ $$
 
 ### **Time of Flight**
 The projectile hits the ground when 
-$ y = 0 $ :
+
+y = 0  :
 
 $$
 t = \frac{2 v_0 \sin\theta}{g}
@@ -146,6 +147,7 @@ plt.grid()
 plt.savefig("single_velocity_plot.png")
 plt.show()
 ```
+![alt text](Untitled.png)
 
 ## Comparison of Different Velocities
 
