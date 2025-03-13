@@ -50,19 +50,6 @@ Graphical analysis highlights:
 - **Resonance behavior** at specific driving frequencies.
 - **Chaotic motion** for certain parameter sets, demonstrated by non-repeating phase space trajectories.
 
-### Visualizations
-#### Time Evolution Plot
-![Time Evolution](pendulum_time_evolution.png)
-
-#### Phase Space Plot
-![Phase Space](pendulum_phase_space.png)
-
-#### Poincaré Section
-![Poincaré Section](pendulum_poincare_section.png)
-
-#### Bifurcation Diagram
-![Bifurcation Diagram](pendulum_bifurcation.png)
-
 ### Limitations and Extensions
 - The model assumes a simple sinusoidal driving force; more complex forcing functions can be explored.
 - Nonlinear damping effects could provide further insights into real-world applications.
