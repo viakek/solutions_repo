@@ -121,7 +121,7 @@ plt.show()
 
 ![alt text](Untitled.png)
 
-Single Velocity Simulation
+## Single Velocity Simulation
 
 ```python
 import numpy as np
@@ -146,7 +146,7 @@ plt.savefig("single_velocity_plot.png")
 plt.show()
 ```
 
-Comparison of Different Velocities
+## Comparison of Different Velocities
 
 ```python
 velocities = [10, 20, 30]
@@ -163,9 +163,10 @@ plt.grid()
 plt.savefig("velocity_comparison.png")
 plt.show()
 ```
+
 ![alt text](Untitled-2.png)
 
-Same Conditions, Different Planets
+## Same Conditions, Different Planets
 
 ```python
 planets = {"Earth": 9.81, "Moon": 1.62, "Mars": 3.71}
@@ -182,7 +183,34 @@ plt.grid()
 plt.savefig("planet_comparison.png")
 plt.show()
 ```
+
 ![alt text](Untitled-3.png)
+
+## Same Velocity, Different Angles
+
+```python
+angles_to_compare = [15, 30, 45, 60, 75]
+time = np.linspace(0, 4, num=500)
+g = 9.81
+
+plt.figure(figsize=(10, 5))
+for theta in angles_to_compare:
+    theta_rad = np.radians(theta)
+    x_vals = v0 * np.cos(theta_rad) * time
+    y_vals = v0 * np.sin(theta_rad) * time - 0.5 * g * time ** 2
+    valid_indices = y_vals >= 0  # Only plot points where y is non-negative
+    plt.plot(x_vals[valid_indices], y_vals[valid_indices], label=f'{theta}°')
+
+plt.xlabel("Horizontal Distance (m)")
+plt.ylabel("Vertical Distance (m)")
+plt.title("Projectile Motion for Different Angles")
+plt.legend()
+plt.grid()
+plt.savefig("angle_comparison.png")
+plt.show()
+```
+
+![alt text](Untitled-4.png)
 
 ## Results
 The simulation confirms that the maximum range occurs at a 45-degree angle. The graph clearly illustrates how the range varies with launch angle, demonstrating the theoretical prediction.
