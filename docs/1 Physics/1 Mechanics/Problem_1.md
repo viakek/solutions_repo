@@ -7,20 +7,73 @@ Projectile motion, while seemingly simple, offers a rich playground for explorin
 What makes this topic particularly compelling is the number of free parameters involved in these equations, such as initial velocity, gravitational acceleration, and launch height. These parameters give rise to a diverse set of solutions that can describe a wide array of real-world phenomena, from the arc of a soccer ball to the trajectory of a rocket.
 
 ## Theoretical Foundation
-To derive the governing equations of projectile motion, we start with Newton's equations of motion. Neglecting air resistance, the horizontal and vertical motions can be described separately:
+# Theoretical Foundation: Derivation from Newton's Laws
 
-- Horizontal motion: $$ x = v_0 \cos(\theta) t $$
-- Vertical motion: $$ y = v_0 \sin(\theta) t - \frac{1}{2} g t^2 $$
-
-where $$ v_0 $$ is the initial velocity,  $$ \theta $$ is the launch angle, $$ g $$ is gravitational acceleration, and $$ t $$ is time.
-
-By solving for the time of flight when the projectile returns to the ground $$ y = 0 $$ , we can derive the range equation:
+## Newton's Second Law
+Newton's second law states:
 
 $$
- R = \frac{v_0^2 \sin(2\theta)}{g}
+\mathbf{F} = m \mathbf{a}
 $$
 
-This equation shows that the range depends on the angle of projection, initial velocity, and gravity.
+For a projectile under gravity, the force acting on it is:
+
+$$
+\mathbf{F} = -mg \hat{j}
+$$
+
+This results in the differential equations:
+
+$$
+m \frac{d^2 x}{dt^2} = 0, \quad m \frac{d^2 y}{dt^2} = -mg
+$$
+
+## Solving for Motion
+
+### **Horizontal Motion**
+$$
+\frac{d^2 x}{dt^2} = 0
+$$
+
+Integrating twice:
+
+$$
+\frac{dx}{dt} = v_0 \cos\theta
+$$
+
+$$
+x(t) = v_0 \cos\theta \cdot t
+$$
+
+### **Vertical Motion**
+$$
+\frac{d^2 y}{dt^2} = -g
+$$
+
+Integrating twice:
+
+$$
+\frac{dy}{dt} = v_0 \sin\theta - g t
+$$
+
+$$
+y(t) = v_0 \sin\theta \cdot t - \frac{1}{2} g t^2
+$$
+
+### **Time of Flight**
+The projectile hits the ground when $ y = 0 $ :
+
+$$
+t = \frac{2 v_0 \sin\theta}{g}
+$$
+
+### **Range Equation**
+$$
+R = \frac{v_0^2 \sin 2\theta}{g}
+$$
+
+This equation shows the dependence of range on angle and velocity.
+
 
 ## Analysis of the Range
 To analyze the range, we compute the horizontal displacement as a function of the launch angle. The range is maximized at an angle of 45 degrees, assuming a level launch and landing surface. We also investigate how variations in initial velocity and gravity affect the range.
