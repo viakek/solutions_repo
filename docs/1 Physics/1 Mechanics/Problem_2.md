@@ -15,9 +15,9 @@ $$
 
 where:
 - $$ \theta $$ is the angular displacement,
-- $$ b $$ is the damping coefficient,
-- $$ c $$ is the restoring force parameter (related to gravity and the length of the pendulum),
-- $$ A $$ is the amplitude of the external forcing,
+-  b  is the damping coefficient,
+-  c  is the restoring force parameter (related to gravity and the length of the pendulum),
+-  A  is the amplitude of the external forcing,
 - $$ \omega $$ is the driving frequency.
 
 For small angles ($$ \theta \approx \sin\theta $$), this equation reduces to a linear form, leading to approximate solutions that describe simple harmonic motion. However, for larger angles, the nonlinearity introduces complex behaviors, including chaotic dynamics.
