@@ -66,6 +66,8 @@ plt.grid()
 plt.show()
 ```
 
+![alt text](Untitled.png)
+
 ## Results
 The simulation confirms that the maximum range occurs at a 45-degree angle. The graph clearly illustrates how the range varies with launch angle, demonstrating the theoretical prediction.
 
@@ -80,3 +82,7 @@ Future work could incorporate these factors to create a more comprehensive simul
 
 ## Conclusion
 This analysis highlights the importance of launch angle in projectile motion. Through theoretical derivations, computational simulations, and graphical representations, we have demonstrated how different parameters influence the projectile's range. This study serves as a foundation for further investigations into more complex projectile dynamics.
+
+## Source 
+
+[Colab](https://colab.research.google.com/drive/1kGvfmv8fvOoe75ARwvITog-vv2Y6kYUD?usp=sharing) 
