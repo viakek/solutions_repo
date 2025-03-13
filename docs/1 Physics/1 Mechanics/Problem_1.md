@@ -169,6 +169,8 @@ plt.show()
 
 ![alt text](Untitled-2.png)
 
+![alt text](Untitled-6.png)
+
 ## Same Conditions, Different Planets
 
 ```python
