@@ -121,8 +121,80 @@ plt.show()
 
 ![alt text](Untitled.png)
 
+Single Velocity Simulation
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+def projectile_range(theta, v0, g=9.81):
+    theta_rad = np.radians(theta)
+    return (v0 ** 2 * np.sin(2 * theta_rad)) / g
+
+v0 = 20  # Initial velocity in m/s
+angles = np.linspace(0, 90, 100)
+ranges = [projectile_range(theta, v0) for theta in angles]
+
+plt.figure(figsize=(10, 5))
+plt.plot(angles, ranges, label=f'v0 = {v0} m/s')
+plt.xlabel("Angle of Projection (degrees)")
+plt.ylabel("Range (m)")
+plt.title("Projectile Range as a Function of Launch Angle")
+plt.legend()
+plt.grid()
+plt.savefig("single_velocity_plot.png")
+plt.show()
+```
+
+Comparison of Different Velocities
+
+```python
+velocities = [10, 20, 30]
+plt.figure(figsize=(10, 5))
+for v in velocities:
+    ranges = [projectile_range(theta, v) for theta in angles]
+    plt.plot(angles, ranges, label=f'v0 = {v} m/s')
+
+plt.xlabel("Angle of Projection (degrees)")
+plt.ylabel("Range (m)")
+plt.title("Projectile Range for Different Initial Velocities")
+plt.legend()
+plt.grid()
+plt.savefig("velocity_comparison.png")
+plt.show()
+```
+![alt text](Untitled-2.png)
+
+Same Conditions, Different Planets
+
+```python
+planets = {"Earth": 9.81, "Moon": 1.62, "Mars": 3.71}
+plt.figure(figsize=(10, 5))
+for planet, g in planets.items():
+    ranges = [projectile_range(theta, v0, g) for theta in angles]
+    plt.plot(angles, ranges, label=f'{planet}')
+
+plt.xlabel("Angle of Projection (degrees)")
+plt.ylabel("Range (m)")
+plt.title("Projectile Motion on Different Planets")
+plt.legend()
+plt.grid()
+plt.savefig("planet_comparison.png")
+plt.show()
+```
+![alt text](Untitled-3.png)
+
 ## Results
 The simulation confirms that the maximum range occurs at a 45-degree angle. The graph clearly illustrates how the range varies with launch angle, demonstrating the theoretical prediction.
+The simulations confirm that the maximum range occurs at a 45-degree angle. The plots illustrate how different parameters affect the range:
+
+Higher velocities result in greater ranges.
+
+Lower gravity (e.g., on the Moon) increases the range, while higher gravity (e.g., on Jupiter) decreases it.
+
+Initial height variations shift the trajectory but do not affect the fundamental 45-degree maximum range rule.
+
+Different launch angles demonstrate the sinusoidal dependence of range on angle.
 
 ## Discussion and Future Work
 While this model provides a solid understanding of projectile motion, real-world conditions introduce additional complexities such as:
