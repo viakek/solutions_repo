@@ -14,13 +14,13 @@ $$
 $$
 
 where:
-- $$ \theta $$ is the angular displacement,
+- $ \theta $ is the angular displacement,
 -  b  is the damping coefficient,
 -  c  is the restoring force parameter (related to gravity and the length of the pendulum),
 -  A  is the amplitude of the external forcing,
-- $$ \omega $$ is the driving frequency.
+- $ \omega $ is the driving frequency.
 
-For small angles ($$ \theta \approx \sin\theta $$), this equation reduces to a linear form, leading to approximate solutions that describe simple harmonic motion. However, for larger angles, the nonlinearity introduces complex behaviors, including chaotic dynamics.
+For small angles $$ \theta \approx \sin\theta $$ this equation reduces to a linear form, leading to approximate solutions that describe simple harmonic motion. However, for larger angles, the nonlinearity introduces complex behaviors, including chaotic dynamics.
 
 ### Resonance and Stability
 - When the driving frequency $$ \omega $$ matches the natural frequency of the pendulum, resonance occurs, leading to large oscillations.
@@ -30,7 +30,7 @@ For small angles ($$ \theta \approx \sin\theta $$), this equation reduces to a l
 To explore the system’s behavior, we analyze the influence of key parameters:
 - **Damping coefficient (b):** High damping suppresses oscillations, while low damping allows sustained motion.
 - **Driving amplitude (A):** Increasing the driving force can push the system into chaotic regimes.
-- **Driving frequency ($$ \omega $$):** The frequency affects resonance conditions and synchronization.
+- **Driving frequency $ \omega $:** The frequency affects resonance conditions and synchronization.
 
 ## Practical Applications
 The forced damped pendulum model is relevant to various real-world systems:
