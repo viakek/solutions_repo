@@ -12,7 +12,7 @@ To derive the governing equations of projectile motion, we start with Newton's e
 - Horizontal motion: $$ x = v_0 \cos(\theta) t $$
 - Vertical motion: $$ y = v_0 \sin(\theta) t - \frac{1}{2} g t^2 $$
 
-where $$ v_0  is the initial velocity,  \theta $$ is the launch angle, g is gravitational acceleration, and  t  is time.
+where $$ v_0 $$ is the initial velocity,  $$ \theta $$ is the launch angle, $$ g $$ is gravitational acceleration, and $$ t $$ is time.
 
 By solving for the time of flight when the projectile returns to the ground $$ y = 0 $$ , we can derive the range equation:
 
