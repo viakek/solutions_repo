@@ -171,6 +171,8 @@ plt.show()
 
 ![alt text](Untitled-6.png)
 
+[Colab](https://colab.research.google.com/drive/1kGvfmv8fvOoe75ARwvITog-vv2Y6kYUD?usp=sharing) 
+
 ## Same Conditions, Different Planets
 
 ```python
