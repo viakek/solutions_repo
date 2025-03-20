@@ -350,7 +350,30 @@ plt.show()
 <p><img alt="alt text" src="../Untitled-15.png"/></p>
 <h2 id="results-and-discussion">Results and Discussion</h2>
 <p>Graphical analysis highlights:
-- <strong>Regular oscillations</strong> for low forcing amplitudes.</p>
+- <strong>Regular oscillations</strong> for low forcing amplitudes. </p>
+<h1 id="forced-damped-pendulum">Forced, Damped Pendulum</h1>
+<p>A forced, damped pendulum follows the equation:</p>
+<div class="arithmatex">\[
+\ddot{\theta} + 2\beta \dot{\theta} + \omega_0^2 \sin\theta = F_0 \cos(\omega t)
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(\theta\)</span> is the angular displacement,</li>
+<li><span class="arithmatex">\(\beta\)</span> is the damping coefficient,</li>
+<li><span class="arithmatex">\(\omega_0\)</span> is the natural frequency,</li>
+<li><span class="arithmatex">\(F_0\)</span> is the forcing amplitude,</li>
+<li><span class="arithmatex">\(\omega\)</span> is the driving frequency.</li>
+</ul>
+<h2 id="resonance-explanation">Resonance Explanation</h2>
+<p>Resonance occurs when the external driving frequency (<span class="arithmatex">\(\omega\)</span>) is close to the system’s natural frequency (<span class="arithmatex">\(\omega_0\)</span>). The amplitude of oscillations grows significantly when damping is low:</p>
+<div class="arithmatex">\[
+A \approx \frac{F_0}{\sqrt{(\omega_0^2 - \omega^2)^2 + 4\beta^2\omega^2}}
+\]</div>
+<p>For small damping (<span class="arithmatex">\(\beta \approx 0\)</span>), at resonance (<span class="arithmatex">\(\omega \approx \omega_0\)</span>):</p>
+<div class="arithmatex">\[
+A \approx \frac{F_0}{2\beta \omega_0}
+\]</div>
+<p>which shows that smaller damping leads to a higher amplitude.</p>
 <p><img alt="alt text" src="../64bb50e1-92f3-4d21-8120-8cf6ad28b8cd.png"/></p>
 <ul>
 <li><strong>Resonance behavior</strong> at specific driving frequencies.</li>
