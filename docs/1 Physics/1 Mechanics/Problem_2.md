@@ -29,8 +29,11 @@ For small angles, where $\theta \approx \sin\theta$, this equation reduces to a 
 
 ## Analysis of Dynamics
 To explore the system’s behavior, we analyze the influence of key parameters:
+
 - **Damping coefficient ($b$):** High damping suppresses oscillations, while low damping allows sustained motion.
+
 - **Driving amplitude ($A$):** Increasing the driving force can push the system into chaotic regimes.
+
 - **Driving frequency ($\omega$):** The frequency affects resonance conditions and synchronization.
 
 ## Practical Applications
