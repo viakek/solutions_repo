@@ -178,41 +178,180 @@
 <h2 id="theoretical-foundation">Theoretical Foundation</h2>
 <h3 id="governing-equation">Governing Equation</h3>
 <p>The equation of motion for a forced damped pendulum is given by:</p>
-<div class="arithmatex">\[
+<p>$
 \frac{d^2\theta}{dt^2} + b \frac{d\theta}{dt} + c\sin(\theta) = A\cos(\omega t)
-\]</div>
+$</p>
 <p>where:
-- $ \theta $ is the angular displacement,
--  b  is the damping coefficient,
--  c  is the restoring force parameter (related to gravity and the length of the pendulum),
--  A  is the amplitude of the external forcing,
-- $ \omega $ is the driving frequency.</p>
-<p>For small angles $ \theta \approx \sin\theta $ this equation reduces to a linear form, leading to approximate solutions that describe simple harmonic motion. However, for larger angles, the nonlinearity introduces complex behaviors, including chaotic dynamics.</p>
+- <span class="arithmatex">\(\theta\)</span> is the angular displacement,
+- <span class="arithmatex">\(b\)</span> is the damping coefficient,
+- <span class="arithmatex">\(c\)</span> is the restoring force parameter (related to gravity and the length of the pendulum),
+- <span class="arithmatex">\(A\)</span> is the amplitude of the external forcing,
+- <span class="arithmatex">\(\omega\)</span> is the driving frequency.</p>
+<p>For small angles, where <span class="arithmatex">\(\theta \approx \sin\theta\)</span>, this equation reduces to a linear form, leading to approximate solutions that describe simple harmonic motion. However, for larger angles, the nonlinearity introduces complex behaviors, including chaotic dynamics.</p>
 <h3 id="resonance-and-stability">Resonance and Stability</h3>
 <ul>
-<li>When the driving frequency $$ \omega $$ matches the natural frequency of the pendulum, resonance occurs, leading to large oscillations.</li>
+<li>When the driving frequency <span class="arithmatex">\(\omega\)</span> matches the natural frequency of the pendulum, resonance occurs, leading to large oscillations.</li>
 <li>Stability analysis reveals that certain parameter ranges lead to periodic, quasiperiodic, or chaotic behavior, depending on the damping and driving force.</li>
 </ul>
 <h2 id="analysis-of-dynamics">Analysis of Dynamics</h2>
 <p>To explore the system’s behavior, we analyze the influence of key parameters:
-- <strong>Damping coefficient (b):</strong> High damping suppresses oscillations, while low damping allows sustained motion.
-- <strong>Driving amplitude (A):</strong> Increasing the driving force can push the system into chaotic regimes.
-- <strong>Driving frequency $ \omega $:</strong> The frequency affects resonance conditions and synchronization.</p>
+- <strong>Damping coefficient (<span class="arithmatex">\(b\)</span>):</strong> High damping suppresses oscillations, while low damping allows sustained motion.
+- <strong>Driving amplitude (<span class="arithmatex">\(A\)</span>):</strong> Increasing the driving force can push the system into chaotic regimes.
+- <strong>Driving frequency (<span class="arithmatex">\(\omega\)</span>):</strong> The frequency affects resonance conditions and synchronization.</p>
 <h2 id="practical-applications">Practical Applications</h2>
+<p><a href="https://colab.research.google.com/drive/1GD7qvD-MMGPocf5nLaXIXcHq3NCLsMWt?usp=sharing">Colab</a> </p>
 <p>The forced damped pendulum model is relevant to various real-world systems:
 - <strong>Energy harvesting devices:</strong> Exploiting resonance for efficient energy conversion.
 - <strong>Suspension bridges:</strong> Studying oscillatory behavior to prevent resonance-related structural failures.
 - <strong>Oscillating electrical circuits:</strong> Analogous to the dynamics of driven RLC circuits.</p>
 <h2 id="computational-implementation">Computational Implementation</h2>
 <p>We implemented a numerical simulation using Python’s <code>solve_ivp</code> function to integrate the differential equation. The simulation provides:
-- <strong>Time evolution plots</strong> of the pendulum’s motion.
-- <strong>Phase portraits</strong> to visualize transitions to chaotic behavior.
-- <strong>Poincaré sections</strong> and <strong>bifurcation diagrams</strong> to explore the system’s sensitivity to initial conditions.</p>
+- <strong>Time evolution plots</strong> of the pendulum’s motion.</p>
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
+# Parameters
+g, l, b, A, omega_d = 9.81, 1.0, 0.2, 1.2, 2.0
+
+# Equation of motion
+def pendulum(t, y):
+    theta, omega = y
+    return [omega, -b * omega - (g / l) * np.sin(theta) + A * np.cos(omega_d * t)]
+
+# Solve ODE
+t_span, t_eval = (0, 50), np.linspace(0, 50, 1000)
+sol = solve_ivp(pendulum, t_span, [0.5, 0.0], t_eval=t_eval, method='RK45')
+
+# Plot
+plt.figure(figsize=(8, 5))
+plt.plot(sol.t, sol.y[0], 'b', label=r'$\theta(t)$')
+plt.xlabel('Time (s)')
+plt.ylabel('Angle θ (rad)')
+plt.title('Time Evolution of the Forced Damped Pendulum')
+plt.legend()
+plt.grid()
+plt.show()
+</code></pre>
+<p><img alt="alt text" src="../Untitled-11.png"/></p>
+<ul>
+<li><strong>Phase portraits</strong> to visualize transitions to chaotic behavior.</li>
+</ul>
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
+# Parameters
+g, l, b, A, omega_d = 9.81, 1.0, 0.2, 1.2, 2.0
+
+# Equation of motion
+def pendulum(t, y):
+    theta, omega = y
+    return [omega, -b * omega - (g / l) * np.sin(theta) + A * np.cos(omega_d * t)]
+
+# Solve ODE
+t_span, t_eval = (0, 50), np.linspace(0, 50, 1000)
+sol = solve_ivp(pendulum, t_span, [0.5, 0.0], t_eval=t_eval, method='RK45')
+
+# Plot
+plt.figure(figsize=(8, 5))
+plt.plot(sol.y[0], sol.y[1], 'r', label=r'$\omega$ vs $\theta$')
+plt.xlabel('Angle θ (rad)')
+plt.ylabel('Angular Velocity ω (rad/s)')
+plt.title('Phase Portrait of the Forced Damped Pendulum')
+plt.legend()
+plt.grid()
+plt.show()
+</code></pre>
+<p><img alt="alt text" src="../Untitled-12.png"/></p>
+<ul>
+<li><strong>Poincaré sections</strong> </li>
+</ul>
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
+# Parameters
+g, l, b, A, omega_d = 9.81, 1.0, 0.2, 1.2, 2.0
+
+# Equation of motion
+def pendulum(t, y):
+    theta, omega = y
+    return [omega, -b * omega - (g / l) * np.sin(theta) + A * np.cos(omega_d * t)]
+
+# Solve ODE
+t_span, t_eval = (0, 200), np.linspace(0, 200, 10000)
+sol = solve_ivp(pendulum, t_span, [0.5, 0.0], t_eval=t_eval, method='RK45')
+
+# Extract points at multiples of the driving period
+T = 2 * np.pi / omega_d
+poincare_t = np.arange(0, 200, T)
+poincare_points = []
+for t in poincare_t:
+    idx = (np.abs(sol.t - t)).argmin()
+    poincare_points.append(sol.y[:, idx])
+
+poincare_points = np.array(poincare_points)
+
+# Plot
+plt.figure(figsize=(8, 5))
+plt.scatter(poincare_points[:, 0] % (2 * np.pi), poincare_points[:, 1], s=5, color='g')
+plt.xlabel('Angle θ (mod 2π)')
+plt.ylabel('Angular Velocity ω')
+plt.title("Poincaré Section")
+plt.grid()
+plt.show()
+</code></pre>
+<p><img alt="alt text" src="../Untitled-14.png"/></p>
+<p><strong>bifurcation diagrams</strong> to explore the system’s sensitivity to initial conditions.</p>
+<pre><code>import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
+# Parameters
+g, l, b, omega_d = 9.81, 1.0, 0.2, 2.0
+A_values = np.linspace(0.5, 1.5, 100)
+T = 2 * np.pi / omega_d
+theta_final = []
+
+# Equation of motion
+def pendulum(t, y, A):
+    theta, omega = y
+    return [omega, -b * omega - (g / l) * np.sin(theta) + A * np.cos(omega_d * t)]
+
+for A in A_values:
+    sol = solve_ivp(pendulum, (0, 300), [0.5, 0.0], args=(A,), t_eval=np.linspace(200, 300, 5000))
+    poincare_t = np.arange(200, 300, T)
+    poincare_points = [sol.y[0, (np.abs(sol.t - t)).argmin()] for t in poincare_t]
+    theta_final.append(poincare_points)
+
+# Flatten lists
+theta_final = np.array(theta_final)
+
+# Plot
+plt.figure(figsize=(8, 5))
+for i, A in enumerate(A_values):
+    plt.scatter([A] * len(theta_final[i]), theta_final[i] % (2 * np.pi), s=1, color='b')
+
+plt.xlabel('Driving Amplitude A')
+plt.ylabel('Angle θ (mod 2π)')
+plt.title("Bifurcation Diagram")
+plt.grid()
+plt.show()
+</code></pre>
+<p><img alt="alt text" src="../Untitled-15.png"/></p>
 <h2 id="results-and-discussion">Results and Discussion</h2>
 <p>Graphical analysis highlights:
-- <strong>Regular oscillations</strong> for low forcing amplitudes.
-- <strong>Resonance behavior</strong> at specific driving frequencies.
-- <strong>Chaotic motion</strong> for certain parameter sets, demonstrated by non-repeating phase space trajectories.</p>
+- <strong>Regular oscillations</strong> for low forcing amplitudes.</p>
+<p><img alt="alt text" src="../Untitled-10.png"/></p>
+<ul>
+<li><strong>Resonance behavior</strong> at specific driving frequencies.</li>
+</ul>
+<p><img alt="alt text" src="../Untitled-9.png"/></p>
+<ul>
+<li><strong>Chaotic motion</strong> for certain parameter sets, demonstrated by non-repeating phase space trajectories.</li>
+</ul>
+<p><img alt="alt text" src="../Untitled-7.png"/></p>
 <h3 id="limitations-and-extensions">Limitations and Extensions</h3>
 <ul>
 <li>The model assumes a simple sinusoidal driving force; more complex forcing functions can be explored.</li>
@@ -220,6 +359,8 @@
 </ul>
 <h2 id="conclusion">Conclusion</h2>
 <p>The forced damped pendulum serves as a compelling case study in nonlinear dynamics. By varying key parameters, we observe a transition from simple periodic motion to chaos, offering insights into both fundamental physics and engineering applications. Further computational studies can deepen our understanding of its complex behavior.</p>
+<h2 id="source">Source</h2>
+<p><a href="https://colab.research.google.com/drive/1GD7qvD-MMGPocf5nLaXIXcHq3NCLsMWt?usp=sharing">Colab</a> </p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
