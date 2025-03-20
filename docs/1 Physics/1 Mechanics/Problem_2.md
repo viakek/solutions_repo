@@ -9,9 +9,10 @@ The forced damped pendulum is a fundamental example of nonlinear dynamics, demon
 ### Governing Equation
 The equation of motion for a forced damped pendulum is given by:
 
-$
+$$
 \frac{d^2\theta}{dt^2} + b \frac{d\theta}{dt} + c\sin(\theta) = A\cos(\omega t)
-$
+$$
+
 
 where:
 - $\theta$ is the angular displacement,
