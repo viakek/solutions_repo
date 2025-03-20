@@ -195,15 +195,39 @@ plt.show()
 Graphical analysis highlights:
 - **Regular oscillations** for low forcing amplitudes.
 
-![alt text](Untitled-10.png)
+![alt text](64bb50e1-92f3-4d21-8120-8cf6ad28b8cd.png)
+
+
 
 - **Resonance behavior** at specific driving frequencies.
 
-![alt text](Untitled-9.png)
+### **Scenario Analysis**
+
+#### **1. No force, no damping**
+- The pendulum oscillates indefinitely with constant amplitude.
+- This is because there is no external force to drive the system and no damping to dissipate energy.
+- The motion follows simple harmonic oscillation.
+
+#### **2. No force, with damping**
+- The amplitude decays over time due to energy loss.
+- Damping removes energy from the system, causing the oscillations to slow down and eventually stop.
+- The motion follows an exponentially decaying sinusoidal pattern.
+
+#### **3. Large forcing**
+- The pendulum exhibits higher amplitude oscillations due to the external driving force.
+- A strong external force overcomes damping effects and drives the system with larger oscillations.
+- The response remains periodic but with greater amplitudes.
+
+#### **4. Resonance**
+- The oscillations grow significantly when the driving frequency matches the natural frequency.
+- At resonance, the system absorbs energy efficiently, leading to large amplitudes.
+- If damping is minimal, amplitudes can increase dramatically, potentially causing instability.
+![alt text](3b53a26f-5abf-4188-af80-0deb8ff2c9ee.png)
 
 - **Chaotic motion** for certain parameter sets, demonstrated by non-repeating phase space trajectories.
 
 ![alt text](Untitled-7.png)
+![alt text](109d786a-a038-490a-b43e-5058eebec840-1.png)
 
 ### Limitations and Extensions
 - The model assumes a simple sinusoidal driving force; more complex forcing functions can be explored.
