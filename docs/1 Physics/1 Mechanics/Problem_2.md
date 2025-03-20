@@ -193,7 +193,40 @@ plt.show()
 
 ## Results and Discussion
 Graphical analysis highlights:
-- **Regular oscillations** for low forcing amplitudes.
+- **Regular oscillations** for low forcing amplitudes. 
+
+# Forced, Damped Pendulum
+
+A forced, damped pendulum follows the equation:
+
+$$
+\ddot{\theta} + 2\beta \dot{\theta} + \omega_0^2 \sin\theta = F_0 \cos(\omega t)
+$$
+
+where:
+
+- $\theta$ is the angular displacement,
+- $\beta$ is the damping coefficient,
+- $\omega_0$ is the natural frequency,
+- $F_0$ is the forcing amplitude,
+- $\omega$ is the driving frequency.
+
+## Resonance Explanation
+
+Resonance occurs when the external driving frequency ($\omega$) is close to the system’s natural frequency ($\omega_0$). The amplitude of oscillations grows significantly when damping is low:
+
+$$
+A \approx \frac{F_0}{\sqrt{(\omega_0^2 - \omega^2)^2 + 4\beta^2\omega^2}}
+$$
+
+For small damping ($\beta \approx 0$), at resonance ($\omega \approx \omega_0$):
+
+$$
+A \approx \frac{F_0}{2\beta \omega_0}
+$$
+
+which shows that smaller damping leads to a higher amplitude.
+
 
 ![alt text](64bb50e1-92f3-4d21-8120-8cf6ad28b8cd.png)
 
