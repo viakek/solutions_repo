@@ -152,7 +152,7 @@ plt.show()
    - Creates a dynamic representation of an object moving in a circular orbit.
    - Helps in understanding real-time orbital mechanics.
 
-[Colab] (https://colab.research.google.com/drive/1icEuLRckKuaCduUnGgaJcfvencpriOC_?usp=sharing)
+[Colab](https://colab.research.google.com/drive/1icEuLRckKuaCduUnGgaJcfvencpriOC_?usp=sharing)
 
 ---
 
