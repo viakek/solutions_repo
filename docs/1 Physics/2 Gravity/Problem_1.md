@@ -79,74 +79,115 @@ To visualize the orbital relationship, we employ Python simulations:
 import numpy as np
 import matplotlib.pyplot as plt
 
-def plot_orbit(radius):
-    # Generate circular path
-    theta = np.linspace(0, 2 * np.pi, 100)
-    x = radius * np.cos(theta)
-    y = radius * np.sin(theta)
+# Constants
+AU = 1.496e11  # Astronomical Unit (m)
+G = 6.67430e-11  # Gravitational constant (m^3 kg^-1 s^-2)
+M_sun = 1.989e30  # Mass of the Sun (kg)
 
-    # Plot the orbit
-    plt.figure(figsize=(6, 6))
-    plt.plot(x, y, label=f'Orbit (r={radius})', color='blue')
-    plt.scatter(0, 0, color='red', label='Central Body', s=100)  # Central mass
-    plt.xlabel('X Position')
-    plt.ylabel('Y Position')
-    plt.legend()
-    plt.grid()
-    plt.title('Circular Orbit Simulation')
-    plt.axis('equal')  # Ensure the orbit is a perfect circle
-    plt.show()
+# Orbital parameters
+radii = [1 * AU, 1.52 * AU]  # Earth and Mars distances from the Sun in meters
+masses = [5.972e24, 6.4171e23]  # Earth and Mars masses (kg)
 
-# Call the function with a radius of 1
-plot_orbit(1)
-import numpy as np
-import matplotlib.pyplot as plt
+# Orbital velocities (using circular orbit velocity formula: v = sqrt(G*M/r))
+v_earth = np.sqrt(G * M_sun / radii[0])
+v_mars = np.sqrt(G * M_sun / radii[1])
 
-# Define orbital radii (arbitrary units)
-radii = np.linspace(1, 10, 10)  
+# Set up the figure
+fig, ax = plt.subplots(figsize=(8, 8))
+ax.set_xlim(-2 * AU, 2 * AU)
+ax.set_ylim(-2 * AU, 2 * AU)
+ax.set_aspect('equal')
+ax.set_facecolor('black')
 
-# Calculate orbital periods using Kepler's Third Law (assuming G*M = 1 for simplicity)
-periods = np.sqrt(radii**3)  
+# Create the central Sun (stationary at the center)
+sun = plt.scatter(0, 0, color='yellow', s=300, label='Sun')
 
-# Plot the relationship
-plt.figure(figsize=(6, 4))
-plt.plot(radii, periods**2, 'bo-', label=r'$T^2 \propto r^3$')  # Plot T^2 vs. r^3
-plt.xlabel('Orbital Radius (r)')
-plt.ylabel('Orbital Period Squared ($T^2$)')
-plt.legend()
-plt.grid()
-plt.title("Kepler’s Third Law Verification")
+# Plot the orbits (circular for simplicity)
+theta = np.linspace(0, 2 * np.pi, 100)
+orbit_earth_x = radii[0] * np.cos(theta)
+orbit_earth_y = radii[0] * np.sin(theta)
+orbit_mars_x = radii[1] * np.cos(theta)
+orbit_mars_y = radii[1] * np.sin(theta)
+
+ax.plot(orbit_earth_x, orbit_earth_y, 'b--', label="Earth Orbit")
+ax.plot(orbit_mars_x, orbit_mars_y, 'r--', label="Mars Orbit")
+
+# Position of the planets (simulating at t=0)
+x_earth = radii[0]
+y_earth = 0
+x_mars = radii[1]
+y_mars = 0
+
+# Plot the planets (Earth and Mars)
+ax.scatter(x_earth, y_earth, color='blue', s=100, label="Earth")
+ax.scatter(x_mars, y_mars, color='red', s=100, label="Mars")
+
+# Velocity vectors (tangent to the orbit)
+ax.arrow(x_earth, y_earth, -0.1 * v_earth * np.sin(0), 0.1 * v_earth * np.cos(0),
+         head_width=0.05 * v_earth, head_length=0.1 * v_earth, fc='blue', ec='blue')
+ax.arrow(x_mars, y_mars, -0.1 * v_mars * np.sin(0), 0.1 * v_mars * np.cos(0),
+         head_width=0.05 * v_mars, head_length=0.1 * v_mars, fc='red', ec='red')
+
+# Gravitational force vectors (towards the Sun)
+ax.plot([x_earth, 0], [y_earth, 0], 'b-', label="Earth Force")
+ax.plot([x_mars, 0], [y_mars, 0], 'r-', label="Mars Force")
+
+# Add labels and title
+ax.set_title("Circular Orbit Simulation: Earth and Mars")
+ax.set_xlabel("Distance (m)")
+ax.set_ylabel("Distance (m)")
+ax.legend()
+ax.grid(True, color='white')
+
+# Show the plot
 plt.show()
 ```
 
-![alt text](Untitled.png)
+![alt text](Untitled-2.png)
 
 2. **Graph of Kepler’s Law:** 
    - Plots orbital radius vs. orbital period squared.
    - Demonstrates the $T^2 \propto r^3$ relationship.
 
 ```python
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
-# Define orbital radii (arbitrary units)
-radii = np.linspace(1, 10, 10)  
+# Data: Orbital radius (r) and T² ∝ r³
+r = np.arange(1, 11)
+T_squared = r**3  # Kepler's Third Law: T² ∝ r³
 
-# Calculate orbital periods using Kepler's Third Law (assuming G*M = 1 for simplicity)
-periods = np.sqrt(radii**3)  
+# Plotting
+plt.figure(figsize=(10, 6))
+plt.plot(r, T_squared, marker='o', linestyle='-', linewidth=2, color='darkorange', label=r'$T^2 \propto r^3$')
 
-# Plot the relationship
-plt.figure(figsize=(6, 4))
-plt.plot(radii, periods**2, 'bo-', label=r'$T^2 \propto r^3$')  # Plot T^2 vs. r^3
-plt.xlabel('Orbital Radius (r)')
-plt.ylabel('Orbital Period Squared ($T^2$)')
-plt.legend()
-plt.grid()
-plt.title("Kepler’s Third Law Verification")
+# Clean and clear title
+plt.title("Kepler's Third Law", fontsize=16, fontweight='bold')
+plt.xlabel("Orbital Radius (r)", fontsize=12)
+plt.ylabel(r"Orbital Period Squared ($T^2$)", fontsize=12)
+
+# Grid and background styling
+plt.grid(True, linestyle='--', alpha=0.6)
+plt.gca().set_facecolor('#f9f9f9')
+plt.xticks(r, fontsize=10)
+plt.yticks(fontsize=10)
+
+# Annotating the data points with their T² values
+for i in r:
+    plt.text(i, i**3 + 20, f"{i**3}", ha='center', va='bottom', fontsize=9, color='brown')
+
+# Add a helpful annotation
+plt.annotate("Perfect cube relationship", xy=(6, 216), xytext=(7, 500),
+             arrowprops=dict(arrowstyle="->", color='gray'),
+             fontsize=10, color='slateblue')
+
+# Legend and layout
+plt.legend(fontsize=12)
+plt.tight_layout()
 plt.show()
 ```
 
-![alt text](Untitled-1.png)
+![alt text](Untitled-3.png)
 
 3. **Animated Orbit Visualization:** 
    - Creates a dynamic representation of an object moving in a circular orbit.
