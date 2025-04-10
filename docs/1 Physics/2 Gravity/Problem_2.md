@@ -63,7 +63,7 @@ $$
 \frac{1}{2}mv^2 - \frac{GMm}{R} = 0
 $$
 
-Cancel mass \( m \) (mass of the object), and solve for $ v $:
+Cancel mass \( m \) (mass of the object), and solve for $v$:
 
 $$
 \frac{1}{2}v^2 = \frac{GM}{R} \Rightarrow v = \sqrt{\frac{2GM}{R}}
@@ -89,7 +89,7 @@ The **third cosmic velocity** is the minimum speed an object needs to completely
 2. To escape the entire solar system, you need **extra velocity** to overcome the Sun’s gravity from your current orbital distance.
 
 So the total speed required is the combination of:
-- The escape speed from the planet (already calculated as $ v_2 $),
+- The escape speed from the planet (already calculated as $v_2$),
 - The additional speed needed to escape the Sun from your distance to it.
 
 ### Energy-Based Derivation
