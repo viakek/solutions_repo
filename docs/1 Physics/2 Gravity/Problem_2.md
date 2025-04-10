@@ -49,13 +49,13 @@ $$
 
 At launch:
 
-- Kinetic Energy: $$ \frac{1}{2}mv^2 $$
-- Gravitational Potential Energy: $$ -\frac{GMm}{R} $$
+- Kinetic Energy: $\frac{1}{2}mv^2$
+- Gravitational Potential Energy: $-\frac{GMm}{R}$
 
 At infinity:
 
-- Kinetic Energy: $ 0 $ (barely escapes)
-- Potential Energy: $ 0 $ (reference level)
+- Kinetic Energy: $0$ (barely escapes)
+- Potential Energy: $0$ (reference level)
 
 Set total energy at both points equal:
 
@@ -75,7 +75,7 @@ $$
 v_2 = \sqrt{\frac{2GM}{R}}
 $$
 
-This is also called the **escape velocity** from a planet of mass $ M $ and radius $ R $.
+This is also called the **escape velocity** from a planet of mass $M$ and radius $R$.
 
 ---
 
@@ -102,8 +102,8 @@ $$
 
 Where:
 
-- $$ M_{\odot} $$: Mass of the Sun  
-- $$ r $$: Distance from the Sun (e.g., Earth’s orbit: $$ 1.496 \times 10^{11} \, \text{m} $$)
+- $M_{\odot}$: Mass of the Sun  
+- $r$: Distance from the Sun (e.g., Earth’s orbit: $1.496 \times 10^{11} \, \text{m}$)
 
 You already have kinetic energy from orbiting the planet, so the total speed to escape both the planet and the star is:
 
