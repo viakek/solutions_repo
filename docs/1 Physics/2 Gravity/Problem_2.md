@@ -75,7 +75,7 @@ $$
 v_2 = \sqrt{\frac{2GM}{R}}
 $$
 
-This is also called the **escape velocity** from a planet of mass $$ M $$ and radius $ R $.
+This is also called the **escape velocity** from a planet of mass $ M $ and radius $ R $.
 
 ---
 
