@@ -208,62 +208,76 @@ $$</p>
 <pre><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
 
-# Constants
-G = 6.67430e-11  # gravitational constant, m^3 kg^-1 s^-2
+# === Constants ===
+G = 6.67430e-11  # gravitational constant (m^3 kg^-1 s^-2)
+SUN_MASS = 1.989e30  # mass of the Sun (kg)
 
-# Celestial bodies data: name, mass (kg), radius (m)
+# === Planetary data: mass (kg), radius (m), average distance from Sun (m) ===
 bodies = {
-    'Earth': {'mass': 5.972e24, 'radius': 6.371e6},
-    'Mars': {'mass': 6.39e23, 'radius': 3.3895e6},
-    'Jupiter': {'mass': 1.898e27, 'radius': 6.9911e7}
+    'Mercury': {'mass': 3.301e23, 'radius': 2.4397e6, 'sun_dist': 5.791e10},
+    'Venus':   {'mass': 4.867e24, 'radius': 6.0518e6, 'sun_dist': 1.082e11},
+    'Earth':   {'mass': 5.972e24, 'radius': 6.371e6,  'sun_dist': 1.496e11},
+    'Mars':    {'mass': 6.39e23,  'radius': 3.3895e6, 'sun_dist': 2.279e11},
+    'Jupiter': {'mass': 1.898e27, 'radius': 6.9911e7, 'sun_dist': 7.785e11},
+    'Saturn':  {'mass': 5.683e26, 'radius': 5.8232e7, 'sun_dist': 1.433e12}
 }
 
-# Sun's data for 3rd cosmic velocity (for escaping the solar system)
-sun_mass = 1.989e30
-sun_distance = {
-    'Earth': 1.496e11,
-    'Mars': 2.279e11,
-    'Jupiter': 7.785e11
+# === Velocity calculations ===
+def compute_cosmic_velocities(planet_mass, planet_radius, dist_to_sun):
+    """
+    Compute the three main cosmic velocities:
+    - v1: Orbital velocity around planet (1st cosmic velocity)
+    - v2: Escape velocity from planet (2nd cosmic velocity)
+    - v3: Escape velocity from the solar system at planet's orbit (3rd cosmic velocity)
+    Returns velocities in km/s.
+    """
+    v1 = np.sqrt(G * planet_mass / planet_radius)  # 1st cosmic
+    v2 = np.sqrt(2 * G * planet_mass / planet_radius)  # 2nd cosmic
+    v_sun_escape = np.sqrt(2 * G * SUN_MASS / dist_to_sun)  # solar system escape
+    v3 = np.sqrt(v2**2 + v_sun_escape**2)  # 3rd cosmic (combined escape)
+
+    return v1 / 1000, v2 / 1000, v3 / 1000  # Convert to km/s
+
+# === Data processing ===
+results = {
+    planet: compute_cosmic_velocities(data['mass'], data['radius'], data['sun_dist'])
+    for planet, data in bodies.items()
 }
 
-# Function to compute velocities
-def compute_velocities(mass, radius, sun_dist):
-    v1 = np.sqrt(G * mass / radius)
-    v2 = np.sqrt(2 * G * mass / radius)
-    v_star_escape = np.sqrt(2 * G * sun_mass / sun_dist)
-    v3 = np.sqrt(v2**2 + v_star_escape**2)
-    return v1, v2, v3
-
-# Store results
-results = {}
-for body in bodies:
-    m = bodies[body]['mass']
-    r = bodies[body]['radius']
-    d = sun_distance[body]
-    results[body] = compute_velocities(m, r, d)
-
-# Plotting
+# === Plotting data ===
 labels = list(results.keys())
-v1_vals = [results[b][0] for b in labels]
-v2_vals = [results[b][1] for b in labels]
-v3_vals = [results[b][2] for b in labels]
+v1_vals = [results[p][0] for p in labels]
+v2_vals = [results[p][1] for p in labels]
+v3_vals = [results[p][2] for p in labels]
 
 x = np.arange(len(labels))
-width = 0.25
+bar_width = 0.25
 
-plt.figure(figsize=(10, 6))
-plt.bar(x - width, v1_vals, width=width, label='1st Cosmic Velocity (m/s)', color='skyblue')
-plt.bar(x, v2_vals, width=width, label='2nd Cosmic Velocity (m/s)', color='orange')
-plt.bar(x + width, v3_vals, width=width, label='3rd Cosmic Velocity (m/s)', color='salmon')
-plt.xticks(x, labels)
-plt.ylabel("Velocity (m/s)")
-plt.title("Cosmic Velocities of Earth, Mars, and Jupiter")
+# === Plotting ===
+plt.figure(figsize=(12, 7))
+colors = ['#4e79a7', '#f28e2b', '#e15759']
+
+bars1 = plt.bar(x - bar_width, v1_vals, width=bar_width, label='1st Cosmic (Orbital)', color=colors[0])
+bars2 = plt.bar(x, v2_vals, width=bar_width, label='2nd Cosmic (Escape)', color=colors[1])
+bars3 = plt.bar(x + bar_width, v3_vals, width=bar_width, label='3rd Cosmic (Solar Escape)', color=colors[2])
+
+# === Annotate bar values ===
+for bar_group in [bars1, bars2, bars3]:
+    for bar in bar_group:
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width() / 2, height + 0.4, f"{height:.1f}", 
+                 ha='center', va='bottom', fontsize=8)
+
+# === Plot settings ===
+plt.xticks(x, labels, fontsize=10)
+plt.ylabel("Velocity (km/s)", fontsize=12)
+plt.title("Cosmic Velocities for Planets in the Solar System", fontsize=14, fontweight='bold')
 plt.legend()
-plt.grid(True, linestyle='--', alpha=0.5)
+plt.grid(True, linestyle='--', alpha=0.4)
 plt.tight_layout()
 plt.show()
 </code></pre>
-<p><img alt="alt text" src="../Untitled-4.png"/></p>
+<p><img alt="alt text" src="../Untitled-6.png"/></p>
 <p><a href="https://colab.research.google.com/drive/1henoSqpYu-a0p3l-9qrtfosVHDtWK3pq?usp=sharing">Colab</a></p>
 <hr/>
 <h2 id="4-discussion-and-importance-in-space-exploration">4. Discussion and Importance in Space Exploration</h2>
