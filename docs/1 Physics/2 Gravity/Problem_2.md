@@ -35,6 +35,87 @@ v_3 = \sqrt{v_{escape,planet}^2 + v_{escape,star}^2}
 $$
 
 ---
+## Derivation of the Second Cosmic Velocity (Escape Velocity)
+
+The **second cosmic velocity** is the minimum velocity needed to escape the gravitational pull of a planet from its surface, without any further propulsion.
+
+### Starting Point: Energy Conservation
+
+We use the conservation of mechanical energy:
+
+$$
+\text{Total Energy at surface} = \text{Total Energy at infinity}
+$$
+
+At launch:
+
+- Kinetic Energy: $$ \frac{1}{2}mv^2 $$
+- Gravitational Potential Energy: $$ -\frac{GMm}{R} $$
+
+At infinity:
+
+- Kinetic Energy: $ 0 $ (barely escapes)
+- Potential Energy: $ 0 $ (reference level)
+
+Set total energy at both points equal:
+
+$$
+\frac{1}{2}mv^2 - \frac{GMm}{R} = 0
+$$
+
+Cancel mass \( m \) (mass of the object), and solve for $ v $:
+
+$$
+\frac{1}{2}v^2 = \frac{GM}{R} \Rightarrow v = \sqrt{\frac{2GM}{R}}
+$$
+
+### Formula for Second Cosmic Velocity:
+
+$$
+v_2 = \sqrt{\frac{2GM}{R}}
+$$
+
+This is also called the **escape velocity** from a planet of mass $$ M $$ and radius $ R $.
+
+---
+
+## Derivation of the Third Cosmic Velocity (Solar System Escape)
+
+The **third cosmic velocity** is the minimum speed an object needs to completely escape the Sun’s gravity, starting from Earth's orbit (or any planet's orbit), already moving along with that planet.
+
+### Step-by-step:
+
+1. From a planet (e.g., Earth), you're already moving at **orbital speed around the Sun** due to the planet’s motion.
+2. To escape the entire solar system, you need **extra velocity** to overcome the Sun’s gravity from your current orbital distance.
+
+So the total speed required is the combination of:
+- The escape speed from the planet (already calculated as $ v_2 $),
+- The additional speed needed to escape the Sun from your distance to it.
+
+### Energy-Based Derivation
+
+The energy needed to escape the Sun from a planet’s orbit is:
+
+$$
+\frac{1}{2}mv^2 = \frac{GM_{\odot}m}{r} \Rightarrow v_{\text{sun\_escape}} = \sqrt{\frac{2GM_{\odot}}{r}}
+$$
+
+Where:
+
+- $$ M_{\odot} $$: Mass of the Sun  
+- $$ r $$: Distance from the Sun (e.g., Earth’s orbit: $$ 1.496 \times 10^{11} \, \text{m} $$)
+
+You already have kinetic energy from orbiting the planet, so the total speed to escape both the planet and the star is:
+
+### Pythagorean Addition:
+
+$$
+v_3 = \sqrt{v_2^2 + v_{\text{sun\_escape}}^2}
+$$
+
+This assumes an object first escapes the planet, then immediately gains additional speed to escape the Sun in a straight-line trajectory.
+
+---
 
 ## 2. Derivation and Parameters
 
