@@ -12,7 +12,7 @@ When an object is released from a moving rocket near Earth, its trajectory is go
 
 The force acting on a payload of mass  $m$ due to Earth (mass   $M$ ) at a distance $r$ from Earth's center is:
 $F = \frac{GMm}{r^2}$
-where $ G $ is the gravitational constant.
+where $G$ is the gravitational constant.
 
 ### Equation of Motion
 
