@@ -10,7 +10,7 @@ When an object is released from a moving rocket near Earth, its trajectory is go
 
 ### Newton's Law of Gravitation
 
-The force acting on a payload of mass  $m$ due to Earth (mass   $M$ ) at a distance $r$ from Earth's center is:
+The force acting on a payload of mass  $m$ due to Earth (mass $M$ ) at a distance $r$ from Earth's center is:
 $F = \frac{GMm}{r^2}$
 where $G$ is the gravitational constant.
 
