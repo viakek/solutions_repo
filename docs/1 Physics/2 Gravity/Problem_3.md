@@ -11,14 +11,14 @@ When an object is released from a moving rocket near Earth, its trajectory is go
 ### Newton's Law of Gravitation
 
 The force acting on a payload of mass  $m$ due to Earth (mass   $M$ ) at a distance $r$ from Earth's center is:
-$ F = \frac{GMm}{r^2} $
+$F = \frac{GMm}{r^2}$
 where $ G $ is the gravitational constant.
 
 ### Equation of Motion
 
 Using Newton's second law:
-$ m\ddot{\mathbf{r}} = -\frac{GMm}{r^3} \mathbf{r} $
-$ \Rightarrow \ddot{\mathbf{r}} = -\frac{GM}{r^3} \mathbf{r} $
+$m\ddot{\mathbf{r}} = -\frac{GMm}{r^3} \mathbf{r}$
+$\Rightarrow \ddot{\mathbf{r}} = -\frac{GM}{r^3} \mathbf{r}$
 This differential equation governs the acceleration of the payload under gravity.
 
 Kepler’s Laws of Orbital Motion
@@ -32,10 +32,10 @@ Kepler’s Laws of Orbital Motion
 These laws provide insight into the shapes and timings of orbits resulting from different initial conditions.
 ### Types of Trajectories
 
-- **Elliptical**: $ 0 < e < 1 $ – bound orbits.
-- **Parabolic**: $ e = 1 $ – escape at exact escape velocity.
-- **Hyperbolic**: $ e > 1 $ – escape trajectory with excess velocity.
-- **Circular**: Special case of elliptical orbit when eccentricity $ e = 0 $.
+- **Elliptical**: $0 < e < 1 $– bound orbits.
+- **Parabolic**: $e = 1$ – escape at exact escape velocity.
+- **Hyperbolic**: $e > 1$ – escape trajectory with excess velocity.
+- **Circular**: Special case of elliptical orbit when eccentricity $e = 0$.
 
 ## Numerical Simulation
 
