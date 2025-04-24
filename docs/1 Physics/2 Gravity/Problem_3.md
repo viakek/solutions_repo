@@ -32,7 +32,7 @@ Kepler’s Laws of Orbital Motion
 These laws provide insight into the shapes and timings of orbits resulting from different initial conditions.
 ### Types of Trajectories
 
-- **Elliptical**: $0 < e < 1 $– bound orbits.
+- **Elliptical**: $0 < e < 1$– bound orbits.
 - **Parabolic**: $e = 1$ – escape at exact escape velocity.
 - **Hyperbolic**: $e > 1$ – escape trajectory with excess velocity.
 - **Circular**: Special case of elliptical orbit when eccentricity $e = 0$.
