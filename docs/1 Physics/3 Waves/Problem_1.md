@@ -91,7 +91,7 @@ plt.show()
 ```
 ![alt text](Untitled.png)
 
-![One Source Interference](https://files.oaiusercontent.com/file-YEjpKXJqN1asPzAAAdJis2?se=2025-05-06T18%3A19%3A01Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D299%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Done_source_interference.gif&sig=bNUiFwMKmdciDDCE/LEYsreNiYBXwMQvuGspLQkjxDc%3D)
+![One Source Interference]()
 
 
 ## 5. Observations and Analysis
