@@ -91,16 +91,16 @@ plt.show()
 ```
 ![alt text](Untitled.png)
 
-![One Source Interference](c:\Users\ulviy\Downloads\one_source_interference.gif)
+![One Source Interference](https://files.oaiusercontent.com/file-YEjpKXJqN1asPzAAAdJis2?se=2025-05-06T18%3A19%3A01Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D299%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Done_source_interference.gif&sig=bNUiFwMKmdciDDCE/LEYsreNiYBXwMQvuGspLQkjxDc%3D)
 
 
 ## 5. Observations and Analysis
 
-    Constructive Interference: Occurs where wave crests align, increasing amplitude. These appear as ridges or bright bands in the plot.
+Constructive Interference: Occurs where wave crests align, increasing amplitude. These appear as ridges or bright bands in the plot.
 
-    Destructive Interference: Occurs where a crest meets a trough, canceling out. These are shown as flat (dark) regions.
+Destructive Interference: Occurs where a crest meets a trough, canceling out. These are shown as flat (dark) regions.
 
-    Symmetry: Due to the regular polygon setup and equal wave properties, the interference pattern is symmetrical, matching the geometry of the polygon.
+Symmetry: Due to the regular polygon setup and equal wave properties, the interference pattern is symmetrical, matching the geometry of the polygon.
 
 The complexity of the pattern increases with the number of sources, leading to denser interference zones.
 
