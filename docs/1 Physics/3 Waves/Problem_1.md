@@ -164,7 +164,7 @@ plt.show()
 
 ![alt text](Untitled-1.png)
 
-``` 
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -189,7 +189,7 @@ ax.set_zlabel('Amplitude')
 plt.tight_layout()
 plt.savefig("wave_3d_surface.png", dpi=300)
 plt.show()
-```python
+```
 
 ![alt text](Untitled-2.png)
 
