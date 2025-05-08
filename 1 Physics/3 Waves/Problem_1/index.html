@@ -317,19 +317,21 @@ plt.savefig("wave_heatmap.png", dpi=300)
 plt.show()
 </code></pre>
 <p><img alt="alt text" src="../Untitled-1.png"/></p>
-<p>``` 
-import numpy as np
+<pre><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D</p>
-<h1 id="create-a-grid">Create a grid</h1>
-<p>x = np.linspace(-10, 10, 400)
+from mpl_toolkits.mplot3d import Axes3D
+
+# Create a grid
+x = np.linspace(-10, 10, 400)
 y = np.linspace(-10, 10, 400)
 X, Y = np.meshgrid(x, y)
-R = np.sqrt(X<strong>2 + Y</strong>2)</p>
-<h1 id="create-wave-pattern">Create wave pattern</h1>
-<p>Z = np.sin(5 * R) / (R + 1e-6)</p>
-<h1 id="plot-and-save-3d-surface">Plot and save 3D surface</h1>
-<p>fig = plt.figure(figsize=(8, 6))
+R = np.sqrt(X**2 + Y**2)
+
+# Create wave pattern
+Z = np.sin(5 * R) / (R + 1e-6)
+
+# Plot and save 3D surface
+fig = plt.figure(figsize=(8, 6))
 ax = fig.add_subplot(111, projection='3d')
 ax.plot_surface(X, Y, Z, cmap='viridis', edgecolor='none')
 ax.set_title('3D Wave Plot from Single Source')
@@ -339,7 +341,7 @@ ax.set_zlabel('Amplitude')
 plt.tight_layout()
 plt.savefig("wave_3d_surface.png", dpi=300)
 plt.show()
-```python</p>
+</code></pre>
 <p><img alt="alt text" src="../Untitled-2.png"/></p>
 <p><img alt="alt text" src="../one_source_interference-1.gif"/></p>
 <p><img alt="alt text" src="../2_source_interference.gif"/></p>
