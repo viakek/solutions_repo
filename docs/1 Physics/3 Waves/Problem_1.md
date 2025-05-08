@@ -91,7 +91,7 @@ plt.show()
 ```
 ![alt text](Untitled.png)
 
-![One Source Interference]()
+![alt text](2_source_interference.gif)
 
 
 ## 5. Observations and Analysis
