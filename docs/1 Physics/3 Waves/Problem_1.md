@@ -40,9 +40,7 @@ Where:
 
 The total displacement at point $(x, y)$ and time $t$ is:
 
-$
-\eta(x, y, t) = \sum_{i=1}^{N} \eta_i(x, y, t)
-$
+$\eta(x, y, t) = \sum_{i=1}^{N} \eta_i(x, y, t)$
 
 Where $N$ is the number of sources.
 
@@ -88,11 +86,120 @@ plt.ylabel('y')
 plt.axis('equal')
 plt.grid(False)
 plt.show()
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Create a grid
+x = np.linspace(-10, 10, 400)
+y = np.linspace(-10, 10, 400)
+X, Y = np.meshgrid(x, y)
+R = np.sqrt(X**2 + Y**2)
+
+# Create wave pattern
+Z = np.sin(5 * R) / (R + 1e-6)
+
+# Plot and save heatmap
+plt.figure(figsize=(6, 5))
+plt.title("Wave Heatmap")
+plt.imshow(Z, extent=(-10, 10, -10, 10), cmap='coolwarm', origin='lower')
+plt.colorbar(label='Amplitude')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.grid(False)
+plt.tight_layout()
+plt.savefig("wave_heatmap.png", dpi=300)
+plt.show()
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Create a grid
+x = np.linspace(-10, 10, 400)
+y = np.linspace(-10, 10, 400)
+X, Y = np.meshgrid(x, y)
+R = np.sqrt(X**2 + Y**2)
+
+# Create wave pattern
+Z = np.sin(5 * R) / (R + 1e-6)
+
+# Plot and save heatmap
+plt.figure(figsize=(6, 5))
+plt.title("Wave Heatmap")
+plt.imshow(Z, extent=(-10, 10, -10, 10), cmap='coolwarm', origin='lower')
+plt.colorbar(label='Amplitude')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.grid(False)
+plt.tight_layout()
+plt.savefig("wave_heatmap.png", dpi=300)
+plt.show()
 ```
+
 ![alt text](Untitled.png)
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Create a grid
+x = np.linspace(-10, 10, 400)
+y = np.linspace(-10, 10, 400)
+X, Y = np.meshgrid(x, y)
+R = np.sqrt(X**2 + Y**2)
+
+# Create wave pattern
+Z = np.sin(5 * R) / (R + 1e-6)
+
+# Plot and save heatmap
+plt.figure(figsize=(6, 5))
+plt.title("Wave Heatmap")
+plt.imshow(Z, extent=(-10, 10, -10, 10), cmap='coolwarm', origin='lower')
+plt.colorbar(label='Amplitude')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.grid(False)
+plt.tight_layout()
+plt.savefig("wave_heatmap.png", dpi=300)
+plt.show()
+``` 
+
+![alt text](Untitled-1.png)
+
+``` 
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Create a grid
+x = np.linspace(-10, 10, 400)
+y = np.linspace(-10, 10, 400)
+X, Y = np.meshgrid(x, y)
+R = np.sqrt(X**2 + Y**2)
+
+# Create wave pattern
+Z = np.sin(5 * R) / (R + 1e-6)
+
+# Plot and save 3D surface
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X, Y, Z, cmap='viridis', edgecolor='none')
+ax.set_title('3D Wave Plot from Single Source')
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Amplitude')
+plt.tight_layout()
+plt.savefig("wave_3d_surface.png", dpi=300)
+plt.show()
+```python
+
+![alt text](Untitled-2.png)
+
+![alt text](one_source_interference-1.gif)
 
 ![alt text](2_source_interference.gif)
 
+![alt text](triangle_wave_interference.gif)
+
+![alt text](pentagon_wave_interference.gif)
 
 ## 5. Observations and Analysis
 
