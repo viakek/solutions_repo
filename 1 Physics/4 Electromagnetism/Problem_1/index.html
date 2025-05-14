@@ -172,6 +172,382 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h1 id="electromagnetism-simulating-the-effects-of-the-lorentz-force">Electromagnetism: Simulating the Effects of the Lorentz Force</h1>
+<h2 id="problem-1-lorentz-force">Problem 1: Lorentz Force</h2>
+<h3 id="motivation">Motivation</h3>
+<p>The <strong>Lorentz force</strong>, given by:</p>
+<div class="arithmatex">\[
+\vec{F} = q(\vec{E} + \vec{v} \times \vec{B}),
+\]</div>
+<p>describes the force acting on a charged particle in electric (<span class="arithmatex">\(<span class="arithmatex">\(\vec{E}\)</span>\)</span>) and magnetic (<span class="arithmatex">\(<span class="arithmatex">\(\vec{B}\)</span>\)</span>) fields. This principle is foundational in particle accelerators, plasma confinement systems, and devices like mass spectrometers.</p>
+<p>Understanding and visualizing the trajectories resulting from this force helps in designing and interpreting physical systems where charged particles interact with electromagnetic fields.</p>
+<hr/>
+<h2 id="1-applications-of-the-lorentz-force">1. Applications of the Lorentz Force</h2>
+<h3 id="key-systems">Key Systems:</h3>
+<ul>
+<li><strong>Particle Accelerators</strong> – Use electric fields to accelerate and magnetic fields to steer particles.</li>
+<li><strong>Mass Spectrometers</strong> – Use $$ \vec{v} \times \vec{B} $$ to separate particles by mass-to-charge ratio.</li>
+<li><strong>Plasma Confinement</strong> (e.g., Tokamaks) – Use strong magnetic fields to confine plasma.</li>
+</ul>
+<h3 id="relevance-of-fields">Relevance of Fields:</h3>
+<ul>
+<li><strong>Electric Fields (<span class="arithmatex">(<span class="arithmatex">\(\vec{E}\)</span>\)</span>)</strong>: Accelerate particles.</li>
+<li><strong>Magnetic Fields (<span class="arithmatex">(<span class="arithmatex">\(\vec{B}\)</span>\)</span>)</strong>: Curve particle paths, confine motion.</li>
+</ul>
+<hr/>
+<h2 id="2-simulating-particle-motion">2. Simulating Particle Motion</h2>
+<h3 id="parameters">Parameters:</h3>
+<ul>
+<li>Charge: $$ q = 1 \, \text{C} $$</li>
+<li>Mass: $$ m = 1 \, \text{g} = 0.001 \, \text{kg} $$</li>
+</ul>
+<p>We solve the equations of motion:</p>
+<div class="arithmatex">\[
+\frac{d\vec{v}}{dt} = \frac{q}{m}(\vec{E} + \vec{v} \times \vec{B}), \quad
+\frac{d\vec{r}}{dt} = \vec{v}
+\]</div>
+<h3 id="numerical-integration-rk4">Numerical Integration (RK4):</h3>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Constants
+q = 1  # Coulombs
+m = 0.001  # kg
+dt = 0.01
+steps = 5000
+
+# Fields
+E = np.array([0.0, 0.0, 0.0])
+B = np.array([0.0, 0.0, 1.0])
+
+# Initial conditions
+r = np.zeros((steps, 3))
+v = np.zeros((steps, 3))
+r[0] = np.array([0.0, 0.0, 0.0])
+v[0] = np.array([1.0, 0.0, 0.0])  # Try other values for spirals, drifts, etc.
+
+# RK4 integration
+for i in range(steps - 1):
+    def acc(v): return (q / m) * (E + np.cross(v, B))
+
+    k1v = acc(v[i]) * dt
+    k1r = v[i] * dt
+
+    k2v = acc(v[i] + 0.5 * k1v) * dt
+    k2r = (v[i] + 0.5 * k1v) * dt
+
+    k3v = acc(v[i] + 0.5 * k2v) * dt
+    k3r = (v[i] + 0.5 * k2v) * dt
+
+    k4v = acc(v[i] + k3v) * dt
+    k4r = (v[i] + k3v) * dt
+
+    v[i + 1] = v[i] + (k1v + 2 * k2v + 2 * k3v + k4v) / 6
+    r[i + 1] = r[i] + (k1r + 2 * k2r + 2 * k3r + k4r) / 6
+</code></pre>
+<h2 id="3-trajectory-scenarios">3. Trajectory Scenarios</h2>
+<h3 id="a-circular-motion-uniform-vecb-no-vece">A. Circular Motion (Uniform <span class="arithmatex">\(<span class="arithmatex">\(\vec{B}\)</span>\)</span>, No <span class="arithmatex">\(<span class="arithmatex">\(\vec{E}\)</span>\)</span>)</h3>
+<ul>
+<li><strong>Initial condition</strong>: Velocity is perpendicular to the magnetic field.</li>
+<li><strong>Expected trajectory</strong>: Circle in the plane perpendicular to <span class="arithmatex">\(<span class="arithmatex">\(\vec{B}\)</span>\)</span>.</li>
+</ul>
+<h4 id="physical-background">Physical Background</h4>
+<p>A charged particle in a uniform magnetic field experiences a centripetal force due to the Lorentz force:</p>
+<div class="arithmatex">\[
+\vec{F} = q\vec{v} \times \vec{B}
+\]</div>
+<p>If <span class="arithmatex">\(<span class="arithmatex">\(\vec{v} \perp \vec{B}\)</span>\)</span> and there is no electric field, the particle moves in a circle with radius:</p>
+<div class="arithmatex">\[
+r_L = \frac{mv}{qB}
+\]</div>
+<p>and angular frequency:</p>
+<div class="arithmatex">\[
+\omega_c = \frac{qB}{m}
+\]</div>
+<h4 id="python-simulation-code">Python Simulation Code</h4>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Constants
+q = 1.0        # Charge (C)
+m = 0.001      # Mass (kg)
+B = np.array([0, 0, 1.0])  # Magnetic field (T)
+E = np.array([0, 0, 0])    # Electric field (V/m)
+v0 = np.array([1.0, 0.0, 0.0])  # Initial velocity (m/s)
+r0 = np.array([0.0, 0.0, 0.0])  # Initial position (m)
+dt = 0.01
+T = 10
+N = int(T / dt)
+
+# Initialize arrays
+r = np.zeros((N, 3))
+v = np.zeros((N, 3))
+r[0] = r0
+v[0] = v0
+
+# Time evolution using Euler method
+for i in range(N - 1):
+    F = q * (E + np.cross(v[i], B))
+    a = F / m
+    v[i+1] = v[i] + a * dt
+    r[i+1] = r[i] + v[i+1] * dt
+
+# Plot trajectory
+plt.figure(figsize=(6, 6))
+plt.plot(r[:, 0], r[:, 1])
+plt.title("Circular Trajectory in XY Plane")
+plt.xlabel("x [m]")
+plt.ylabel("y [m]")
+plt.axis('equal')
+plt.grid()
+plt.show()
+</code></pre>
+<h3 id="b-spiral-in-z-direction">B. Spiral in Z-direction</h3>
+<ul>
+<li><strong>Initial condition</strong>: Add a vertical velocity component <span class="arithmatex">\(<span class="arithmatex">\(v_z\)</span>\)</span> to the initial velocity.</li>
+<li><strong>Expected trajectory</strong>: Helical motion (spiral) around the magnetic field lines in the z-direction.</li>
+</ul>
+<h4 id="physical-background_1">Physical Background</h4>
+<p>When a charged particle has a velocity component both <strong>perpendicular</strong> and <strong>parallel</strong> to a uniform magnetic field <span class="arithmatex">\(<span class="arithmatex">\(\vec{B}\)</span>\)</span>, it follows a <strong>helical</strong> path.</p>
+<ul>
+<li>Circular motion in the plane perpendicular to <span class="arithmatex">\(<span class="arithmatex">\(\vec{B}\)</span>\)</span></li>
+<li>Constant drift along the direction of <span class="arithmatex">\(<span class="arithmatex">\(\vec{B}\)</span>\)</span></li>
+</ul>
+<p>This results in a <strong>spiral trajectory</strong> along the z-axis.</p>
+<h4 id="python-simulation-code_1">Python Simulation Code</h4>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Constants
+q = 1.0        # Charge (C)
+m = 0.001      # Mass (kg)
+B = np.array([0, 0, 1.0])  # Magnetic field (T)
+E = np.array([0, 0, 0])    # Electric field (V/m)
+v0 = np.array([1.0, 0.0, 0.5])  # Initial velocity with vz component
+r0 = np.array([0.0, 0.0, 0.0])
+dt = 0.01
+T = 10
+N = int(T / dt)
+
+# Initialize arrays
+r = np.zeros((N, 3))
+v = np.zeros((N, 3))
+r[0] = r0
+v[0] = v0
+
+# Time evolution using Euler method
+for i in range(N - 1):
+    F = q * (E + np.cross(v[i], B))
+    a = F / m
+    v[i+1] = v[i] + a * dt
+    r[i+1] = r[i] + v[i+1] * dt
+
+# Plot 3D trajectory
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot(r[:, 0], r[:, 1], r[:, 2])
+ax.set_title("Helical (Spiral) Trajectory in 3D")
+ax.set_xlabel("x [m]")
+ax.set_ylabel("y [m]")
+ax.set_zlabel("z [m]")
+plt.show()
+### B. Spiral in Z-direction
+
+- **Initial condition**: Add a vertical velocity component $$v_z$$ to the initial velocity.
+- **Expected trajectory**: Helical motion (spiral) around the magnetic field lines in the z-direction.
+
+#### Physical Background
+
+When a charged particle has a velocity component both **perpendicular** and **parallel** to a uniform magnetic field $$\vec{B}$$, it follows a **helical** path.
+
+- Circular motion in the plane perpendicular to $$\vec{B}$$
+- Constant drift along the direction of $$\vec{B}$$
+
+This results in a **spiral trajectory** along the z-axis.
+
+#### Python Simulation Code
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Constants
+q = 1.0        # Charge (C)
+m = 0.001      # Mass (kg)
+B = np.array([0, 0, 1.0])  # Magnetic field (T)
+E = np.array([0, 0, 0])    # Electric field (V/m)
+v0 = np.array([1.0, 0.0, 0.5])  # Initial velocity with vz component
+r0 = np.array([0.0, 0.0, 0.0])
+dt = 0.01
+T = 10
+N = int(T / dt)
+
+# Initialize arrays
+r = np.zeros((N, 3))
+v = np.zeros((N, 3))
+r[0] = r0
+v[0] = v0
+
+# Time evolution using Euler method
+for i in range(N - 1):
+    F = q * (E + np.cross(v[i], B))
+    a = F / m
+    v[i+1] = v[i] + a * dt
+    r[i+1] = r[i] + v[i+1] * dt
+
+# Plot 3D trajectory
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot(r[:, 0], r[:, 1], r[:, 2])
+ax.set_title("Helical (Spiral) Trajectory in 3D")
+ax.set_xlabel("x [m]")
+ax.set_ylabel("y [m]")
+ax.set_zlabel("z [m]")
+plt.show()
+</code></pre>
+<h3 id="c-crossed-fields-drift-motion">C. Crossed Fields – Drift Motion</h3>
+<ul>
+<li><strong>Field configuration</strong>: Apply crossed electric and magnetic fields:</li>
+</ul>
+<p>$$
+  \vec{E} = [1, 0, 0], \quad \vec{B} = [0, 0, 1]
+  $$</p>
+<ul>
+<li><strong>Expected result</strong>: The particle experiences a drift due to the cross product:</li>
+</ul>
+<p>$$
+  \vec{v}_d = \frac{\vec{E} \times \vec{B}}{B^2}
+  $$</p>
+<p>This drift is perpendicular to both the electric and magnetic fields, causing the charged particle to move with a constant velocity in the <span class="arithmatex">\(<span class="arithmatex">\(y\)</span>\)</span>-direction while spiraling due to the magnetic field.</p>
+<h4 id="python-simulation-code_2">Python Simulation Code</h4>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Constants
+q = 1.0        # Charge (C)
+m = 0.001      # Mass (kg)
+B = np.array([0, 0, 1.0])  # Magnetic field (T)
+E = np.array([1.0, 0.0, 0.0])  # Electric field (V/m)
+v0 = np.array([0.0, 1.0, 0.0])  # Initial velocity
+r0 = np.array([0.0, 0.0, 0.0])
+dt = 0.01
+T = 10
+N = int(T / dt)
+
+# Initialize arrays
+r = np.zeros((N, 3))
+v = np.zeros((N, 3))
+r[0] = r0
+v[0] = v0
+
+# Time evolution using Euler method
+for i in range(N - 1):
+    F = q * (E + np.cross(v[i], B))
+    a = F / m
+    v[i+1] = v[i] + a * dt
+    r[i+1] = r[i] + v[i+1] * dt
+
+# Plot 2D trajectory
+plt.figure(figsize=(6, 6))
+plt.plot(r[:, 0], r[:, 1])
+plt.title("Drift Motion in XY Plane (Crossed E and B)")
+plt.xlabel("x [m]")
+plt.ylabel("y [m]")
+plt.axis('equal')
+plt.grid()
+plt.show()
+</code></pre>
+<h2 id="4-parameter-exploration">4. Parameter Exploration</h2>
+<h3 id="parameters-to-vary">Parameters to Vary:</h3>
+<ul>
+<li>Electric field <span class="arithmatex">\(<span class="arithmatex">\(\vec{E}\)</span>\)</span> and magnetic field <span class="arithmatex">\(<span class="arithmatex">\(\vec{B}\)</span>\)</span> strengths and directions</li>
+<li>Initial velocity vector <span class="arithmatex">\(<span class="arithmatex">\(\vec{v}_0\)</span>\)</span></li>
+<li>Charge-to-mass ratio <span class="arithmatex">\(<span class="arithmatex">\(\frac{q}{m}\)</span>\)</span></li>
+</ul>
+<h3 id="key-quantities-to-observe">Key Quantities to Observe:</h3>
+<ul>
+<li><strong>Larmor radius</strong> (radius of circular motion):</li>
+</ul>
+<p>$$
+  r_L = \frac{mv_\perp}{qB}
+  $$</p>
+<ul>
+<li><strong>Cyclotron frequency</strong> (angular frequency of rotation):</li>
+</ul>
+<p>$$
+  \omega_c = \frac{qB}{m}
+  $$</p>
+<ul>
+<li><strong>Drift velocity</strong> in crossed electric and magnetic fields:</li>
+</ul>
+<p>$$
+  \vec{v}_d = \frac{\vec{E} \times \vec{B}}{B^2}
+  $$</p>
+<p>Use these analytical relationships to:</p>
+<ul>
+<li>Predict the trajectory before simulating.</li>
+<li>Compare numerical results to theoretical expectations.</li>
+<li>Validate your code's physical accuracy.</li>
+</ul>
+<hr/>
+<h2 id="5-real-world-relevance">5. Real-World Relevance</h2>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Role of Lorentz Force</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cyclotron</strong></td>
+<td>Charged particles move in circular paths under <span class="arithmatex">\(<span class="arithmatex">\(\vec{B}\)</span>\)</span>.</td>
+</tr>
+<tr>
+<td><strong>Mass Spectrometer</strong></td>
+<td>Particle curvature <span class="arithmatex">\(<span class="arithmatex">\(\propto \frac{m}{q}\)</span>\)</span> helps identify isotopes.</td>
+</tr>
+<tr>
+<td><strong>Magnetic Bottle</strong></td>
+<td>Magnetic mirror effect traps particles via field gradients.</td>
+</tr>
+<tr>
+<td><strong>Solar Wind</strong></td>
+<td>Charged solar particles are deflected by Earth's magnetosphere.</td>
+</tr>
+</tbody>
+</table>
+<p>These systems depend critically on the Lorentz force to manipulate, trap, or sort charged particles.</p>
+<hr/>
+<h2 id="6-extension-ideas">6. Extension Ideas</h2>
+<p>To make the simulation more advanced and realistic, consider exploring:</p>
+<ul>
+<li>
+<p><strong>Non-uniform magnetic fields</strong><br/>
+  (e.g., magnetic mirrors, Earth's dipole field, magnetic bottles)</p>
+</li>
+<li>
+<p><strong>Time-varying electric fields</strong><br/>
+  (as seen in radio-frequency (RF) ion traps and linear accelerators)</p>
+</li>
+<li>
+<p><strong>Multiple interacting particles</strong><br/>
+  (introduce Coulomb forces to simulate plasma dynamics)</p>
+</li>
+<li>
+<p><strong>Relativistic effects</strong><br/>
+  (for particles approaching the speed of light, modify Newtonian dynamics)</p>
+</li>
+<li>
+<p><strong>Focusing and guiding mechanisms in accelerators</strong><br/>
+  (e.g., quadrupole magnets, beam optics)</p>
+</li>
+</ul>
+<p>These features reflect real-world complexities and provide stepping stones toward simulating full plasma systems, particle accelerators, and astrophysical plasmas.</p>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
