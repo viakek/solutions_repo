@@ -52,40 +52,59 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 # Constants
-q = 1  # Coulombs
-m = 0.001  # kg
-dt = 0.01
-steps = 5000
+q = 1.0       # Charge (C)
+m = 0.001     # Mass (kg)
+dt = 0.01     # Time step (s)
+steps = 5000  # Number of steps
 
 # Fields
-E = np.array([0.0, 0.0, 0.0])
-B = np.array([0.0, 0.0, 1.0])
+E = np.array([0.0, 0.0, 0.0])      # Electric field (V/m)
+B = np.array([0.0, 0.0, 1.0])      # Magnetic field (T)
 
 # Initial conditions
-r = np.zeros((steps, 3))
-v = np.zeros((steps, 3))
-r[0] = np.array([0.0, 0.0, 0.0])
-v[0] = np.array([1.0, 0.0, 0.0])  # Try other values for spirals, drifts, etc.
+r = np.zeros((steps, 3))           # Position array
+v = np.zeros((steps, 3))           # Velocity array
+r[0] = np.array([0.0, 0.0, 0.0])   # Initial position
+v[0] = np.array([1.0, 0.0, 0.5])   # Initial velocity (change vz for spiral)
+
+def acceleration(v):
+    return (q / m) * (E + np.cross(v, B))
 
 # RK4 integration
 for i in range(steps - 1):
-    def acc(v): return (q / m) * (E + np.cross(v, B))
-
-    k1v = acc(v[i]) * dt
+    a1 = acceleration(v[i])
+    k1v = a1 * dt
     k1r = v[i] * dt
 
-    k2v = acc(v[i] + 0.5 * k1v) * dt
+    a2 = acceleration(v[i] + 0.5 * k1v)
+    k2v = a2 * dt
     k2r = (v[i] + 0.5 * k1v) * dt
 
-    k3v = acc(v[i] + 0.5 * k2v) * dt
+    a3 = acceleration(v[i] + 0.5 * k2v)
+    k3v = a3 * dt
     k3r = (v[i] + 0.5 * k2v) * dt
 
-    k4v = acc(v[i] + k3v) * dt
+    a4 = acceleration(v[i] + k3v)
+    k4v = a4 * dt
     k4r = (v[i] + k3v) * dt
 
     v[i + 1] = v[i] + (k1v + 2 * k2v + 2 * k3v + k4v) / 6
     r[i + 1] = r[i] + (k1r + 2 * k2r + 2 * k3r + k4r) / 6
+
+# Plot 3D trajectory
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot(r[:, 0], r[:, 1], r[:, 2])
+ax.set_title("Charged Particle Trajectory (RK4)")
+ax.set_xlabel("x [m]")
+ax.set_ylabel("y [m]")
+ax.set_zlabel("z [m]")
+plt.tight_layout()
+plt.show()
 ```
+![alt text](Untitled.png)
+
+
 ## 3. Trajectory Scenarios
 
 ### A. Circular Motion (Uniform $$\vec{B}$$, No $$\vec{E}$$)
@@ -154,60 +173,8 @@ plt.grid()
 plt.show()
 ```
 
-### B. Spiral in Z-direction
+![alt text](Untitled-1.png)
 
-- **Initial condition**: Add a vertical velocity component $$v_z$$ to the initial velocity.
-- **Expected trajectory**: Helical motion (spiral) around the magnetic field lines in the z-direction.
-
-#### Physical Background
-
-When a charged particle has a velocity component both **perpendicular** and **parallel** to a uniform magnetic field $$\vec{B}$$, it follows a **helical** path.
-
-- Circular motion in the plane perpendicular to $$\vec{B}$$
-- Constant drift along the direction of $$\vec{B}$$
-
-This results in a **spiral trajectory** along the z-axis.
-
-#### Python Simulation Code
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-
-# Constants
-q = 1.0        # Charge (C)
-m = 0.001      # Mass (kg)
-B = np.array([0, 0, 1.0])  # Magnetic field (T)
-E = np.array([0, 0, 0])    # Electric field (V/m)
-v0 = np.array([1.0, 0.0, 0.5])  # Initial velocity with vz component
-r0 = np.array([0.0, 0.0, 0.0])
-dt = 0.01
-T = 10
-N = int(T / dt)
-
-# Initialize arrays
-r = np.zeros((N, 3))
-v = np.zeros((N, 3))
-r[0] = r0
-v[0] = v0
-
-# Time evolution using Euler method
-for i in range(N - 1):
-    F = q * (E + np.cross(v[i], B))
-    a = F / m
-    v[i+1] = v[i] + a * dt
-    r[i+1] = r[i] + v[i+1] * dt
-
-# Plot 3D trajectory
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-ax.plot(r[:, 0], r[:, 1], r[:, 2])
-ax.set_title("Helical (Spiral) Trajectory in 3D")
-ax.set_xlabel("x [m]")
-ax.set_ylabel("y [m]")
-ax.set_zlabel("z [m]")
-plt.show()
 ### B. Spiral in Z-direction
 
 - **Initial condition**: Add a vertical velocity component $$v_z$$ to the initial velocity.
@@ -263,6 +230,67 @@ ax.set_ylabel("y [m]")
 ax.set_zlabel("z [m]")
 plt.show()
 ```
+
+![alt text](Untitled-2.png)
+
+### B. Spiral in Z-direction
+
+- **Initial condition**: Add a vertical velocity component $$v_z$$ to the initial velocity.
+- **Expected trajectory**: Helical motion (spiral) around the magnetic field lines in the z-direction.
+
+#### Physical Background
+
+When a charged particle has a velocity component both **perpendicular** and **parallel** to a uniform magnetic field $$\vec{B}$$, it follows a **helical** path.
+
+- Circular motion in the plane perpendicular to $$\vec{B}$$
+- Constant drift along the direction of $$\vec{B}$$
+
+This results in a **spiral trajectory** along the z-axis.
+
+#### Python Simulation Code
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Constants
+q = 1.0        # Charge (C)
+m = 0.001      # Mass (kg)
+B = np.array([0, 0, 1.0])  # Magnetic field (T)
+E = np.array([0, 0, 0])    # Electric field (V/m)
+v0 = np.array([1.0, 0.0, 0.5])  # Initial velocity with vz component
+r0 = np.array([0.0, 0.0, 0.0])
+dt = 0.01
+T = 10
+N = int(T / dt)
+
+# Initialize arrays
+r = np.zeros((N, 3))
+v = np.zeros((N, 3))
+r[0] = r0
+v[0] = v0
+
+# Time evolution using Euler method
+for i in range(N - 1):
+    F = q * (E + np.cross(v[i], B))
+    a = F / m
+    v[i+1] = v[i] + a * dt
+    r[i+1] = r[i] + v[i+1] * dt
+
+# Plot 3D trajectory
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot(r[:, 0], r[:, 1], r[:, 2])
+ax.set_title("Helical (Spiral) Trajectory in 3D")
+ax.set_xlabel("x [m]")
+ax.set_ylabel("y [m]")
+ax.set_zlabel("z [m]")
+plt.show()
+```
+
+![alt text](Untitled-3.png)
+
 ### C. Crossed Fields – Drift Motion
 
 - **Field configuration**: Apply crossed electric and magnetic fields:
@@ -319,6 +347,9 @@ plt.axis('equal')
 plt.grid()
 plt.show()
 ```
+
+![alt text](Untitled-4.png)
+
 ## 4. Parameter Exploration
 
 ### Parameters to Vary:
