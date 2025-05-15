@@ -52,20 +52,21 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 # Constants
-q = 1.0       # Charge (C)
-m = 0.001     # Mass (kg)
-dt = 0.01     # Time step (s)
-steps = 5000  # Number of steps
+q = 1.0           # Charge (C)
+m = 0.001         # Mass (kg)
+c = 3e8           # Speed of light (m/s)
+dt = 1e-6         # Time step (s)
+steps = 100000    # Number of steps for a long trajectory
 
 # Fields
-E = np.array([0.0, 0.0, 0.0])      # Electric field (V/m)
+E = np.array([0.0, 0.0, 1e3])      # Electric field (V/m)
 B = np.array([0.0, 0.0, 1.0])      # Magnetic field (T)
 
 # Initial conditions
 r = np.zeros((steps, 3))           # Position array
 v = np.zeros((steps, 3))           # Velocity array
 r[0] = np.array([0.0, 0.0, 0.0])   # Initial position
-v[0] = np.array([1.0, 0.0, 0.5])   # Initial velocity (change vz for spiral)
+v[0] = np.array([3e6, 0.0, 1e6])   # Initial velocity
 
 def acceleration(v):
     return (q / m) * (E + np.cross(v, B))
@@ -91,18 +92,18 @@ for i in range(steps - 1):
     v[i + 1] = v[i] + (k1v + 2 * k2v + 2 * k3v + k4v) / 6
     r[i + 1] = r[i] + (k1r + 2 * k2r + 2 * k3r + k4r) / 6
 
-# Plot 3D trajectory
-fig = plt.figure(figsize=(8, 6))
+# Plot 3D trajectory (sample every 100 points for speed)
+fig = plt.figure(figsize=(10, 7))
 ax = fig.add_subplot(111, projection='3d')
-ax.plot(r[:, 0], r[:, 1], r[:, 2])
-ax.set_title("Charged Particle Trajectory (RK4)")
+ax.plot(r[::100, 0], r[::100, 1], r[::100, 2], linewidth=1)
+ax.set_title("Very Long Charged Particle Trajectory (RK4)")
 ax.set_xlabel("x [m]")
 ax.set_ylabel("y [m]")
 ax.set_zlabel("z [m]")
 plt.tight_layout()
 plt.show()
 ```
-![alt text](Untitled.png)
+![alt text](Untitled-5.png)
 
 
 ## 3. Trajectory Scenarios
@@ -137,43 +138,62 @@ $$
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 # Constants
-q = 1.0        # Charge (C)
-m = 0.001      # Mass (kg)
-B = np.array([0, 0, 1.0])  # Magnetic field (T)
-E = np.array([0, 0, 0])    # Electric field (V/m)
-v0 = np.array([1.0, 0.0, 0.0])  # Initial velocity (m/s)
-r0 = np.array([0.0, 0.0, 0.0])  # Initial position (m)
-dt = 0.01
-T = 10
-N = int(T / dt)
+q = 1.0           # Charge (C)
+m = 0.001         # Mass (kg)
+dt = 1e-6         # Time step (s)
+steps = 50000     # Number of steps
+B = np.array([0.0, 0.0, 1.0])   # Magnetic field (T)
+E = np.array([0.0, 0.0, 0.0])   # No electric field
 
-# Initialize arrays
-r = np.zeros((N, 3))
-v = np.zeros((N, 3))
-r[0] = r0
-v[0] = v0
+# Initial conditions
+r = np.zeros((steps, 3))           # Position array
+v = np.zeros((steps, 3))           # Velocity array
 
-# Time evolution using Euler method
-for i in range(N - 1):
-    F = q * (E + np.cross(v[i], B))
-    a = F / m
-    v[i+1] = v[i] + a * dt
-    r[i+1] = r[i] + v[i+1] * dt
+# Start at origin, with velocity along y and B along z → orbit in x-y plane
+r[0] = np.array([1.0, 0.0, 0.0])         # Start off-center
+v[0] = np.array([0.0, 1e5, 0.0])         # Perpendicular to B for circular orbit
 
-# Plot trajectory
-plt.figure(figsize=(6, 6))
-plt.plot(r[:, 0], r[:, 1])
-plt.title("Circular Trajectory in XY Plane")
-plt.xlabel("x [m]")
-plt.ylabel("y [m]")
-plt.axis('equal')
-plt.grid()
+def acceleration(v):
+    return (q / m) * (E + np.cross(v, B))
+
+# RK4 integration
+for i in range(steps - 1):
+    a1 = acceleration(v[i])
+    k1v = a1 * dt
+    k1r = v[i] * dt
+
+    a2 = acceleration(v[i] + 0.5 * k1v)
+    k2v = a2 * dt
+    k2r = (v[i] + 0.5 * k1v) * dt
+
+    a3 = acceleration(v[i] + 0.5 * k2v)
+    k3v = a3 * dt
+    k3r = (v[i] + 0.5 * k2v) * dt
+
+    a4 = acceleration(v[i] + k3v)
+    k4v = a4 * dt
+    k4r = (v[i] + k3v) * dt
+
+    v[i + 1] = v[i] + (k1v + 2 * k2v + 2 * k3v + k4v) / 6
+    r[i + 1] = r[i] + (k1r + 2 * k2r + 2 * k3r + k4r) / 6
+
+# Plot 3D trajectory (it will be in x–y plane with constant z)
+fig = plt.figure(figsize=(10, 7))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot(r[::10, 0], r[::10, 1], r[::10, 2], linewidth=1.2)
+ax.set_title("Circular Orbit of a Charged Particle in 3D (RK4)")
+ax.set_xlabel("x [m]")
+ax.set_ylabel("y [m]")
+ax.set_zlabel("z [m]")
+ax.view_init(elev=30, azim=60)
+plt.tight_layout()
 plt.show()
 ```
 
-![alt text](Untitled-1.png)
+![alt text](Untitled-6.png)
 
 ### B. Spiral in Z-direction
 
@@ -199,39 +219,63 @@ from mpl_toolkits.mplot3d import Axes3D
 # Constants
 q = 1.0        # Charge (C)
 m = 0.001      # Mass (kg)
-B = np.array([0, 0, 1.0])  # Magnetic field (T)
-E = np.array([0, 0, 0])    # Electric field (V/m)
-v0 = np.array([1.0, 0.0, 0.5])  # Initial velocity with vz component
-r0 = np.array([0.0, 0.0, 0.0])
-dt = 0.01
-T = 10
+dt = 0.001
+T = 20
 N = int(T / dt)
 
-# Initialize arrays
+# Fields
+B = np.array([0, 0, 1.0])       # Magnetic field (T) - along z
+E = np.array([100.0, 0.0, 0.0]) # Electric field (V/m) - along x
+
+# Initial conditions
+v0 = np.array([0.0, 1.0, 0.5])  # Initial velocity (perpendicular to B)
+r0 = np.array([0.0, 0.0, 0.0])
+
+# Allocate arrays
 r = np.zeros((N, 3))
 v = np.zeros((N, 3))
 r[0] = r0
 v[0] = v0
 
-# Time evolution using Euler method
-for i in range(N - 1):
-    F = q * (E + np.cross(v[i], B))
-    a = F / m
-    v[i+1] = v[i] + a * dt
-    r[i+1] = r[i] + v[i+1] * dt
+# Acceleration function
+def acceleration(v):
+    return (q / m) * (E + np.cross(v, B))
 
-# Plot 3D trajectory
-fig = plt.figure()
+# RK4 integration
+for i in range(N - 1):
+    a1 = acceleration(v[i])
+    k1v = a1 * dt
+    k1r = v[i] * dt
+
+    a2 = acceleration(v[i] + 0.5 * k1v)
+    k2v = a2 * dt
+    k2r = (v[i] + 0.5 * k1v) * dt
+
+    a3 = acceleration(v[i] + 0.5 * k2v)
+    k3v = a3 * dt
+    k3r = (v[i] + 0.5 * k2v) * dt
+
+    a4 = acceleration(v[i] + k3v)
+    k4v = a4 * dt
+    k4r = (v[i] + k3v) * dt
+
+    v[i + 1] = v[i] + (k1v + 2 * k2v + 2 * k3v + k4v) / 6
+    r[i + 1] = r[i] + (k1r + 2 * k2r + 2 * k3r + k4r) / 6
+
+# Plot the 3D spiral trajectory
+fig = plt.figure(figsize=(10, 7))
 ax = fig.add_subplot(111, projection='3d')
-ax.plot(r[:, 0], r[:, 1], r[:, 2])
-ax.set_title("Helical (Spiral) Trajectory in 3D")
+ax.plot(r[:, 0], r[:, 1], r[:, 2], linewidth=1)
+ax.set_title("3D Spiral Trajectory of Charged Particle (RK4)")
 ax.set_xlabel("x [m]")
 ax.set_ylabel("y [m]")
 ax.set_zlabel("z [m]")
+ax.view_init(elev=30, azim=60)
+plt.tight_layout()
 plt.show()
 ```
 
-![alt text](Untitled-2.png)
+![alt text](Untitled-7.png)
 
 ### B. Spiral in Z-direction
 
@@ -257,13 +301,17 @@ from mpl_toolkits.mplot3d import Axes3D
 # Constants
 q = 1.0        # Charge (C)
 m = 0.001      # Mass (kg)
+dt = 0.001
+T = 20
+N = int(T / dt)
+
+# Fields
 B = np.array([0, 0, 1.0])  # Magnetic field (T)
 E = np.array([0, 0, 0])    # Electric field (V/m)
-v0 = np.array([1.0, 0.0, 0.5])  # Initial velocity with vz component
+
+# Initial conditions: forward velocity + z-drift
+v0 = np.array([1.0, 0.0, 0.5])  # Causes helical spiral up the z-axis
 r0 = np.array([0.0, 0.0, 0.0])
-dt = 0.01
-T = 10
-N = int(T / dt)
 
 # Initialize arrays
 r = np.zeros((N, 3))
@@ -271,25 +319,45 @@ v = np.zeros((N, 3))
 r[0] = r0
 v[0] = v0
 
-# Time evolution using Euler method
-for i in range(N - 1):
-    F = q * (E + np.cross(v[i], B))
-    a = F / m
-    v[i+1] = v[i] + a * dt
-    r[i+1] = r[i] + v[i+1] * dt
+# Acceleration from Lorentz force
+def acceleration(v):
+    return (q / m) * (E + np.cross(v, B))
 
-# Plot 3D trajectory
-fig = plt.figure()
+# RK4 integration loop
+for i in range(N - 1):
+    a1 = acceleration(v[i])
+    k1v = a1 * dt
+    k1r = v[i] * dt
+
+    a2 = acceleration(v[i] + 0.5 * k1v)
+    k2v = a2 * dt
+    k2r = (v[i] + 0.5 * k1v) * dt
+
+    a3 = acceleration(v[i] + 0.5 * k2v)
+    k3v = a3 * dt
+    k3r = (v[i] + 0.5 * k2v) * dt
+
+    a4 = acceleration(v[i] + k3v)
+    k4v = a4 * dt
+    k4r = (v[i] + k3v) * dt
+
+    v[i + 1] = v[i] + (k1v + 2 * k2v + 2 * k3v + k4v) / 6
+    r[i + 1] = r[i] + (k1r + 2 * k2r + 2 * k3r + k4r) / 6
+
+# Plot the 3D helical trajectory
+fig = plt.figure(figsize=(10, 7))
 ax = fig.add_subplot(111, projection='3d')
-ax.plot(r[:, 0], r[:, 1], r[:, 2])
-ax.set_title("Helical (Spiral) Trajectory in 3D")
+ax.plot(r[:, 0], r[:, 1], r[:, 2], linewidth=1)
+ax.set_title("3D Spiral Trajectory Along z-axis (RK4)")
 ax.set_xlabel("x [m]")
 ax.set_ylabel("y [m]")
 ax.set_zlabel("z [m]")
+ax.view_init(elev=30, azim=60)
+plt.tight_layout()
 plt.show()
 ```
 
-![alt text](Untitled-3.png)
+![alt text](Untitled-8.png)
 
 ### C. Crossed Fields – Drift Motion
 
@@ -316,39 +384,62 @@ import matplotlib.pyplot as plt
 # Constants
 q = 1.0        # Charge (C)
 m = 0.001      # Mass (kg)
-B = np.array([0, 0, 1.0])  # Magnetic field (T)
-E = np.array([1.0, 0.0, 0.0])  # Electric field (V/m)
-v0 = np.array([0.0, 1.0, 0.0])  # Initial velocity
-r0 = np.array([0.0, 0.0, 0.0])
-dt = 0.01
-T = 10
+dt = 0.001
+T = 20
 N = int(T / dt)
 
-# Initialize arrays
+# Fields
+B = np.array([0, 0, 1.0])     # Magnetic field (T)
+E = np.array([1.0, 0.0, 0.0]) # Electric field (V/m)
+
+# Initial conditions
+v0 = np.array([0.0, 1.0, 0.0])
+r0 = np.array([0.0, 0.0, 0.0])
+
+# Allocate arrays
 r = np.zeros((N, 3))
 v = np.zeros((N, 3))
 r[0] = r0
 v[0] = v0
 
-# Time evolution using Euler method
-for i in range(N - 1):
-    F = q * (E + np.cross(v[i], B))
-    a = F / m
-    v[i+1] = v[i] + a * dt
-    r[i+1] = r[i] + v[i+1] * dt
+# Acceleration function from Lorentz force
+def acceleration(v):
+    return (q / m) * (E + np.cross(v, B))
 
-# Plot 2D trajectory
-plt.figure(figsize=(6, 6))
-plt.plot(r[:, 0], r[:, 1])
-plt.title("Drift Motion in XY Plane (Crossed E and B)")
+# RK4 integration
+for i in range(N - 1):
+    a1 = acceleration(v[i])
+    k1v = a1 * dt
+    k1r = v[i] * dt
+
+    a2 = acceleration(v[i] + 0.5 * k1v)
+    k2v = a2 * dt
+    k2r = (v[i] + 0.5 * k1v) * dt
+
+    a3 = acceleration(v[i] + 0.5 * k2v)
+    k3v = a3 * dt
+    k3r = (v[i] + 0.5 * k2v) * dt
+
+    a4 = acceleration(v[i] + k3v)
+    k4v = a4 * dt
+    k4r = (v[i] + k3v) * dt
+
+    v[i + 1] = v[i] + (k1v + 2 * k2v + 2 * k3v + k4v) / 6
+    r[i + 1] = r[i] + (k1r + 2 * k2r + 2 * k3r + k4r) / 6
+
+# Plot 2D trajectory in the XY plane
+plt.figure(figsize=(8, 6))
+plt.plot(r[:, 0], r[:, 1], linewidth=1)
+plt.title("E × B Drift in XY Plane (RK4)")
 plt.xlabel("x [m]")
 plt.ylabel("y [m]")
 plt.axis('equal')
-plt.grid()
+plt.grid(True)
+plt.tight_layout()
 plt.show()
 ```
 
-![alt text](Untitled-4.png)
+![alt text](Untitled-9.png)
 
 ## 4. Parameter Exploration
 
