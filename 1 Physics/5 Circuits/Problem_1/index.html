@@ -186,8 +186,8 @@
 <p>Given a weighted undirected graph:</p>
 <ul>
 <li>START and END are the terminals.</li>
-<li>Each edge $$ e_{ij} $$ has a resistance $$ R_{ij} $$.</li>
-<li>The goal is to compute a single equivalent resistance $$ R_{\text{eq}} $$ between START and END.</li>
+<li>Each edge $ e_{ij} $ has a resistance $ R_{ij} $.</li>
+<li>The goal is to compute a single equivalent resistance $ R_{\text{eq}} $ between START and END.</li>
 </ul>
 <p>We apply the following reduction rules iteratively:</p>
 <hr/>
@@ -287,23 +287,23 @@ if __name__ == "__main__":
 <h2 id="3-example-analysis">3. Example Analysis</h2>
 <p>Given the test circuit:</p>
 <ul>
-<li>START → A: <span class="arithmatex">\(<span class="arithmatex">\(R = 2\,\Omega\)</span>\)</span> </li>
-<li>A → B: <span class="arithmatex">\(<span class="arithmatex">\(R = 3\,\Omega\)</span>\)</span> </li>
-<li>B → END: <span class="arithmatex">\(<span class="arithmatex">\(R = 4\,\Omega\)</span>\)</span> </li>
-<li>A → END: <span class="arithmatex">\(<span class="arithmatex">\(R = 6\,\Omega\)</span>\)</span> </li>
+<li>START → A: <span class="arithmatex">\(R = 2\,\Omega\)</span></li>
+<li>A → B: <span class="arithmatex">\(R = 3\,\Omega\)</span> </li>
+<li>B → END: <span class="arithmatex">\(R = 4\,\Omega\)</span> </li>
+<li>A → END: <span class="arithmatex">\(R = 6\,\Omega\)</span> </li>
 </ul>
 <h3 id="step-by-step">Step-by-step:</h3>
 <ol>
 <li>
 <p>Combine A–B and B–END (series):<br/>
-<span class="arithmatex">\(<span class="arithmatex">\(R_{\text{AB-END}} = 3 + 4 = 7\,\Omega\)</span>\)</span></p>
+<span class="arithmatex">\(R_{\text{AB-END}} = 3 + 4 = 7\,\Omega\)</span></p>
 </li>
 <li>
 <p>A has two paths to END:  </p>
 </li>
-<li>One path is: <span class="arithmatex">\(<span class="arithmatex">\(7\,\Omega\)</span>\)</span> </li>
+<li>One path is: <span class="arithmatex">\(7\,\Omega\)</span> </li>
 <li>
-<p>Other path is: <span class="arithmatex">\(<span class="arithmatex">\(6\,\Omega\)</span>\)</span></p>
+<p>Other path is: <span class="arithmatex">\(6\,\Omega\)</span></p>
 </li>
 <li>
 <p>Combine those in parallel:</p>
