@@ -90,67 +90,111 @@ This Python implementation uses `networkx` to represent the circuit as a graph.
 
 ```python
 import networkx as nx
+import matplotlib.pyplot as plt
 
-def equivalent_resistance(graph: nx.MultiGraph, start, end):
-    G = graph.copy()
+# Create a MultiGraph representing the red diagram circuit
+G = nx.MultiGraph()
 
-    def combine_series():
-        changed = False
-        for node in list(G.nodes):
-            if node in (start, end):
-                continue
-            neighbors = list(G.neighbors(node))
-            if len(neighbors) == 2:
-                u, v = neighbors
-                # Assume only one edge each for series detection
-                data1 = list(G.get_edge_data(u, node).values())[0]
-                data2 = list(G.get_edge_data(node, v).values())[0]
-                R1 = data1['resistance']
-                R2 = data2['resistance']
-                R_eq = R1 + R2
-                G.add_edge(u, v, resistance=R_eq)
-                G.remove_node(node)
-                changed = True
-        return changed
+# Define the edges with resistances
+edges = [
+    ("A", "B", 5),
+    ("B", "C", 10),
+    ("B", "C", 30),  # Parallel with the above
+    ("C", "D", 5),
+    ("D", "E", 5)
+]
 
-    def combine_parallel():
-        changed = False
-        edge_list = list(G.edges(keys=True, data=True))
-        seen = set()
-        for u, v, k, d in edge_list:
-            pair = tuple(sorted((u, v)))
-            if pair in seen:
-                continue
-            all_edges = list(G.get_edge_data(u, v).values())
-            if len(all_edges) > 1:
-                resistances = [e['resistance'] for e in all_edges]
-                R_eq = 1 / sum(1 / R for R in resistances)
-                G.remove_edges_from([(u, v, key) for key in list(G.get_edge_data(u, v).keys())])
-                G.add_edge(u, v, resistance=R_eq)
-                changed = True
-            seen.add(pair)
-        return changed
+# Add edges with resistance as attribute
+for u, v, r in edges:
+    G.add_edge(u, v, resistance=r)
 
-    while True:
-        if not (combine_series() or combine_parallel()):
-            break
+# Position for nodes
+pos = {
+    "A": (0, 1),
+    "B": (1, 1),
+    "C": (2, 1.5),
+    "D": (3, 1),
+    "E": (4, 1)
+}
 
-    if G.has_edge(start, end):
-        return list(G.get_edge_data(start, end).values())[0]['resistance']
+# Draw the original graph
+plt.figure(figsize=(8, 5))
+nx.draw(G, pos, with_labels=True, node_color="skyblue", node_size=1000, font_size=12)
+
+# Draw edge labels
+edge_labels = {}
+for u, v, data in G.edges(data=True):
+    key = (u, v) if (u, v) not in edge_labels else (v, u)
+    if key in edge_labels:
+        edge_labels[key] += f", {data['resistance']}Ω"
     else:
-        raise Exception("No path between START and END")
+        edge_labels[key] = f"{data['resistance']}Ω"
 
-# Example test
-if __name__ == "__main__":
-    G = nx.MultiGraph()
-    G.add_edge("START", "A", resistance=2)
-    G.add_edge("A", "B", resistance=3)
-    G.add_edge("B", "END", resistance=4)
-    G.add_edge("A", "END", resistance=6)  # Parallel path
-
-    result = equivalent_resistance(G, "START", "END")
-    print(f"Equivalent resistance: {result:.2f} ohms")
+nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=10)
+plt.title("Step 1: Initial Circuit ")
+plt.axis("off")
+plt.tight_layout()
+plt.show()
 ```
+
+![alt text](Untitled.png)
+
+```python
+# Calculate the equivalent resistance of the two parallel resistors between B and C
+R_parallel = 1 / (1/10 + 1/30)  # Parallel: 10Ω and 30Ω
+R_parallel = round(R_parallel, 2)
+
+# Create a new graph for Step 2: After parallel reduction
+G2 = nx.Graph()
+edges2 = [
+    ("A", "B", 5),
+    ("B", "C", R_parallel),
+    ("C", "D", 5),
+    ("D", "E", 5)
+]
+
+for u, v, r in edges2:
+    G2.add_edge(u, v, resistance=r)
+
+# Draw the reduced graph after parallel combination
+plt.figure(figsize=(8, 5))
+nx.draw(G2, pos, with_labels=True, node_color="skyblue", node_size=1000, font_size=12)
+
+edge_labels2 = {(u, v): f"{d['resistance']}Ω" for u, v, d in G2.edges(data=True)}
+nx.draw_networkx_edge_labels(G2, pos, edge_labels=edge_labels2, font_size=10)
+plt.title("Step 2: After Parallel Reduction of B–C")
+plt.axis("off")
+plt.tight_layout()
+plt.show()
+```
+
+![alt text](Untitled-1.png)
+
+```python
+# Compute total equivalent resistance in the series
+R_total = 5 + R_parallel + 5 + 5  # A-B, B-C, C-D, D-E
+R_total = round(R_total, 2)
+
+# Create a simplified linear graph showing total equivalent resistance
+G3 = nx.Graph()
+G3.add_edge("A", "E", resistance=R_total)
+
+# Position for nodes A and E only
+pos3 = {"A": (0, 1), "E": (2, 1)}
+
+# Draw the final equivalent circuit
+plt.figure(figsize=(6, 3))
+nx.draw(G3, pos3, with_labels=True, node_color="lightgreen", node_size=1200, font_size=14)
+edge_labels3 = {("A", "E"): f"{R_total}Ω"}
+nx.draw_networkx_edge_labels(G3, pos3, edge_labels=edge_labels3, font_size=12)
+plt.title("Step 3: Total Equivalent Resistance")
+plt.axis("off")
+plt.tight_layout()
+plt.show()
+```
+
+![alt text](Untitled-2.png)
+
 
 ## 3. Example Analysis
 
