@@ -22,8 +22,8 @@ This transforms circuit simplification into a graph-reduction problem. The proce
 Given a weighted undirected graph:
 
 - START and END are the terminals.
-- Each edge $ e_{ij} $ has a resistance $ R_{ij} $.
-- The goal is to compute a single equivalent resistance $ R_{\text{eq}} $ between START and END.
+- Each edge $e_{ij}$ has a resistance $R_{ij}$.
+- The goal is to compute a single equivalent resistance $R_{\text{eq}}$ between START and END.
 
 We apply the following reduction rules iteratively:
 
