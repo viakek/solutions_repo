@@ -22,8 +22,8 @@ This transforms circuit simplification into a graph-reduction problem. The proce
 Given a weighted undirected graph:
 
 - START and END are the terminals.
-- Each edge $$ e_{ij} $$ has a resistance $$ R_{ij} $$.
-- The goal is to compute a single equivalent resistance $$ R_{\text{eq}} $$ between START and END.
+- Each edge $ e_{ij} $ has a resistance $ R_{ij} $.
+- The goal is to compute a single equivalent resistance $ R_{\text{eq}} $ between START and END.
 
 We apply the following reduction rules iteratively:
 
@@ -156,19 +156,19 @@ if __name__ == "__main__":
 
 Given the test circuit:
 
-- START → A: $$R = 2\,\Omega$$  
-- A → B: $$R = 3\,\Omega$$  
-- B → END: $$R = 4\,\Omega$$  
-- A → END: $$R = 6\,\Omega$$  
+- START → A: $R = 2\,\Omega$
+- A → B: $R = 3\,\Omega$ 
+- B → END: $R = 4\,\Omega$  
+- A → END: $R = 6\,\Omega$  
 
 ### Step-by-step:
 
 1. Combine A–B and B–END (series):  
-   $$R_{\text{AB-END}} = 3 + 4 = 7\,\Omega$$
+   $R_{\text{AB-END}} = 3 + 4 = 7\,\Omega$
 
 2. A has two paths to END:  
-   - One path is: $$7\,\Omega$$  
-   - Other path is: $$6\,\Omega$$
+   - One path is: $7\,\Omega$  
+   - Other path is: $6\,\Omega$
 
 3. Combine those in parallel:
 
