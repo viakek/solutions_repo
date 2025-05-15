@@ -436,16 +436,16 @@ from mpl_toolkits.mplot3d import Axes3D
 # Constants
 q = 1.0        # Charge (C)
 m = 0.001      # Mass (kg)
-dt = 0.001
-T = 20
+dt = 1e-5      # Smaller time step for stability
+T = 0.1        # Shorter total time to keep computation reasonable
 N = int(T / dt)
 
 # Fields
 B = np.array([0, 0, 1.0])  # Magnetic field (T)
-E = np.array([0, 0, 0])    # Electric field (V/m)
+E = np.array([0, 0, 0])    # No electric field
 
-# Initial conditions: forward velocity + z-drift
-v0 = np.array([1.0, 0.0, 0.5])  # Causes helical spiral up the z-axis
+# Initial conditions: circular motion + axial drift
+v0 = np.array([1.0, 0.0, 0.5])  # x-y circular, z linear
 r0 = np.array([0.0, 0.0, 0.0])
 
 # Initialize arrays
@@ -454,11 +454,11 @@ v = np.zeros((N, 3))
 r[0] = r0
 v[0] = v0
 
-# Acceleration from Lorentz force
+# Lorentz force acceleration
 def acceleration(v):
     return (q / m) * (E + np.cross(v, B))
 
-# RK4 integration loop
+# RK4 integration
 for i in range(N - 1):
     a1 = acceleration(v[i])
     k1v = a1 * dt
@@ -476,14 +476,14 @@ for i in range(N - 1):
     k4v = a4 * dt
     k4r = (v[i] + k3v) * dt
 
-    v[i + 1] = v[i] + (k1v + 2 * k2v + 2 * k3v + k4v) / 6
-    r[i + 1] = r[i] + (k1r + 2 * k2r + 2 * k3r + k4r) / 6
+    v[i + 1] = v[i] + (k1v + 2*k2v + 2*k3v + k4v) / 6
+    r[i + 1] = r[i] + (k1r + 2*k2r + 2*k3r + k4r) / 6
 
-# Plot the 3D helical trajectory
+# Plot the helical trajectory
 fig = plt.figure(figsize=(10, 7))
 ax = fig.add_subplot(111, projection='3d')
 ax.plot(r[:, 0], r[:, 1], r[:, 2], linewidth=1)
-ax.set_title("3D Spiral Trajectory Along z-axis (RK4)")
+ax.set_title("Stable 3D Spiral Trajectory Along z-axis (RK4)")
 ax.set_xlabel("x [m]")
 ax.set_ylabel("y [m]")
 ax.set_zlabel("z [m]")
@@ -491,7 +491,7 @@ ax.view_init(elev=30, azim=60)
 plt.tight_layout()
 plt.show()
 </code></pre>
-<p><img alt="alt text" src="../Untitled-8.png"/></p>
+<p><img alt="alt text" src="../Untitled-11.png"/></p>
 <h3 id="c-crossed-fields-drift-motion">C. Crossed Fields – Drift Motion</h3>
 <ul>
 <li><strong>Field configuration</strong>: Apply crossed electric and magnetic fields:</li>
