@@ -1,11 +1,12 @@
 # Problem 1
 
-## Exploring the Central Limit Theorem through Simulations
-Motivation
+# Exploring the Central Limit Theorem through Simulations
+
+### Motivation
 
 The Central Limit Theorem (CLT) is a foundational principle in statistics. It asserts that the distribution of sample means approaches a normal distribution as the sample size increases, regardless of the original distribution's shape. This property has profound implications in statistics and real-world applications. Through simulation, we can vividly observe the CLT in action, enhancing both understanding and intuition.
 
-## 1. Simulating Sampling Distributions
+### 1. Simulating Sampling Distributions
 
 To explore the CLT, we simulate sampling distributions using the following population distributions:
 
@@ -25,7 +26,7 @@ $$
 We generate a large synthetic population (e.g., 100,000 samples) for each distribution:
 
 
-## 2. Sampling and Visualization
+### 2. Sampling and Visualization
 # Sample Mean
 
 The sample mean is the average of a sample:
@@ -36,7 +37,7 @@ $$
 \bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
 $$
 
-# Sampling Distribution
+### Sampling Distribution
 
 The sampling distribution of the sample mean is the probability distribution of all possible means from samples of a given size from the population.
 
@@ -108,7 +109,7 @@ plot_sampling_distribution(pop_binomial, sample_sizes, "Binomial")
 Run the plots for different sample sizes.
 As the sample size increases, the sampling distribution becomes more bell-shaped and symmetric, illustrating convergence to normality.
 
-## 3. Parameter Exploration
+### 3. Parameter Exploration
 
 We examine how:
 
@@ -118,7 +119,7 @@ We examine how:
 
     The variance of the population affects the spread of the sampling distribution.
 
-## Variance
+### Variance
 
 The variance of the population ($\sigma^2$) measures the dispersion from the mean. The variance of the sampling distribution of the mean is:
 
@@ -126,13 +127,13 @@ $$
 \text{Var}(\bar{x}) = \frac{\sigma^2}{n}
 $$
 
-## Expectations
+### Expectations
 
     The more skewed the original distribution, the larger the sample size needed for convergence.
 
     Uniform distributions converge more rapidly than exponential ones.
 
-## 4. Practical Applications
+### 4. Practical Applications
 
 Understanding the CLT is essential in fields such as:
 
@@ -144,7 +145,7 @@ Understanding the CLT is essential in fields such as:
 
     Medical Trials: Helps ensure reliability of results from sampled patient data.
 
-## Deliverables
+### Deliverables
 
     A Python script or notebook with simulations using NumPy, Matplotlib, and Seaborn.
 
@@ -162,6 +163,6 @@ Code Hints
 
     Use np.random.seed() for reproducibility.
 
-## Conclusion
+### Conclusion
 
 The Central Limit Theorem, though abstract in theory, becomes intuitive through computational experiments. Simulations show that regardless of the population’s distribution, the mean of sufficiently large samples tends to be normally distributed. This underpins much of statistical inference, from confidence intervals to decision-making models. Each plot is supported by mathematical definitions to reinforce learning and interpretation.
