@@ -113,11 +113,11 @@ As the sample size increases, the sampling distribution becomes more bell-shaped
 
 We examine how:
 
-    The shape of the original distribution affects the speed of convergence.
+- The shape of the original distribution affects the speed of convergence.
 
-    The sample size influences the accuracy and spread of the sample mean.
+- The sample size influences the accuracy and spread of the sample mean.
 
-    The variance of the population affects the spread of the sampling distribution.
+- The variance of the population affects the spread of the sampling distribution.
 
 ### Variance
 
@@ -129,39 +129,39 @@ $$
 
 ### Expectations
 
-    The more skewed the original distribution, the larger the sample size needed for convergence.
+- The more skewed the original distribution, the larger the sample size needed for convergence.
 
-    Uniform distributions converge more rapidly than exponential ones.
+- Uniform distributions converge more rapidly than exponential ones.
 
 ### 4. Practical Applications
 
 Understanding the CLT is essential in fields such as:
 
-    Statistics: Confidence intervals and hypothesis testing rely on CLT.
+- Statistics: Confidence intervals and hypothesis testing rely on CLT.
 
-    Manufacturing: Used in quality control to assess process stability.
+- Manufacturing: Used in quality control to assess process stability.
 
-    Finance: CLT helps model and assess risk using aggregated returns.
+- Finance: CLT helps model and assess risk using aggregated returns.
 
-    Medical Trials: Helps ensure reliability of results from sampled patient data.
+- Medical Trials: Helps ensure reliability of results from sampled patient data.
 
 ### Deliverables
 
-    A Python script or notebook with simulations using NumPy, Matplotlib, and Seaborn.
+- A Python script or notebook with simulations using NumPy, Matplotlib, and Seaborn.
 
-    Plots illustrating sampling distributions from different population types.
+- Plots illustrating sampling distributions from different population types.
 
-    Mathematical definitions embedded next to each plot and concept.
+- Mathematical definitions embedded next to each plot and concept.
 
-    A Markdown discussion relating simulation results to theoretical expectations.
+- A Markdown discussion relating simulation results to theoretical expectations.
 
-Code Hints
+### Code Hints
 
-    Use numpy.random to generate populations and samples.
+- Use numpy.random to generate populations and samples.
 
-    Plot with seaborn.histplot() and overlay a normal curve using scipy.stats.norm.pdf.
+- Plot with seaborn.histplot() and overlay a normal curve using scipy.stats.norm.pdf.
 
-    Use np.random.seed() for reproducibility.
+- Use np.random.seed() for reproducibility.
 
 ### Conclusion
 
