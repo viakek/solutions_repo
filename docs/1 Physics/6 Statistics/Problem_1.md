@@ -23,9 +23,9 @@ $$
 P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}
 $$
 
-**Uniform(0, 1)** – flat, no skew
-**Exponential(λ=1)** – heavily right-skewed
-**Binomial(n=10, p=0.5)** – discrete, symmetric
+- Uniform(0, 1) - flat, no skew
+- Exponential(λ=1) – heavily right-skewed
+- Binomial(n=10, p=0.5) – discrete, symmetric
 
 We generate a large synthetic population (e.g., 100,000 samples) for each distribution:
 
