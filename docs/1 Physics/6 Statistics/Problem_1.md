@@ -24,19 +24,6 @@ $$
 
 We generate a large synthetic population (e.g., 100,000 samples) for each distribution:
 
-```python
-import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
-from scipy.stats import norm
-
-np.random.seed(0)
-
-# Generate populations
-pop_uniform = np.random.uniform(0, 1, 100000)
-pop_exponential = np.random.exponential(scale=1.0, size=100000)
-pop_binomial = np.random.binomial(n=10, p=0.5, size=100000)
-```
 
 ## 2. Sampling and Visualization
 # Sample Mean
@@ -54,24 +41,69 @@ $$
 The sampling distribution of the sample mean is the probability distribution of all possible means from samples of a given size from the population.
 
 ```python
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import norm
+
+# Set the random seed for reproducibility
+np.random.seed(0)
+
+# ----------------------------
+# 1. Generate Populations
+# ----------------------------
+
+# Uniform Distribution: U(0, 1)
+pop_uniform = np.random.uniform(0, 1, 100000)
+
+# Exponential Distribution: λ = 1
+pop_exponential = np.random.exponential(scale=1.0, size=100000)
+
+# Binomial Distribution: n = 10, p = 0.5
+pop_binomial = np.random.binomial(n=10, p=0.5, size=100000)
+
+# ----------------------------
+# 2. Sampling and Visualization Function
+# ----------------------------
+
 def plot_sampling_distribution(population, sample_sizes, dist_name):
+    """
+    Plots the sampling distribution of the mean for various sample sizes.
+    """
     for n in sample_sizes:
-        sample_means = [np.mean(np.random.choice(population, size=n)) for _ in range(10000)]
-        sns.histplot(sample_means, kde=True, stat="density", bins=30, color="skyblue", label=f"n={n}")
+        # Generate 10,000 sample means
+        sample_means = [np.mean(np.random.choice(population, size=n, replace=False)) for _ in range(10000)]
+
+        # Plot histogram
+        sns.histplot(sample_means, kde=True, stat="density", bins=30, color="skyblue", label=f"Sample size = {n}")
+        
+        # Overlay normal curve
         mu, sigma = np.mean(sample_means), np.std(sample_means)
         x = np.linspace(min(sample_means), max(sample_means), 100)
         plt.plot(x, norm.pdf(x, mu, sigma), 'r--', label="Normal PDF")
-        plt.title(f"Sampling Distribution of Mean ({dist_name}, n={n})")
+
+        # Labels and title
+        plt.title(f"Sampling Distribution of the Mean\n{dist_name} Distribution (n = {n})")
         plt.xlabel("Sample Mean")
         plt.ylabel("Density")
         plt.legend()
         plt.grid(True)
+        plt.tight_layout()
         plt.show()
-        sample_sizes = [5, 10, 30, 50]
+
+# ----------------------------
+# 3. Run Simulations
+# ----------------------------
+
+sample_sizes = [5, 10, 30, 50]
+
 plot_sampling_distribution(pop_uniform, sample_sizes, "Uniform")
 plot_sampling_distribution(pop_exponential, sample_sizes, "Exponential")
 plot_sampling_distribution(pop_binomial, sample_sizes, "Binomial")
 ```
+
+![alt text](Untitled.png)
+![alt text](Untitled-1.png)
 
 Run the plots for different sample sizes.
 As the sample size increases, the sampling distribution becomes more bell-shaped and symmetric, illustrating convergence to normality.
