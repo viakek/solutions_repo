@@ -86,115 +86,76 @@ $$
 
 ## 2. Python Algorithm
 
-This Python implementation uses `networkx` to represent the circuit as a graph.
+## Step 1: Original Circuit (with parallel and series resistors)
 
 ```python
-import networkx as nx
-import matplotlib.pyplot as plt
+!pip install schemdraw
 
-# Create a MultiGraph representing the red diagram circuit
-G = nx.MultiGraph()
+import schemdraw
+import schemdraw.elements as elm
 
-# Define the edges with resistances
-edges = [
-    ("A", "B", 5),
-    ("B", "C", 10),
-    ("B", "C", 30),  # Parallel with the above
-    ("C", "D", 5),
-    ("D", "E", 5)
-]
+# Step 1: Original Circuit
+with schemdraw.Drawing() as d:
+    d.config(unit=2.5)
 
-# Add edges with resistance as attribute
-for u, v, r in edges:
-    G.add_edge(u, v, resistance=r)
-
-# Position for nodes
-pos = {
-    "A": (0, 1),
-    "B": (1, 1),
-    "C": (2, 1.5),
-    "D": (3, 1),
-    "E": (4, 1)
-}
-
-# Draw the original graph
-plt.figure(figsize=(8, 5))
-nx.draw(G, pos, with_labels=True, node_color="skyblue", node_size=1000, font_size=12)
-
-# Draw edge labels
-edge_labels = {}
-for u, v, data in G.edges(data=True):
-    key = (u, v) if (u, v) not in edge_labels else (v, u)
-    if key in edge_labels:
-        edge_labels[key] += f", {data['resistance']}Ω"
-    else:
-        edge_labels[key] = f"{data['resistance']}Ω"
-
-nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=10)
-plt.title("Step 1: Initial Circuit ")
-plt.axis("off")
-plt.tight_layout()
-plt.show()
+    d += elm.SourceV().up().label('V', loc='top')
+    d += elm.Line().right()
+    d += elm.Resistor().label('5Ω').right()
+    d += elm.Dot()
+    d.push()
+    d += elm.Line().down()
+    d += elm.Resistor().label('10Ω')
+    d += elm.Line().up()
+    d.pop()
+    d += elm.Line().up()
+    d += elm.Resistor().label('30Ω')
+    d += elm.Line().down()
+    d += elm.Dot()
+    d += elm.Resistor().label('5Ω').right()
+    d += elm.Resistor().label('5Ω').right()
+    d += elm.Ground()
 ```
 
-![alt text](Untitled.png)
+![alt text](image.png)
+
+## Step 2: After Parallel Reduction 
 
 ```python
-# Calculate the equivalent resistance of the two parallel resistors between B and C
-R_parallel = 1 / (1/10 + 1/30)  # Parallel: 10Ω and 30Ω
-R_parallel = round(R_parallel, 2)
+import schemdraw
+import schemdraw.elements as elm
 
-# Create a new graph for Step 2: After parallel reduction
-G2 = nx.Graph()
-edges2 = [
-    ("A", "B", 5),
-    ("B", "C", R_parallel),
-    ("C", "D", 5),
-    ("D", "E", 5)
-]
+# Step 2: Parallel Resistors Replaced with Equivalent
+with schemdraw.Drawing() as d:
+    d.config(unit=2.5)
 
-for u, v, r in edges2:
-    G2.add_edge(u, v, resistance=r)
-
-# Draw the reduced graph after parallel combination
-plt.figure(figsize=(8, 5))
-nx.draw(G2, pos, with_labels=True, node_color="skyblue", node_size=1000, font_size=12)
-
-edge_labels2 = {(u, v): f"{d['resistance']}Ω" for u, v, d in G2.edges(data=True)}
-nx.draw_networkx_edge_labels(G2, pos, edge_labels=edge_labels2, font_size=10)
-plt.title("Step 2: After Parallel Reduction of B–C")
-plt.axis("off")
-plt.tight_layout()
-plt.show()
+    d += elm.SourceV().up().label('V', loc='top')
+    d += elm.Line().right()
+    d += elm.Resistor().label('5Ω').right()
+    d += elm.Resistor().label('7.5Ω').right().label('(10Ω || 30Ω)', loc='bottom')
+    d += elm.Resistor().label('5Ω').right()
+    d += elm.Resistor().label('5Ω').right()
+    d += elm.Ground()
 ```
 
-![alt text](Untitled-1.png)
+![alt text](image-1.png)
+
+## Step 3: Final Equivalent Resistance Only
 
 ```python
-# Compute total equivalent resistance in the series
-R_total = 5 + R_parallel + 5 + 5  # A-B, B-C, C-D, D-E
-R_total = round(R_total, 2)
+import schemdraw
+import schemdraw.elements as elm
 
-# Create a simplified linear graph showing total equivalent resistance
-G3 = nx.Graph()
-G3.add_edge("A", "E", resistance=R_total)
+# Step 3: Fully Reduced to One Equivalent Resistor
+with schemdraw.Drawing() as d:
+    d.config(unit=2.5)
 
-# Position for nodes A and E only
-pos3 = {"A": (0, 1), "E": (2, 1)}
-
-# Draw the final equivalent circuit
-plt.figure(figsize=(6, 3))
-nx.draw(G3, pos3, with_labels=True, node_color="lightgreen", node_size=1200, font_size=14)
-edge_labels3 = {("A", "E"): f"{R_total}Ω"}
-nx.draw_networkx_edge_labels(G3, pos3, edge_labels=edge_labels3, font_size=12)
-plt.title("Step 3: Total Equivalent Resistance")
-plt.axis("off")
-plt.tight_layout()
-plt.show()
+    d += elm.SourceV().up().label('V', loc='top')
+    d += elm.Line().right()
+    d += elm.Resistor().label('22.5Ω').right().label('(5+7.5+5+5)', loc='bottom')
+    d += elm.Ground()
 ```
 
-![alt text](Untitled-2.png)
-
+![alt text](image-3.png)
 
 ## 3. Example Analysis
 
