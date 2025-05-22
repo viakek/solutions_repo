@@ -268,48 +268,74 @@ plot_sampling_distribution(pop_binomial, sample_sizes, "Binomial")
 As the sample size increases, the sampling distribution becomes more bell-shaped and symmetric, illustrating convergence to normality.</p>
 <h3 id="3-parameter-exploration">3. Parameter Exploration</h3>
 <p>We examine how:</p>
-<pre><code>The shape of the original distribution affects the speed of convergence.
-
-The sample size influences the accuracy and spread of the sample mean.
-
-The variance of the population affects the spread of the sampling distribution.
-</code></pre>
+<ul>
+<li>
+<p>The shape of the original distribution affects the speed of convergence.</p>
+</li>
+<li>
+<p>The sample size influences the accuracy and spread of the sample mean.</p>
+</li>
+<li>
+<p>The variance of the population affects the spread of the sampling distribution.</p>
+</li>
+</ul>
 <h3 id="variance">Variance</h3>
 <p>The variance of the population (<span class="arithmatex">\(\sigma^2\)</span>) measures the dispersion from the mean. The variance of the sampling distribution of the mean is:</p>
 <div class="arithmatex">\[
 \text{Var}(\bar{x}) = \frac{\sigma^2}{n}
 \]</div>
 <h3 id="expectations">Expectations</h3>
-<pre><code>The more skewed the original distribution, the larger the sample size needed for convergence.
-
-Uniform distributions converge more rapidly than exponential ones.
-</code></pre>
+<ul>
+<li>
+<p>The more skewed the original distribution, the larger the sample size needed for convergence.</p>
+</li>
+<li>
+<p>Uniform distributions converge more rapidly than exponential ones.</p>
+</li>
+</ul>
 <h3 id="4-practical-applications">4. Practical Applications</h3>
 <p>Understanding the CLT is essential in fields such as:</p>
-<pre><code>Statistics: Confidence intervals and hypothesis testing rely on CLT.
-
-Manufacturing: Used in quality control to assess process stability.
-
-Finance: CLT helps model and assess risk using aggregated returns.
-
-Medical Trials: Helps ensure reliability of results from sampled patient data.
-</code></pre>
+<ul>
+<li>
+<p>Statistics: Confidence intervals and hypothesis testing rely on CLT.</p>
+</li>
+<li>
+<p>Manufacturing: Used in quality control to assess process stability.</p>
+</li>
+<li>
+<p>Finance: CLT helps model and assess risk using aggregated returns.</p>
+</li>
+<li>
+<p>Medical Trials: Helps ensure reliability of results from sampled patient data.</p>
+</li>
+</ul>
 <h3 id="deliverables">Deliverables</h3>
-<pre><code>A Python script or notebook with simulations using NumPy, Matplotlib, and Seaborn.
-
-Plots illustrating sampling distributions from different population types.
-
-Mathematical definitions embedded next to each plot and concept.
-
-A Markdown discussion relating simulation results to theoretical expectations.
-</code></pre>
-<p>Code Hints</p>
-<pre><code>Use numpy.random to generate populations and samples.
-
-Plot with seaborn.histplot() and overlay a normal curve using scipy.stats.norm.pdf.
-
-Use np.random.seed() for reproducibility.
-</code></pre>
+<ul>
+<li>
+<p>A Python script or notebook with simulations using NumPy, Matplotlib, and Seaborn.</p>
+</li>
+<li>
+<p>Plots illustrating sampling distributions from different population types.</p>
+</li>
+<li>
+<p>Mathematical definitions embedded next to each plot and concept.</p>
+</li>
+<li>
+<p>A Markdown discussion relating simulation results to theoretical expectations.</p>
+</li>
+</ul>
+<h3 id="code-hints">Code Hints</h3>
+<ul>
+<li>
+<p>Use numpy.random to generate populations and samples.</p>
+</li>
+<li>
+<p>Plot with seaborn.histplot() and overlay a normal curve using scipy.stats.norm.pdf.</p>
+</li>
+<li>
+<p>Use np.random.seed() for reproducibility.</p>
+</li>
+</ul>
 <h3 id="conclusion">Conclusion</h3>
 <p>The Central Limit Theorem, though abstract in theory, becomes intuitive through computational experiments. Simulations show that regardless of the population’s distribution, the mean of sufficiently large samples tends to be normally distributed. This underpins much of statistical inference, from confidence intervals to decision-making models. Each plot is supported by mathematical definitions to reinforce learning and interpretation.</p>
 </div>
