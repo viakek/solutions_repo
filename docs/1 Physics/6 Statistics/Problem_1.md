@@ -23,6 +23,10 @@ $$
 P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}
 $$
 
+**Uniform(0, 1)** – flat, no skew
+**Exponential(λ=1)** – heavily right-skewed
+**Binomial(n=10, p=0.5)** – discrete, symmetric
+
 We generate a large synthetic population (e.g., 100,000 samples) for each distribution:
 
 
@@ -103,8 +107,17 @@ plot_sampling_distribution(pop_exponential, sample_sizes, "Exponential")
 plot_sampling_distribution(pop_binomial, sample_sizes, "Binomial")
 ```
 
-![alt text](Untitled.png)
-![alt text](Untitled-1.png)
+![alt text](Untitled-6.png)
+![alt text](Untitled-7.png)
+![alt text](Untitled-8.png)
+![alt text](Untitled-9.png)
+![alt text](Untitled-10.png)
+![alt text](Untitled-11.png)
+![alt text](Untitled-12.png)
+![alt text](Untitled-13.png)
+![alt text](Untitled-14.png)
+![alt text](Untitled-15.png)
+![alt text](Untitled-16.png)
 
 Run the plots for different sample sizes.
 As the sample size increases, the sampling distribution becomes more bell-shaped and symmetric, illustrating convergence to normality.
