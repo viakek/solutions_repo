@@ -192,6 +192,9 @@ $$
 <div class="arithmatex">\[
 P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}
 \]</div>
+<p><strong>Uniform(0, 1)</strong> – flat, no skew
+<strong>Exponential(λ=1)</strong> – heavily right-skewed
+<strong>Binomial(n=10, p=0.5)</strong> – discrete, symmetric</p>
 <p>We generate a large synthetic population (e.g., 100,000 samples) for each distribution:</p>
 <h3 id="2-sampling-and-visualization">2. Sampling and Visualization</h3>
 <h1 id="sample-mean">Sample Mean</h1>
@@ -262,8 +265,17 @@ plot_sampling_distribution(pop_uniform, sample_sizes, "Uniform")
 plot_sampling_distribution(pop_exponential, sample_sizes, "Exponential")
 plot_sampling_distribution(pop_binomial, sample_sizes, "Binomial")
 </code></pre>
-<p><img alt="alt text" src="../Untitled.png"/>
-<img alt="alt text" src="../Untitled-1.png"/></p>
+<p><img alt="alt text" src="../Untitled-6.png"/>
+<img alt="alt text" src="../Untitled-7.png"/>
+<img alt="alt text" src="../Untitled-8.png"/>
+<img alt="alt text" src="../Untitled-9.png"/>
+<img alt="alt text" src="../Untitled-10.png"/>
+<img alt="alt text" src="../Untitled-11.png"/>
+<img alt="alt text" src="../Untitled-12.png"/>
+<img alt="alt text" src="../Untitled-13.png"/>
+<img alt="alt text" src="../Untitled-14.png"/>
+<img alt="alt text" src="../Untitled-15.png"/>
+<img alt="alt text" src="../Untitled-16.png"/></p>
 <p>Run the plots for different sample sizes.
 As the sample size increases, the sampling distribution becomes more bell-shaped and symmetric, illustrating convergence to normality.</p>
 <h3 id="3-parameter-exploration">3. Parameter Exploration</h3>
