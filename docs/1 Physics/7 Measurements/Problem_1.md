@@ -108,7 +108,6 @@ $$
 ### Sources of Uncertainty:
 
 * **Length measurement**: The most significant source due to ±0.005 m resolution
-* **Reaction time**: Though reduced by timing 10 oscillations, human reaction still contributes
 * **Assumption of SHM**: Only valid for small angles (<15°)
 * **Air resistance and pivot friction**: Minor but present
 
