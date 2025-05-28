@@ -172,6 +172,139 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h1 id="measuring-earths-gravitational-acceleration-with-a-pendulum"><strong>Measuring Earth's Gravitational Acceleration with a Pendulum</strong></h1>
+<h2 id="motivation"><strong>Motivation</strong></h2>
+<p>The acceleration due to gravity, <span class="arithmatex">\(g\)</span>, is a fundamental constant in physics, playing a critical role in mechanics, astronomy, and engineering. One of the simplest yet effective methods to measure <span class="arithmatex">\(g\)</span> is by analyzing the motion of a simple pendulum. This experiment provides insight into precision measurement techniques and the treatment of uncertainties in experimental physics.</p>
+<h2 id="materials"><strong>Materials</strong></h2>
+<ul>
+<li>String: 1.000 ± 0.005 m</li>
+<li>Weight: Metal washer</li>
+<li>Stopwatch (smartphone timer): Resolution ±0.01 s</li>
+<li>Ruler: Resolution ±0.005 m</li>
+</ul>
+<h2 id="setup"><strong>Setup</strong></h2>
+<ul>
+<li>Length of pendulum <span class="arithmatex">\(L = 1.000 \pm 0.005 \, \text{m}\)</span> (measured from suspension point to center of mass of the weight)</li>
+<li>Angle of release: &lt; 15° to approximate simple harmonic motion</li>
+</ul>
+<h2 id="data-collection"><strong>Data Collection</strong></h2>
+<p>Displaced the pendulum to a small angle and measured the time for 10 complete oscillations, repeated 10 times:</p>
+<table>
+<thead>
+<tr>
+<th>Trial</th>
+<th>Time for 10 Oscillations (s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>20.11</td>
+</tr>
+<tr>
+<td>2</td>
+<td>20.15</td>
+</tr>
+<tr>
+<td>3</td>
+<td>20.12</td>
+</tr>
+<tr>
+<td>4</td>
+<td>20.10</td>
+</tr>
+<tr>
+<td>5</td>
+<td>20.13</td>
+</tr>
+<tr>
+<td>6</td>
+<td>20.16</td>
+</tr>
+<tr>
+<td>7</td>
+<td>20.14</td>
+</tr>
+<tr>
+<td>8</td>
+<td>20.11</td>
+</tr>
+<tr>
+<td>9</td>
+<td>20.12</td>
+</tr>
+<tr>
+<td>10</td>
+<td>20.10</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mean-time">Mean Time:</h3>
+<div class="arithmatex">\[
+\bar{t} = \frac{1}{10} \sum t_i = \frac{201.14}{10} = 20.114 \, \text{s}
+\]</div>
+<h3 id="standard-deviation">Standard Deviation:</h3>
+<div class="arithmatex">\[
+\sigma = \sqrt{\frac{1}{n-1} \sum (t_i - \bar{t})^2} \approx 0.021 \, \text{s}
+\]</div>
+<h3 id="uncertainty-in-mean">Uncertainty in Mean:</h3>
+<div class="arithmatex">\[
+u_t = \frac{\sigma}{\sqrt{n}} = \frac{0.021}{\sqrt{10}} \approx 0.007 \, \text{s}
+\]</div>
+<h2 id="calculations"><strong>Calculations</strong></h2>
+<h3 id="1-period-of-the-pendulum">1. Period of the pendulum:</h3>
+<div class="arithmatex">\[
+T = \frac{\bar{t}}{10} = \frac{20.114}{10} = 2.0114 \, \text{s}
+\]</div>
+<div class="arithmatex">\[
+u_T = \frac{u_t}{10} = \frac{0.007}{10} = 0.0007 \, \text{s}
+\]</div>
+<h3 id="2-gravitational-acceleration">2. Gravitational acceleration:</h3>
+<p>Using the formula <span class="arithmatex">\(g = \frac{4\pi^2L}{T^2}\)</span></p>
+<div class="arithmatex">\[
+g = \frac{4\pi^2 \cdot 1.000}{(2.0114)^2} \approx \frac{39.4784}{4.0458} \approx 9.76 \, \text{m/s}^2
+\]</div>
+<h3 id="3-uncertainty-in-g">3. Uncertainty in <span class="arithmatex">\(g\)</span>:</h3>
+<div class="arithmatex">\[
+\frac{u_g}{g} = \sqrt{\left(\frac{u_L}{L}\right)^2 + \left(2 \cdot \frac{u_T}{T} \right)^2}
+\]</div>
+<div class="arithmatex">\[
+\frac{u_g}{g} = \sqrt{\left(\frac{0.005}{1.000}\right)^2 + \left(2 \cdot \frac{0.0007}{2.0114} \right)^2} \approx \sqrt{(0.005)^2 + (0.0007)^2} \approx 0.0051
+\]</div>
+<div class="arithmatex">\[
+u_g = 0.0051 \cdot 9.76 \approx 0.05 \, \text{m/s}^2
+\]</div>
+<div class="arithmatex">\[
+\boxed{g = 9.76 \pm 0.05 \, \text{m/s}^2}
+\]</div>
+<hr/>
+<h2 id="analysis-and-discussion"><strong>Analysis and Discussion</strong></h2>
+<h3 id="comparison-with-standard-value">Comparison with Standard Value:</h3>
+<ul>
+<li>Standard value: <span class="arithmatex">\(g = 9.81 \, \text{m/s}^2\)</span></li>
+<li>Measured value: <span class="arithmatex">\(9.76 \pm 0.05 \, \text{m/s}^2\)</span></li>
+<li>Difference: 0.05 <span class="arithmatex">\(\Rightarrow\)</span> within experimental uncertainty</li>
+</ul>
+<h3 id="sources-of-uncertainty">Sources of Uncertainty:</h3>
+<ul>
+<li><strong>Length measurement</strong>: The most significant source due to ±0.005 m resolution</li>
+<li><strong>Reaction time</strong>: Though reduced by timing 10 oscillations, human reaction still contributes</li>
+<li><strong>Assumption of SHM</strong>: Only valid for small angles (&lt;15°)</li>
+<li><strong>Air resistance and pivot friction</strong>: Minor but present</li>
+</ul>
+<h3 id="improvements">Improvements:</h3>
+<ul>
+<li>Use a light gate or photogate timer for better timing accuracy</li>
+<li>Measure multiple lengths and plot <span class="arithmatex">\(T^2\)</span> vs. <span class="arithmatex">\(L\)</span> to find slope for <span class="arithmatex">\(g\)</span></li>
+<li>Use heavier mass to reduce air resistance effect</li>
+</ul>
+<hr/>
+<h2 id="conclusion"><strong>Conclusion</strong></h2>
+<p>By analyzing the period of a pendulum with careful timing and uncertainty analysis, we determined the acceleration due to gravity to be:</p>
+<div class="arithmatex">\[
+\boxed{g = 9.76 \pm 0.05 \, \text{m/s}^2}
+\]</div>
+<p>This is in good agreement with the accepted standard value, demonstrating the effectiveness of the pendulum method in measuring gravitational acceleration.</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
