@@ -117,7 +117,6 @@ $$
 * Measure multiple lengths and plot $T^2$ vs. $L$ to find slope for $g$
 * Use heavier mass to reduce air resistance effect
 
----
 
 ## **Conclusion**
 
