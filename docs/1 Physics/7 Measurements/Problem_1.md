@@ -4,146 +4,130 @@
 
 ## **Motivation**
 
-The acceleration due to gravity, $g$, is a fundamental constant in physics. It is critical in many fields such as mechanics, astronomy, and engineering. This experiment explores a classical method for measuring $g$ by observing the oscillations of a simple pendulum, allowing for practice in measurement techniques and error analysis.
+Understanding the acceleration due to gravity, $g$, is vital for applications in physics and engineering. This experiment uses a modified pendulum—a key attached to a necklace—to determine $g$ through oscillation timing. The setup highlights the impact of experimental design and measurement precision.
 
----
 
 ## **Materials**
 
-* String (charging cable): $1.500 \pm 0.005 \, \text{m}$
-* Weight: Metal key (mass \~30 g)
-* Stopwatch (smartphone timer): Resolution ±0.01 s
+* Necklace length: $0.200 \pm 0.005 \, \text{m}$
+* Weight: Key (\~30 g)
+* Stopwatch (smartphone): Resolution ±0.01 s
 * Ruler: Resolution ±0.005 m
 
----
 
 ## **Setup**
 
-* **Length of pendulum** $L = 1.500 \pm 0.005 \, \text{m}$
-  *(Measured from suspension point to center of mass of the key)*
-* **Angle of release**: Less than 15°, to satisfy the small-angle approximation for simple harmonic motion.
+* **Length of pendulum**: $L = 0.200 \pm 0.005 \, \text{m}$
+  *(Measured from pivot point to the center of mass of the key)*
+* **Angle of release**: Less than 15° to satisfy the simple harmonic motion (SHM) condition
 
----
 
 ## **Data Collection**
 
-Measured the time for **10 complete oscillations**, repeated **10 times**:
+Time recorded for **10 full oscillations**, repeated **10 times**:
 
 | Trial | Time for 10 Oscillations (s) |
 | ----- | ---------------------------- |
-| 1     | 10.41                        |
-| 2     | 10.75                        |
-| 3     | 10.79                        |
-| 4     | 10.87                        |
-| 5     | 10.87                        |
-| 6     | 10.56                        |
-| 7     | 10.15                        |
-| 8     | 10.17                        |
-| 9     | 10.69                        |
-| 10    | 10.80                        |
+| 1     | 10.02                        |
+| 2     | 9.90                         |
+| 3     | 10.09                        |
+| 4     | 9.86                         |
+| 5     | 10.08                        |
+| 6     | 9.76                         |
+| 7     | 9.87                         |
+| 8     | 10.23                        |
+| 9     | 10.10                        |
+| 10    | 9.76                         |
 
----
 
 ## **Calculations**
 
 ### **1. Mean Time:**
 
 $$
-\bar{t} = \frac{1}{10} \sum t_i = \frac{106.06}{10} = 10.606 \, \text{s}
+\bar{t} = \frac{1}{10} \sum t_i = \frac{99.67}{10} = 9.967 \, \text{s}
 $$
 
 ### **2. Standard Deviation:**
 
 $$
-\sigma = \sqrt{\frac{1}{n - 1} \sum (t_i - \bar{t})^2} \approx 0.274 \, \text{s}
+\sigma = \sqrt{\frac{1}{n-1} \sum (t_i - \bar{t})^2} \approx 0.159 \, \text{s}
 $$
 
 ### **3. Uncertainty in Mean:**
 
 $$
-u_t = \frac{\sigma}{\sqrt{n}} = \frac{0.274}{\sqrt{10}} \approx 0.087 \, \text{s}
+u_t = \frac{\sigma}{\sqrt{10}} \approx 0.050 \, \text{s}
 $$
 
----
 
-## **1. Period of the Pendulum**
-
-$$
-T = \frac{\bar{t}}{10} = \frac{10.606}{10} = 1.0606 \, \text{s}
-$$
+### **4. Period of the Pendulum:**
 
 $$
-u_T = \frac{u_t}{10} = \frac{0.087}{10} = 0.0087 \, \text{s}
-$$
-
----
-
-## **2. Gravitational Acceleration**
-
-Using the formula:
-
-$$
-g = \frac{4\pi^2L}{T^2}
+T = \frac{\bar{t}}{10} = \frac{9.967}{10} = 0.9967 \, \text{s}
 $$
 
 $$
-g = \frac{4\pi^2 \cdot 1.5}{(1.0606)^2} \approx \frac{59.22}{1.126} \approx 52.64 \, \text{m/s}^2
+u_T = \frac{u_t}{10} = 0.0050 \, \text{s}
 $$
 
----
 
-## **3. Uncertainty in $g$**
-
-$$
-\frac{u_g}{g} = \sqrt{\left(\frac{u_L}{L}\right)^2 + \left(2 \cdot \frac{u_T}{T} \right)^2}
-$$
+### **5. Gravitational Acceleration:**
 
 $$
-\frac{u_g}{g} = \sqrt{\left(\frac{0.005}{1.500}\right)^2 + \left(2 \cdot \frac{0.0087}{1.0606} \right)^2} \approx 0.0167
+g = \frac{4\pi^2L}{T^2} = \frac{4\pi^2 \cdot 0.2}{(0.9967)^2} \approx 7.95 \, \text{m/s}^2
 $$
 
+
+### **6. Uncertainty in $g$:**
+
 $$
-u_g = 0.0167 \cdot 52.64 \approx 0.88 \, \text{m/s}^2
+\frac{u_g}{g} = \sqrt{\left(\frac{0.005}{0.2}\right)^2 + \left(2 \cdot \frac{0.0050}{0.9967} \right)^2} \approx 0.02696
 $$
 
 $$
-\boxed{g = 52.64 \pm 0.88 \, \text{m/s}^2}
+u_g = 0.02696 \cdot 7.95 \approx 0.21 \, \text{m/s}^2
 $$
 
----
+
+## Final Result:
+
+$$
+\boxed{g = 7.95 \pm 0.21 \, \text{m/s}^2}
+$$
 
 ## **Analysis and Discussion**
 
 ### **Comparison with Standard Value:**
 
-* **Standard value**: $g = 9.81 \, \text{m/s}^2$
-* **Measured value**: $52.64 \pm 0.88 \, \text{m/s}^2$
-* **Difference**: \~43 m/s² ⇒ **Not within experimental uncertainty**
+* **Standard value**: $9.81 \, \text{m/s}^2$
+* **Measured value**: $7.95 \pm 0.21 \, \text{m/s}^2$
+* **Difference**: $\approx 1.86 \, \text{m/s}^2$
+* Result is **outside experimental uncertainty**
 
-### **Likely Sources of Error:**
+### **Possible Sources of Error:**
 
-* **Incorrect timing**: Possibly measured **5 oscillations**, not 10.
-* **Length error**: Cable might have stretched or was not measured precisely to the center of mass.
-* **Large swing amplitude**: Violates the small-angle assumption for SHM.
-* **Timing human error**: Manual stopwatch use introduces delays.
+* **Short pendulum** increases sensitivity to timing errors
+* **Center of mass** of key-necklace system may not be well defined
+* **Air resistance** and necklace flexibility may dampen motion
+* **Angle of swing** may have been too large, violating SHM conditions
 
----
 
 ## **Suggestions for Improvement**
 
-* Use a **photogate or light gate** for accurate time measurement.
-* Verify that the string is taut and measure **to the actual center of mass**.
-* Repeat the experiment at **multiple lengths** and graph $T^2$ vs. $L$ to extract $g$ from the slope.
-* Use a **smaller release angle** to ensure SHM approximation.
+* Use a **stiff string or rod** to keep the length consistent
+* Attach mass firmly to prevent swinging inconsistencies
+* Use a **photogate or light sensor** to reduce timing errors
+* Repeat at **multiple lengths** to verify results with a $T^2$ vs. $L$ graph
 
----
 
 ## **Conclusion**
 
-Despite following a systematic method, the calculated value of gravity was significantly off due to likely timing or procedural errors. The result:
+Using a key attached to a necklace as a pendulum, the gravitational acceleration was measured as:
 
 $$
-\boxed{g = 52.64 \pm 0.88 \, \text{m/s}^2}
+\boxed{g = 7.95 \pm 0.21 \, \text{m/s}^2}
 $$
 
-does not align with the accepted value of $9.81 \, \text{m/s}^2$, showing that **accurate timing and careful setup are crucial** in pendulum experiments.
+Though the method is simple and accessible, the result deviates from the standard value due to limitations in control and precision of the setup. This experiment illustrates how even basic designs require careful execution for accurate physical measurements.
+
