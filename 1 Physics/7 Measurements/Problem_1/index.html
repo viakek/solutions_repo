@@ -174,25 +174,22 @@
 <h1 id="problem-1">Problem 1</h1>
 <h1 id="measuring-earths-gravitational-acceleration-with-a-pendulum"><strong>Measuring Earth's Gravitational Acceleration with a Pendulum</strong></h1>
 <h2 id="motivation"><strong>Motivation</strong></h2>
-<p>The acceleration due to gravity, <span class="arithmatex">\(g\)</span>, is a fundamental constant in physics. It is critical in many fields such as mechanics, astronomy, and engineering. This experiment explores a classical method for measuring <span class="arithmatex">\(g\)</span> by observing the oscillations of a simple pendulum, allowing for practice in measurement techniques and error analysis.</p>
-<hr/>
+<p>Understanding the acceleration due to gravity, <span class="arithmatex">\(g\)</span>, is vital for applications in physics and engineering. This experiment uses a modified pendulum—a key attached to a necklace—to determine <span class="arithmatex">\(g\)</span> through oscillation timing. The setup highlights the impact of experimental design and measurement precision.</p>
 <h2 id="materials"><strong>Materials</strong></h2>
 <ul>
-<li>String (charging cable): <span class="arithmatex">\(1.500 \pm 0.005 \, \text{m}\)</span></li>
-<li>Weight: Metal key (mass \~30 g)</li>
-<li>Stopwatch (smartphone timer): Resolution ±0.01 s</li>
+<li>Necklace length: <span class="arithmatex">\(0.200 \pm 0.005 \, \text{m}\)</span></li>
+<li>Weight: Key (\~30 g)</li>
+<li>Stopwatch (smartphone): Resolution ±0.01 s</li>
 <li>Ruler: Resolution ±0.005 m</li>
 </ul>
-<hr/>
 <h2 id="setup"><strong>Setup</strong></h2>
 <ul>
-<li><strong>Length of pendulum</strong> <span class="arithmatex">\(L = 1.500 \pm 0.005 \, \text{m}\)</span>
-<em>(Measured from suspension point to center of mass of the key)</em></li>
-<li><strong>Angle of release</strong>: Less than 15°, to satisfy the small-angle approximation for simple harmonic motion.</li>
+<li><strong>Length of pendulum</strong>: <span class="arithmatex">\(L = 0.200 \pm 0.005 \, \text{m}\)</span>
+<em>(Measured from pivot point to the center of mass of the key)</em></li>
+<li><strong>Angle of release</strong>: Less than 15° to satisfy the simple harmonic motion (SHM) condition</li>
 </ul>
-<hr/>
 <h2 id="data-collection"><strong>Data Collection</strong></h2>
-<p>Measured the time for <strong>10 complete oscillations</strong>, repeated <strong>10 times</strong>:</p>
+<p>Time recorded for <strong>10 full oscillations</strong>, repeated <strong>10 times</strong>:</p>
 <table>
 <thead>
 <tr>
@@ -203,121 +200,109 @@
 <tbody>
 <tr>
 <td>1</td>
-<td>10.41</td>
+<td>10.02</td>
 </tr>
 <tr>
 <td>2</td>
-<td>10.75</td>
+<td>9.90</td>
 </tr>
 <tr>
 <td>3</td>
-<td>10.79</td>
+<td>10.09</td>
 </tr>
 <tr>
 <td>4</td>
-<td>10.87</td>
+<td>9.86</td>
 </tr>
 <tr>
 <td>5</td>
-<td>10.87</td>
+<td>10.08</td>
 </tr>
 <tr>
 <td>6</td>
-<td>10.56</td>
+<td>9.76</td>
 </tr>
 <tr>
 <td>7</td>
-<td>10.15</td>
+<td>9.87</td>
 </tr>
 <tr>
 <td>8</td>
-<td>10.17</td>
+<td>10.23</td>
 </tr>
 <tr>
 <td>9</td>
-<td>10.69</td>
+<td>10.10</td>
 </tr>
 <tr>
 <td>10</td>
-<td>10.80</td>
+<td>9.76</td>
 </tr>
 </tbody>
 </table>
-<hr/>
 <h2 id="calculations"><strong>Calculations</strong></h2>
 <h3 id="1-mean-time"><strong>1. Mean Time:</strong></h3>
 <div class="arithmatex">\[
-\bar{t} = \frac{1}{10} \sum t_i = \frac{106.06}{10} = 10.606 \, \text{s}
+\bar{t} = \frac{1}{10} \sum t_i = \frac{99.67}{10} = 9.967 \, \text{s}
 \]</div>
 <h3 id="2-standard-deviation"><strong>2. Standard Deviation:</strong></h3>
 <div class="arithmatex">\[
-\sigma = \sqrt{\frac{1}{n - 1} \sum (t_i - \bar{t})^2} \approx 0.274 \, \text{s}
+\sigma = \sqrt{\frac{1}{n-1} \sum (t_i - \bar{t})^2} \approx 0.159 \, \text{s}
 \]</div>
 <h3 id="3-uncertainty-in-mean"><strong>3. Uncertainty in Mean:</strong></h3>
 <div class="arithmatex">\[
-u_t = \frac{\sigma}{\sqrt{n}} = \frac{0.274}{\sqrt{10}} \approx 0.087 \, \text{s}
+u_t = \frac{\sigma}{\sqrt{10}} \approx 0.050 \, \text{s}
 \]</div>
-<hr/>
-<h2 id="1-period-of-the-pendulum"><strong>1. Period of the Pendulum</strong></h2>
+<h3 id="4-period-of-the-pendulum"><strong>4. Period of the Pendulum:</strong></h3>
 <div class="arithmatex">\[
-T = \frac{\bar{t}}{10} = \frac{10.606}{10} = 1.0606 \, \text{s}
-\]</div>
-<div class="arithmatex">\[
-u_T = \frac{u_t}{10} = \frac{0.087}{10} = 0.0087 \, \text{s}
-\]</div>
-<hr/>
-<h2 id="2-gravitational-acceleration"><strong>2. Gravitational Acceleration</strong></h2>
-<p>Using the formula:</p>
-<div class="arithmatex">\[
-g = \frac{4\pi^2L}{T^2}
+T = \frac{\bar{t}}{10} = \frac{9.967}{10} = 0.9967 \, \text{s}
 \]</div>
 <div class="arithmatex">\[
-g = \frac{4\pi^2 \cdot 1.5}{(1.0606)^2} \approx \frac{59.22}{1.126} \approx 52.64 \, \text{m/s}^2
+u_T = \frac{u_t}{10} = 0.0050 \, \text{s}
 \]</div>
-<hr/>
-<h2 id="3-uncertainty-in-g"><strong>3. Uncertainty in <span class="arithmatex">\(g\)</span></strong></h2>
+<h3 id="5-gravitational-acceleration"><strong>5. Gravitational Acceleration:</strong></h3>
 <div class="arithmatex">\[
-\frac{u_g}{g} = \sqrt{\left(\frac{u_L}{L}\right)^2 + \left(2 \cdot \frac{u_T}{T} \right)^2}
+g = \frac{4\pi^2L}{T^2} = \frac{4\pi^2 \cdot 0.2}{(0.9967)^2} \approx 7.95 \, \text{m/s}^2
 \]</div>
+<h3 id="6-uncertainty-in-g"><strong>6. Uncertainty in <span class="arithmatex">\(g\)</span>:</strong></h3>
 <div class="arithmatex">\[
-\frac{u_g}{g} = \sqrt{\left(\frac{0.005}{1.500}\right)^2 + \left(2 \cdot \frac{0.0087}{1.0606} \right)^2} \approx 0.0167
-\]</div>
-<div class="arithmatex">\[
-u_g = 0.0167 \cdot 52.64 \approx 0.88 \, \text{m/s}^2
+\frac{u_g}{g} = \sqrt{\left(\frac{0.005}{0.2}\right)^2 + \left(2 \cdot \frac{0.0050}{0.9967} \right)^2} \approx 0.02696
 \]</div>
 <div class="arithmatex">\[
-\boxed{g = 52.64 \pm 0.88 \, \text{m/s}^2}
+u_g = 0.02696 \cdot 7.95 \approx 0.21 \, \text{m/s}^2
 \]</div>
-<hr/>
+<h2 id="final-result">Final Result:</h2>
+<div class="arithmatex">\[
+\boxed{g = 7.95 \pm 0.21 \, \text{m/s}^2}
+\]</div>
 <h2 id="analysis-and-discussion"><strong>Analysis and Discussion</strong></h2>
 <h3 id="comparison-with-standard-value"><strong>Comparison with Standard Value:</strong></h3>
 <ul>
-<li><strong>Standard value</strong>: <span class="arithmatex">\(g = 9.81 \, \text{m/s}^2\)</span></li>
-<li><strong>Measured value</strong>: <span class="arithmatex">\(52.64 \pm 0.88 \, \text{m/s}^2\)</span></li>
-<li><strong>Difference</strong>: \~43 m/s² ⇒ <strong>Not within experimental uncertainty</strong></li>
+<li><strong>Standard value</strong>: <span class="arithmatex">\(9.81 \, \text{m/s}^2\)</span></li>
+<li><strong>Measured value</strong>: <span class="arithmatex">\(7.95 \pm 0.21 \, \text{m/s}^2\)</span></li>
+<li><strong>Difference</strong>: <span class="arithmatex">\(\approx 1.86 \, \text{m/s}^2\)</span></li>
+<li>Result is <strong>outside experimental uncertainty</strong></li>
 </ul>
-<h3 id="likely-sources-of-error"><strong>Likely Sources of Error:</strong></h3>
+<h3 id="possible-sources-of-error"><strong>Possible Sources of Error:</strong></h3>
 <ul>
-<li><strong>Incorrect timing</strong>: Possibly measured <strong>5 oscillations</strong>, not 10.</li>
-<li><strong>Length error</strong>: Cable might have stretched or was not measured precisely to the center of mass.</li>
-<li><strong>Large swing amplitude</strong>: Violates the small-angle assumption for SHM.</li>
-<li><strong>Timing human error</strong>: Manual stopwatch use introduces delays.</li>
+<li><strong>Short pendulum</strong> increases sensitivity to timing errors</li>
+<li><strong>Center of mass</strong> of key-necklace system may not be well defined</li>
+<li><strong>Air resistance</strong> and necklace flexibility may dampen motion</li>
+<li><strong>Angle of swing</strong> may have been too large, violating SHM conditions</li>
 </ul>
-<hr/>
 <h2 id="suggestions-for-improvement"><strong>Suggestions for Improvement</strong></h2>
 <ul>
-<li>Use a <strong>photogate or light gate</strong> for accurate time measurement.</li>
-<li>Verify that the string is taut and measure <strong>to the actual center of mass</strong>.</li>
-<li>Repeat the experiment at <strong>multiple lengths</strong> and graph <span class="arithmatex">\(T^2\)</span> vs. <span class="arithmatex">\(L\)</span> to extract <span class="arithmatex">\(g\)</span> from the slope.</li>
-<li>Use a <strong>smaller release angle</strong> to ensure SHM approximation.</li>
+<li>Use a <strong>stiff string or rod</strong> to keep the length consistent</li>
+<li>Attach mass firmly to prevent swinging inconsistencies</li>
+<li>Use a <strong>photogate or light sensor</strong> to reduce timing errors</li>
+<li>Repeat at <strong>multiple lengths</strong> to verify results with a <span class="arithmatex">\(T^2\)</span> vs. <span class="arithmatex">\(L\)</span> graph</li>
 </ul>
-<hr/>
 <h2 id="conclusion"><strong>Conclusion</strong></h2>
-<p>Despite following a systematic method, the calculated value of gravity was significantly off due to likely timing or procedural errors. The result:</p>
+<p>Using a key attached to a necklace as a pendulum, the gravitational acceleration was measured as:</p>
 <div class="arithmatex">\[
-\boxed{g = 52.64 \pm 0.88 \, \text{m/s}^2}
+\boxed{g = 7.95 \pm 0.21 \, \text{m/s}^2}
 \]</div>
-<p>does not align with the accepted value of <span class="arithmatex">\(9.81 \, \text{m/s}^2\)</span>, showing that <strong>accurate timing and careful setup are crucial</strong> in pendulum experiments.</p>
+<p>Though the method is simple and accessible, the result deviates from the standard value due to limitations in control and precision of the setup. This experiment illustrates how even basic designs require careful execution for accurate physical measurements.</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
