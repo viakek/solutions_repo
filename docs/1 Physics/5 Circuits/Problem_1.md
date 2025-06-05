@@ -63,7 +63,7 @@ A -- R₂ -- B
 
 with:
 
-A -- R_{\text{eq}} -- B
+$$A -- R_{\text{eq}} -- B$$
 
 
 Where:
