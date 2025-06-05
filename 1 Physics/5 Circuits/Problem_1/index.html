@@ -333,6 +333,193 @@ draw_graph(G, title="Final Simplified Circuit")
    R_{\text{total}} = 2 + 3.23 = 5.23\,\Omega
    $$</p>
 <hr/>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+def draw_resistor(ax, x, y, label, horizontal=True):
+    if horizontal:
+        ax.plot([x, x+1], [y, y], color="black")
+        ax.add_patch(patches.Rectangle((x+0.25, y-0.1), 0.5, 0.2,
+                                       edgecolor='black', facecolor='none'))
+        ax.text(x+0.5, y+0.2, label, ha='center')
+    else:
+        ax.plot([x, x], [y, y-1], color="black")
+        ax.add_patch(patches.Rectangle((x-0.1, y-0.75), 0.2, 0.5,
+                                       edgecolor='black', facecolor='none'))
+        ax.text(x+0.2, y-0.5, label, va='center')
+
+def draw_updated_series_steps():
+    fig, axs = plt.subplots(1, 3, figsize=(15, 5))
+    axs = axs.flatten()
+
+    # Step 1: Original square circuit
+    ax = axs[0]
+    ax.set_title("Step 1: Square Circuit")
+    draw_resistor(ax, 0, 2, "2Ω")
+    draw_resistor(ax, 1, 2, "4Ω")
+    draw_resistor(ax, 2, 2, "6Ω")
+    draw_resistor(ax, 0, 0, "3Ω")
+    draw_resistor(ax, 1, 0, "5Ω")
+    draw_resistor(ax, 2, 0, "7Ω")
+    ax.plot([0, 0], [0, 2], color='black')
+    ax.plot([3, 3], [0, 2], color='black')
+    ax.text(-0.2, 2, "START", va='center')
+    ax.text(3.1, 2, "END", va='center')
+    ax.set_xlim(-0.5, 3.5)
+    ax.set_ylim(-0.5, 2.5)
+    ax.axis('off')
+
+    # Step 2: Combine 2Ω + 4Ω = 6Ω and B–END = 6Ω
+    ax = axs[1]
+    ax.set_title("Step 2: Combine 2Ω + 4Ω and 6Ω")
+    draw_resistor(ax, 0, 2, "6Ω")
+    draw_resistor(ax, 1, 2, "6Ω")
+    draw_resistor(ax, 0, 0, "3Ω")
+    draw_resistor(ax, 1, 0, "5Ω")
+    draw_resistor(ax, 2, 0, "7Ω")
+    ax.plot([0, 0], [0, 2], color='black')  # START
+    ax.plot([2, 3], [2, 2], color='black')  # Output to END
+    ax.plot([3, 3], [0, 2], color='black')  # END
+    ax.plot([2, 3], [0, 0], color='black')  # Bottom right to END
+    ax.text(-0.2, 2, "START", va='center')
+    ax.text(3.1, 2, "END", va='center')
+    ax.set_xlim(-0.5, 3.5)
+    ax.set_ylim(-0.5, 2.5)
+    ax.axis('off')
+
+    # Step 3: Combine 3Ω + 5Ω = 8Ω and 7Ω
+    ax = axs[2]
+    ax.set_title("Step 3: Combine 3Ω + 5Ω and 7Ω")
+    draw_resistor(ax, 0, 2, "6Ω")
+    draw_resistor(ax, 1, 2, "6Ω")
+    draw_resistor(ax, 0, 0, "8Ω")
+    draw_resistor(ax, 1, 0, "7Ω")
+    ax.plot([0, 0], [0, 2], color='black')  # START
+    ax.plot([2, 3], [2, 2], color='black')  # Top to END
+    ax.plot([2, 3], [0, 0], color='black')  # Bottom to END
+    ax.plot([3, 3], [0, 2], color='black')  # END
+    ax.text(-0.2, 2, "START", va='center')
+    ax.text(3.1, 2, "END", va='center')
+    ax.set_xlim(-0.5, 3.5)
+    ax.set_ylim(-0.5, 2.5)
+    ax.axis('off')
+
+    plt.tight_layout()
+    plt.show()
+
+draw_updated_series_steps()
+</code></pre>
+<p><img alt="alt text" src="../03455f1d-763c-4517-a650-27f457afbfba.png"/></p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+def draw_resistor(ax, x, y, label, horizontal=True):
+    if horizontal:
+        ax.plot([x, x+1], [y, y], color="black")
+        ax.add_patch(patches.Rectangle((x+0.25, y-0.1), 0.5, 0.2,
+                                       edgecolor='black', facecolor='none'))
+        ax.text(x+0.5, y+0.2, label, ha='center')
+    else:
+        ax.plot([x, x], [y, y-1], color="black")
+        ax.add_patch(patches.Rectangle((x-0.1, y-0.75), 0.2, 0.5,
+                                       edgecolor='black', facecolor='none'))
+        ax.text(x+0.2, y-0.5, label, va='center')
+
+def draw_final_series_combinations():
+    fig, axs = plt.subplots(1, 2, figsize=(10, 4))
+    axs = axs.flatten()
+
+    # Step 4: Top 12Ω and bottom 8Ω + 7Ω = 15Ω, connect to END
+    ax = axs[0]
+    ax.set_title("Step 4: Connect 12Ω and 15Ω to END")
+    draw_resistor(ax, 0, 2, "12Ω")  # Top path result
+    draw_resistor(ax, 0, 0, "8Ω")   # Bottom path before merging
+    draw_resistor(ax, 1, 0, "7Ω")   # Bottom path before merging
+    ax.plot([0, 0], [0, 2], color='black')  # START shared
+    ax.plot([2, 2], [0, 2], color='black')  # END shared
+    ax.plot([1, 2], [0, 0], color='black')  # Wire after 7Ω to END
+    ax.plot([1, 2], [2, 2], color='black')  # Wire after 12Ω to END
+    ax.text(-0.2, 2, "START", va='center')
+    ax.text(2.2, 2, "END", va='center')
+    ax.set_xlim(-0.5, 2.5)
+    ax.set_ylim(-0.5, 2.5)
+    ax.axis('off')
+
+    # Step 5: 12Ω and 15Ω clearly connected to END
+    ax = axs[1]
+    ax.set_title("Step 5: Final Connections")
+    draw_resistor(ax, 0, 2, "12Ω")  # Top path
+    draw_resistor(ax, 0, 0, "15Ω")  # Bottom path
+    ax.plot([0, 0], [0, 2], color='black')  # START shared
+    ax.plot([2, 2], [0, 2], color='black')  # END shared
+    ax.plot([1, 2], [0, 0], color='black')  # Wire after 15Ω to END
+    ax.plot([1, 2], [2, 2], color='black')  # Wire after 12Ω to END
+    ax.text(-0.2, 2, "START", va='center')
+    ax.text(2.2, 2, "END", va='center')
+    ax.set_xlim(-0.5, 2.5)
+    ax.set_ylim(-0.5, 2.5)
+    ax.axis('off')
+
+    plt.tight_layout()
+    plt.show()
+
+draw_final_series_combinations()
+</code></pre>
+<p><img alt="alt text" src="../c08ba36e-cdf3-4ff1-bfb6-d83daff2024d.png"/></p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+def draw_resistor(ax, x, y, label, horizontal=True):
+    if horizontal:
+        ax.plot([x, x+1], [y, y], color="black")
+        ax.add_patch(patches.Rectangle((x+0.25, y-0.1), 0.5, 0.2,
+                     edgecolor='black', facecolor='none'))
+        ax.text(x+0.5, y+0.2, label, ha='center')
+    else:
+        ax.plot([x, x], [y, y-1], color="black")
+        ax.add_patch(patches.Rectangle((x-0.1, y-0.75), 0.2, 0.5,
+                     edgecolor='black', facecolor='none'))
+        ax.text(x+0.2, y-0.5, label, va='center')
+
+def draw_parallel_connection_with_join_lines():
+    fig, ax = plt.subplots(figsize=(6, 4))
+
+    ax.set_title("Final: 12Ω and 15Ω Connected in Parallel")
+
+    # Draw resistors
+    draw_resistor(ax, 0, 2, "12Ω")  # Top
+    draw_resistor(ax, 0, 0, "15Ω")  # Bottom
+
+    # START and END vertical lines
+    ax.plot([0, 0], [0, 2], color='black')  # Left vertical (START)
+    ax.plot([2, 2], [0, 2], color='black')  # Right vertical (END)
+
+    # Connect 12Ω to END
+    ax.plot([1, 2], [2, 2], color='black')  # Right side of 12Ω
+
+    # Connect 15Ω to END
+    ax.plot([1, 2], [0, 0], color='black')  # Right side of 15Ω
+
+    # Connect START to 12Ω
+    ax.plot([0, 1], [2, 2], color='black')  # Left side of 12Ω
+
+    # Connect START to 15Ω
+    ax.plot([0, 1], [0, 0], color='black')  # Left side of 15Ω
+
+    # Labels
+    ax.text(-0.3, 1, "START", va='center')
+    ax.text(2.2, 1, "END", va='center')
+
+    ax.set_xlim(-0.5, 2.5)
+    ax.set_ylim(-0.5, 2.5)
+    ax.axis('off')
+
+    plt.tight_layout()
+    plt.show()
+
+draw_parallel_connection_with_join_lines()
+</code></pre>
+<p><img alt="alt text" src="../7cb422a4-8743-43c3-8252-df26365d9fdd.png"/></p>
 <h2 id="4-conclusion">4. Conclusion</h2>
 <p>We showed how to:</p>
 <ul>
