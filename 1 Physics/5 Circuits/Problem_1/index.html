@@ -561,75 +561,132 @@ final_G = simplify_and_plot_step_by_step(G.copy(), start, end) # Pass a copy to 
 <pre><code class="language-python">import networkx as nx
 import matplotlib.pyplot as plt
 
-# Helper function to draw the circuit with step labels
+# ✅ Improved draw_circuit: shows multiple resistors on same edge (e.g., "3.00Ω, 7.00Ω")
 def draw_circuit(G, step_title, step_num):
     pos = nx.spring_layout(G, seed=42)
-    labels = nx.get_edge_attributes(G, 'resistance')
-    labels = {k: f"{v:.2f}Ω" for k, v in labels.items()}
+
+    # Build edge labels that account for multiple resistors (parallel edges)
+    edge_labels = {}
+    for u, v in G.edges():
+        resistances = [
+            f"{data['resistance']:.2f}Ω"
+            for key, data in G.get_edge_data(u, v).items()
+            if 'resistance' in data
+        ]
+        edge_labels[(u, v)] = ", ".join(resistances)
 
     plt.figure(figsize=(6, 4))
     nx.draw(G, pos, with_labels=True, node_color='skyblue', node_size=800, font_weight='bold')
-    nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
     plt.title(f"Step {step_num}: {step_title}")
     plt.axis('off')
     plt.show()
 
-# Function to simplify series and parallel step by step
-def simplify_circuit_stepwise(G):
-    step = 0
-    draw_circuit(G, "Original Nested Circuit", step)
-    step += 1
+def combine_series_with_steps(G, start, end, step):
+    changed = True
+    while changed:
+        changed = False
+        for node in list(G.nodes):
+            if node in (start, end):
+                continue
+            if G.degree[node] == 2 and len(list(G.neighbors(node))) == 2:
+                neighbors = list(G.neighbors(node))
+                if len(G.get_edge_data(neighbors[0], node)) == 1 and len(G.get_edge_data(node, neighbors[1])) == 1:
+                    R1 = list(G.get_edge_data(neighbors[0], node).values())[0]['resistance']
+                    R2 = list(G.get_edge_data(node, neighbors[1]).values())[0]['resistance']
+                    req = R1 + R2
+                    print(f"🔗 Series merge: {R1}Ω + {R2}Ω = {req}Ω between {neighbors[0]}–{neighbors[1]} (via {node})")
+                    G.remove_node(node)
+                    if G.has_edge(neighbors[0], neighbors[1]):
+                        existing_resistances = [d['resistance'] for key, d in G.get_edge_data(neighbors[0], neighbors[1]).items()]
+                        existing_resistances.append(req)
+                        combined_resistance = 1 / sum(1 / r for r in existing_resistances)
+                        for key in list(G[neighbors[0]][neighbors[1]].keys()):
+                            G.remove_edge(neighbors[0], neighbors[1], key=key)
+                        G.add_edge(neighbors[0], neighbors[1], resistance=combined_resistance)
+                    else:
+                        G.add_edge(neighbors[0], neighbors[1], resistance=req)
 
-    # Step 1: Combine C-D (4Ω) and B-C (2Ω) in series to form B-D path through C
-    G.remove_edge('B', 'C')
-    G.remove_edge('C', 'D')
-    G.remove_node('C')
-    G.add_edge('B', 'D', resistance=6)  # new series path via C
-    draw_circuit(G, "Series: B–C–D → 6Ω", step)
-    step += 1
-
-    # Step 2: B–D (6Ω from B-C-D) and B–D (4Ω) in parallel
-    # Combine 6Ω and 4Ω in parallel
-    R_parallel = 1 / (1/6 + 1/4)
-    G.remove_edges_from([('B', 'D')])  # remove both paths
-    G.add_edge('B', 'D', resistance=R_parallel)
-    draw_circuit(G, "Parallel: B–D paths (6Ω || 4Ω)", step)
-    step += 1
-
-    # Step 3: A–B (2Ω) in series with B–D (2.4Ω)
-    G.remove_edge('A', 'B')
-    G.remove_edge('B', 'D')
-    G.remove_node('B')
-    G.add_edge('A', 'D', resistance=2 + R_parallel)
-    draw_circuit(G, "Series: A–B–D → 4.4Ω", step)
-    step += 1
-
-    # Step 4: A–D (4.4Ω) in series with D–E (1Ω)
-    G.remove_edge('D', 'E')
-    G.remove_edge('A', 'D')
-    G.remove_node('D')
-    G.add_edge('A', 'E', resistance=4.4 + 1)
-    draw_circuit(G, "Series: A–D–E → 5.4Ω", step)
-    step += 1
-
+                    step[0] += 1
+                    draw_circuit(G, f"Series merged {neighbors[0]}–{neighbors[1]}", step[0])
+                    changed = True
+                    break
     return G
 
-# Initial nested circuit
-G = nx.Graph()
-G.add_edge('A', 'B', resistance=2)
-G.add_edge('B', 'C', resistance=2)
-G.add_edge('C', 'D', resistance=4)
-G.add_edge('B', 'D', resistance=4)
-G.add_edge('D', 'E', resistance=1)
+def combine_parallel_with_steps(G, step):
+    changed = True
+    while changed:
+        changed = False
+        seen = set()
+        for u, v, key in list(G.edges(keys=True)):
+            if (u, v) in seen or (v, u) in seen:
+                continue
+            edges_data = list(G.get_edge_data(u, v, default={}).items())
+            if len(edges_data) &gt; 1:
+                resistances = [d['resistance'] for key, d in edges_data]
+                req = 1 / sum(1 / r for r in resistances)
+                print(f"🔀 Parallel merge: {' || '.join(f'{r}Ω' for r in resistances)} = {req:.2f}Ω between {u}–{v}")
+                G.remove_edges_from([(u, v, key) for key, _ in edges_data])
+                G.add_edge(u, v, resistance=req)
+                seen.add((u, v))
+                step[0] += 1
+                draw_circuit(G, f"Parallel merged {u}–{v}", step[0])
+                changed = True
+    return G
 
-# Perform step-by-step simplification
-final_graph = simplify_circuit_stepwise(G)
+def simplify_and_plot_step_by_step(G, start, end):
+    step = [1]
+    draw_circuit(G, "Original Circuit", step[0])
+    while True:
+        old_edges = list(G.edges(data=True, keys=True))
+        G = combine_series_with_steps(G, start, end, step)
+        G = combine_parallel_with_steps(G, step)
+        new_edges = list(G.edges(data=True, keys=True))
+        if old_edges == new_edges:
+            break
+
+    if G.has_edge(start, end):
+        if isinstance(G, nx.MultiGraph):
+            total_conductance = sum(
+                1/data['resistance'] 
+                for u, v, key, data in G.edges(keys=True, data=True) 
+                if {u, v} == {start, end}
+            )
+            total_resistance = 1 / total_conductance if total_conductance &gt; 0 else float('inf')
+        else:
+            total_resistance = G.edges[start, end]['resistance']
+    else:
+        total_resistance = float('inf')
+
+    step[0] += 1
+    draw_circuit(G, f"Final Equivalent Resistance = {total_resistance:.2f}Ω", step[0])
+    print(f"\n⚡ Final Total Resistance between {start} and {end}: {total_resistance:.2f}Ω")
+    return G
+
+# 🧩 New circuit with both series and parallel paths
+G = nx.MultiGraph()
+
+# Main series path
+G.add_edge('START', 'A', resistance=2)
+G.add_edge('A', 'B', resistance=3)
+G.add_edge('B', 'END', resistance=5)
+
+# Parallel branch: A–C–D–END
+G.add_edge('A', 'C', resistance=6)
+G.add_edge('C', 'D', resistance=2)
+G.add_edge('D', 'END', resistance=4)
+
+start, end = 'START', 'END'
+
+# 🚀 Run simplification with step-by-step visualization
+final_G = simplify_and_plot_step_by_step(G.copy(), start, end)
 </code></pre>
-<p><img alt="alt text" src="../Untitled-17.png"/>
-<img alt="alt text" src="../Untitled-18.png"/>
-<img alt="alt text" src="../Untitled-19.png"/>
-<img alt="alt text" src="../Untitled-20.png"/>
-<img alt="alt text" src="../Untitled-21.png"/></p>
+<p><img alt="alt text" src="../Untitled-32.png"/>
+<img alt="alt text" src="../Untitled-33.png"/>
+<img alt="alt text" src="../Untitled-34.png"/>
+<img alt="alt text" src="../Untitled-35.png"/>
+<img alt="alt text" src="../Untitled-36.png"/>
+<img alt="alt text" src="../Untitled-37.png"/></p>
 <h2 id="4-conclusion">4. Conclusion</h2>
 <p>We showed how to:</p>
 <ul>
