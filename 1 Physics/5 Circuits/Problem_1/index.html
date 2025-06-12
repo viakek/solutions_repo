@@ -435,8 +435,8 @@ import matplotlib.pyplot as plt
 
 def draw_circuit(G, step_title):
     pos = nx.spring_layout(G, seed=42)
-    labels = nx.get_edge_attributes(G, 'resistance')
-    labels = {k: f"{v:.2f}Ω" for k, v in labels.items()}
+    # Correctly handle edge labels for MultiGraph
+    labels = {(u, v): f"{data['resistance']:.2f}Ω" for u, v, key, data in G.edges(keys=True, data=True) if 'resistance' in data}
 
     plt.figure(figsize=(6, 4))
     nx.draw(G, pos, with_labels=True, node_color='skyblue', node_size=800, font_weight='bold')
@@ -445,23 +445,39 @@ def draw_circuit(G, step_title):
     plt.axis('off')
     plt.show()
 
-def combine_series_with_steps(G, step):
+def combine_series_with_steps(G, start, end, step):
     changed = True
     while changed:
         changed = False
         for node in list(G.nodes):
-            neighbors = list(G.neighbors(node))
-            if len(neighbors) == 2 and node not in ('START', 'END'):
-                n1, n2 = neighbors
-                if G.number_of_edges(node, n1) == 1 and G.number_of_edges(node, n2) == 1:
-                    r1 = G.edges[node, n1]['resistance']
-                    r2 = G.edges[node, n2]['resistance']
-                    req = r1 + r2
-                    print(f"🔗 Series merge: {r1}Ω + {r2}Ω = {req}Ω between {n1}–{n2} (via {node})")
-                    G.add_edge(n1, n2, resistance=req)
+            if node in (start, end):
+                continue
+            # Check if node has exactly two neighbors and is not connected to itself
+            if G.degree[node] == 2 and len(list(G.neighbors(node))) == 2:
+                neighbors = list(G.neighbors(node))
+                # Check if there is a single edge between node and each neighbor
+                if len(G.get_edge_data(neighbors[0], node)) == 1 and len(G.get_edge_data(node, neighbors[1])) == 1:
+                     # Get the resistance from the single edge
+                    R1 = list(G.get_edge_data(neighbors[0], node).values())[0]['resistance']
+                    R2 = list(G.get_edge_data(node, neighbors[1]).values())[0]['resistance']
+                    req = R1 + R2
+                    print(f"🔗 Series merge: {R1}Ω + {R2}Ω = {req}Ω between {neighbors[0]}–{neighbors[1]} (via {node})")
                     G.remove_node(node)
+                    # Check if an edge already exists between neighbors[0] and neighbors[1]
+                    if G.has_edge(neighbors[0], neighbors[1]):
+                        # If an edge exists, combine in parallel
+                        existing_resistances = [d['resistance'] for key, d in G.get_edge_data(neighbors[0], neighbors[1]).items()]
+                        existing_resistances.append(req)
+                        combined_resistance = 1 / sum(1 / r for r in existing_resistances)
+                        # Remove all existing edges between neighbors[0] and neighbors[1]
+                        for key in list(G[neighbors[0]][neighbors[1]].keys()):
+                            G.remove_edge(neighbors[0], neighbors[1], key=key)
+                        G.add_edge(neighbors[0], neighbors[1], resistance=combined_resistance)
+                    else:
+                        G.add_edge(neighbors[0], neighbors[1], resistance=req)
+
                     step[0] += 1
-                    draw_circuit(G, f"Step {step[0]}: Series merged {n1}–{n2}")
+                    draw_circuit(G, f"Step {step[0]}: Series merged {neighbors[0]}–{neighbors[1]}")
                     changed = True
                     break
     return G
@@ -471,16 +487,18 @@ def combine_parallel_with_steps(G, step):
     while changed:
         changed = False
         seen = set()
-        for u, v in list(G.edges):
+        # Correctly iterate over edges for MultiGraph
+        for u, v, key in list(G.edges(keys=True)):
             if (u, v) in seen or (v, u) in seen:
                 continue
-            parallel_edges = [(a, b, data['resistance']) for a, b, data in G.edges(data=True)
-                              if {a, b} == {u, v}]
-            if len(parallel_edges) &gt; 1:
-                resistances = [r for _, _, r in parallel_edges]
+            # Use list(G.get_edge_data(u, v, default={}).items()) to get data for all edges between u and v
+            edges_data = list(G.get_edge_data(u, v, default={}).items())
+            if len(edges_data) &gt; 1:
+                resistances = [d['resistance'] for key, d in edges_data]
                 req = 1 / sum(1 / r for r in resistances)
                 print(f"🔀 Parallel merge: {' || '.join(f'{r}Ω' for r in resistances)} = {req:.2f}Ω between {u}–{v}")
-                G.remove_edges_from([(u, v)] * len(parallel_edges))
+                # Remove edges by key
+                G.remove_edges_from([(u, v, key) for key, _ in edges_data])
                 G.add_edge(u, v, resistance=req)
                 seen.add((u, v))
                 step[0] += 1
@@ -488,51 +506,58 @@ def combine_parallel_with_steps(G, step):
                 changed = True
     return G
 
-def simplify_and_plot_step_by_step(G):
+
+def simplify_and_plot_step_by_step(G, start, end):
     step = [1]
     draw_circuit(G, f"Step {step[0]}: Original Circuit")
     while True:
-        old_edges = list(G.edges(data=True))
-        G = combine_series_with_steps(G, step)
+        old_edges = list(G.edges(data=True, keys=True)) # Include keys in comparison
+        G = combine_series_with_steps(G, start, end, step)
         G = combine_parallel_with_steps(G, step)
-        new_edges = list(G.edges(data=True))
+        new_edges = list(G.edges(data=True, keys=True)) # Include keys in comparison
         if old_edges == new_edges:
             break
+
+    # Final step: show total resistance
+    # Handle multiple edges between start and end after reduction
+    if G.has_edge(start, end):
+        if isinstance(G, nx.MultiGraph):
+            total_conductance = sum(1/data['resistance'] for u, v, key, data in G.edges(keys=True, data=True) if {u, v} == {start, end})
+            total_resistance = 1 / total_conductance if total_conductance &gt; 0 else float('inf')
+        else:
+            total_resistance = G.edges[start, end]['resistance']
+    else:
+        total_resistance = float('inf')  # Open circuit
+
+
+    if total_resistance is not None:
+        step[0] += 1
+        draw_circuit(G, f"Step {step[0]}: Final Equivalent Resistance = {total_resistance:.2f}Ω")
+        print(f"\n⚡ Final Total Resistance between {start} and {end}: {total_resistance:.2f}Ω")
+
     return G
 
-# Define the original circuit
-G = nx.Graph()
+# Build the original circuit as a MultiGraph
+G = nx.MultiGraph()
 G.add_edge('START', 'A', resistance=2)
 G.add_edge('A', 'B', resistance=4)
 G.add_edge('B', 'END', resistance=6)
+
 G.add_edge('START', 'X', resistance=3)
 G.add_edge('X', 'Y', resistance=5)
 G.add_edge('Y', 'END', resistance=7)
 
-# Run and show each simplification step
-final_G = simplify_and_plot_step_by_step(G)
+start, end = 'START', 'END'
 
-# Calculate final resistance
-start_end_edges = [
-    data['resistance']
-    for u, v, data in final_G.edges(data=True)
-    if {'START', 'END'} == {u, v}
-]
-
-if len(start_end_edges) == 1:
-    total_resistance = start_end_edges[0]
-elif len(start_end_edges) &gt; 1:
-    total_resistance = 1 / sum(1 / r for r in start_end_edges)
-else:
-    total_resistance = None
-
-total_resistance
+# Simplify and visualize
+final_G = simplify_and_plot_step_by_step(G.copy(), start, end) # Pass a copy to avoid modifying the original example graph
 </code></pre>
-<p><img alt="alt text" src="../Untitled-12.png"/>
-<img alt="alt text" src="../Untitled-13.png"/>
-<img alt="alt text" src="../Untitled-14.png"/>
-<img alt="alt text" src="../Untitled-15.png"/>
-<img alt="alt text" src="../Untitled-16.png"/></p>
+<p><img alt="alt text" src="../Untitled-25.png"/>
+<img alt="alt text" src="../Untitled-27.png"/>
+<img alt="alt text" src="../Untitled-28.png"/>
+<img alt="alt text" src="../Untitled-29.png"/>
+<img alt="alt text" src="../Untitled-30.png"/>
+<img alt="alt text" src="../Untitled-31.png"/></p>
 <pre><code class="language-python">import networkx as nx
 import matplotlib.pyplot as plt
 
