@@ -202,6 +202,107 @@ Given the test circuit:
 ```python
 import networkx as nx
 import matplotlib.pyplot as plt
+import itertools
+import warnings
+
+warnings.filterwarnings("ignore", category=UserWarning)
+
+def draw_graph(G, step, pos=None):
+    if pos is None:
+        pos = nx.spring_layout(G, seed=42)
+    
+    edge_labels = nx.get_edge_attributes(G, 'resistance')
+    edge_labels = {(u, v): f"{r:.2f}Ω" for (u, v), r in edge_labels.items()}
+
+    plt.figure(figsize=(6, 4))
+    nx.draw_networkx_nodes(G, pos, node_color='skyblue', node_size=800)
+    nx.draw_networkx_labels(G, pos, font_size=12, font_weight='bold')
+
+    nx.draw_networkx_edges(G, pos, width=2)
+    nx.draw_networkx_edge_labels(
+        G, pos, edge_labels=edge_labels,
+        font_size=10, label_pos=0.6,
+        bbox=dict(facecolor='white', edgecolor='none', pad=0.5)
+    )
+
+    plt.title(f"Step {step}")
+    plt.axis('off')
+    plt.show()
+    return pos  # return to reuse same layout
+
+def reduce_parallel(G):
+    changed = False
+    seen = set()
+    for u, v in list(G.edges()):
+        if (u, v) in seen or (v, u) in seen:
+            continue
+        parallels = [e for e in G.edges([u, v]) if (e[0] == u and e[1] == v) or (e[0] == v and e[1] == u)]
+        if len(parallels) > 1:
+            resistances = [G.get_edge_data(x, y)['resistance'] for (x, y) in parallels]
+            R_eq = 1 / sum(1 / R for R in resistances)
+            G.remove_edges_from(parallels)
+            G.add_edge(u, v, resistance=R_eq)
+            changed = True
+        seen.add((u, v))
+    return changed
+
+def reduce_series(G, start, end):
+    changed = False
+    for node in list(G.nodes()):
+        if node in (start, end):
+            continue
+        if G.degree[node] == 2:
+            neighbors = list(G.neighbors(node))
+            if G.has_edge(neighbors[0], node) and G.has_edge(node, neighbors[1]):
+                R1 = G[neighbors[0]][node]['resistance']
+                R2 = G[node][neighbors[1]]['resistance']
+                G.remove_node(node)
+                G.add_edge(neighbors[0], neighbors[1], resistance=R1 + R2)
+                changed = True
+                break  # reprocess after change
+    return changed
+
+def equivalent_resistance(G, start, end):
+    step = 0
+    pos = draw_graph(G, step)  # use one layout
+    while True:
+        changed = False
+        if reduce_parallel(G):
+            step += 1
+            pos = draw_graph(G, step, pos)
+            changed = True
+        if reduce_series(G, start, end):
+            step += 1
+            pos = draw_graph(G, step, pos)
+            changed = True
+        if not changed:
+            break
+
+    if G.has_edge(start, end):
+        print(f"✅ Equivalent resistance between {start} and {end}: {G[start][end]['resistance']:.2f} Ω")
+    else:
+        print("⚠️ No path between start and end — open circuit.")
+
+# --- Example Circuit ---
+
+G = nx.Graph()
+G.add_edge('A', 'B', resistance=2)
+G.add_edge('B', 'C', resistance=3)
+G.add_edge('B', 'C', resistance=6)
+G.add_edge('C', 'D', resistance=4)
+
+start, end = 'A', 'D'
+equivalent_resistance(G, start, end)
+```
+
+![alt text](Untitled-22.png)
+![alt text](Untitled-23.png)
+![alt text](Untitled-24.png)
+
+
+```python
+import networkx as nx
+import matplotlib.pyplot as plt
 
 def draw_circuit(G, step_title):
     pos = nx.spring_layout(G, seed=42)
